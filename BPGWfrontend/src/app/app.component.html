@@ -1,0 +1,5 @@
+<div *ngFor="let forecast of forecasts">
+  <h1>{{ forecast.date | date }}</h1>
+  <h2>{{ forecast.summary }}</h2>
+  <h3>{{ forecast.temperatureC }} celcius degrees</h3>
+</div>
