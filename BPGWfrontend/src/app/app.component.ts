@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
   forecasts: any;
-  title = 'BPGWfrontend';
+  title = 'BPGWfrontend2';
 
   constructor(private http: HttpClient) { }
 
