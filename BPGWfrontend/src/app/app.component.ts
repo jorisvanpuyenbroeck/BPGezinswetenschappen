@@ -5,16 +5,16 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  forecasts: any;
-  title = 'BPGWfrontend2';
+  topics: any;
+  title = 'BPGWfrontend';
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get(environment.baseUrl + '/api/weatherforecast')
-      .subscribe(data => this.forecasts = data);
+    this.http.get(environment.baseUrl + '/api/topics')
+      .subscribe(data => this.topics = data);
   }  
 }
