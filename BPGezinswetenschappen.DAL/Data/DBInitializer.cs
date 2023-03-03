@@ -10,10 +10,10 @@ namespace BPGezinswetenschappen.DAL.Data
             context.Database.EnsureCreated();
 
             // Look for any products.
-            if (context.Users.Any())
-            {
-                return;   // DB has been seeded
-            }
+            //if (context.Users.Any())
+            //{
+            //    return;   // DB has been seeded
+            //}
 
             //Add topics
             context.AddRange(
@@ -37,16 +37,20 @@ namespace BPGezinswetenschappen.DAL.Data
             //Add users
             User studentWillem = new User()
             {
+                UserName = "r0000001",
                 FirstName = "Willem",
                 LastName = "Helsen",
-                UserLevel = "student"
+                UserLevel = "student",
+                Password = "1234",
             };
 
             User studentJonas = new User()
             {
+                UserName = "r0000002",
                 FirstName = "Jonas",
                 LastName = "Quintiens",
-                UserLevel = "student"
+                UserLevel = "student",
+                Password = "1234",
             };
 
             context.Add(studentJonas);
@@ -55,22 +59,30 @@ namespace BPGezinswetenschappen.DAL.Data
             //Add coaches
             User coachWilfried = new User()
             {
+                UserName = "u0000001",
                 FirstName = "Wilfried",
                 LastName = "Meulenbergs",
-                UserLevel = "coach"
+                UserLevel = "coach",
+                Password = "1234",
             };
 
             User coachJan = new User()
             {
+
+                UserName = "u0000002",
                 FirstName = "Jan",
                 LastName = "Waeben",
-                UserLevel = "coach"
+                UserLevel = "coach",
+                Password = "1234",
             };
             User coachKristien = new User()
             {
+
+                UserName = "u0000003",
                 FirstName = "Kristien",
                 LastName = "Nys",
-                UserLevel = "coach"
+                UserLevel = "coach",
+                Password = "1234",
             };
             context.Add(coachJan);
             context.Add(coachKristien);
@@ -80,9 +92,12 @@ namespace BPGezinswetenschappen.DAL.Data
 
             User adminJoris = new User()
             {
+
+                UserName = "u0032661",
                 FirstName = "Joris",
                 LastName = "Van Puyenbroeck",
-                UserLevel = "admin"
+                UserLevel = "admin",
+                Password = "1234",
             };
             context.Add(adminJoris);
 

@@ -1,5 +1,6 @@
 ﻿using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +19,15 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Topics
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
         {
-            return await _context.Topics.ToListAsync();
+            return await _context.Topics.Include(t => t.UserTopics).ToListAsync();
         }
 
         // GET: api/Topics/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Topic>> GetTopic(int id)
         {
