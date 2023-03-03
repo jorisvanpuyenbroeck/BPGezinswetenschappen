@@ -14,23 +14,33 @@ namespace BPGezinswetenschappen.DAL.Data
         public BPContext(DbContextOptions<BPContext> options) : base(options)
         { }
 
-        public DbSet<Student> Students { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ProjectIdea> ProjectIdeas { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Organisation> Organisations { get; set; }
-        public DbSet<Coach> Coaches { get; set; }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<CoachTopic> CoachTopics { get; set; }
+        public DbSet<UserTopic> UserTopics { get; set; }
         public DbSet<ProjectTopic> ProjectTopics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>().ToTable("Student");
-            modelBuilder.Entity<Project>().ToTable("Project");
+            modelBuilder.Entity<User>();
+            modelBuilder.Entity<ProjectIdea>().ToTable("ProjectIdea");
+            modelBuilder.Entity<Project>()
+                .HasOne(p => p.Student)
+                .WithMany(u => u.StudentProjects)
+                .HasForeignKey(p => p.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Project>()
+                .HasOne(p => p.Coach)
+                .WithMany(u => u.CoachProjects)
+                .HasForeignKey(p => p.CoachId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Organisation>().ToTable("Organisation");
-            modelBuilder.Entity<Coach>().ToTable("Coach");
             modelBuilder.Entity<Topic>().ToTable("Topic");
-            modelBuilder.Entity<CoachTopic>().ToTable("CoachTopic");
+            modelBuilder.Entity<UserTopic>().ToTable("CoachTopic");
             modelBuilder.Entity<ProjectTopic>().ToTable("ProjectTopic");
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

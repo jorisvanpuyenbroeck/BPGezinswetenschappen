@@ -6,11 +6,11 @@ namespace BPGezinswetenschappen.DAL.Data
     {
         public static void Initialize(BPContext context)
         {
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             // Look for any products.
-            if (context.Students.Any())
+            if (context.Users.Any())
             {
                 return;   // DB has been seeded
             }
@@ -26,7 +26,6 @@ namespace BPGezinswetenschappen.DAL.Data
                 new Topic { Name = "School" }
                 );
 
-
             //Add organisations
 
             context.AddRange(
@@ -35,81 +34,115 @@ namespace BPGezinswetenschappen.DAL.Data
                 new Organisation { Name = "Netwerk Tegen Armoede" }
                 );
 
-            //Add customers
-            Student studentWillem = new Student()
+            //Add users
+            User studentWillem = new User()
             {
                 FirstName = "Willem",
                 LastName = "Helsen",
+                UserLevel = "student"
             };
 
-            Student studentJonas = new Student()
+            User studentJonas = new User()
             {
                 FirstName = "Jonas",
                 LastName = "Quintiens",
+                UserLevel = "student"
             };
-            Student studentJoris = new Student()
-            {
-                FirstName = "Joris",
-                LastName = "Van Puyenbroeck",
-            };
-            context.Add(studentJoris);
+
             context.Add(studentJonas);
             context.Add(studentWillem);
 
-
             //Add coaches
-            Coach coachWilfried = new Coach()
+            User coachWilfried = new User()
             {
                 FirstName = "Wilfried",
                 LastName = "Meulenbergs",
+                UserLevel = "coach"
             };
 
-            Coach coachJan = new Coach()
+            User coachJan = new User()
             {
                 FirstName = "Jan",
                 LastName = "Waeben",
+                UserLevel = "coach"
             };
-            Coach coachKristien = new Coach()
+            User coachKristien = new User()
             {
                 FirstName = "Kristien",
                 LastName = "Nys",
+                UserLevel = "coach"
             };
             context.Add(coachJan);
             context.Add(coachKristien);
             context.Add(coachWilfried);
 
+            // add admin
+
+            User adminJoris = new User()
+            {
+                FirstName = "Joris",
+                LastName = "Van Puyenbroeck",
+                UserLevel = "admin"
+            };
+            context.Add(adminJoris);
+
             context.SaveChanges();
 
-            //Projects
+
+
+            //ProjectIdeas
+
+            ProjectIdea idea = new ProjectIdea()
+            {
+                Title = "Gezinsgerichte begeleiding in de jeugdhulp"
+            };
+            ProjectIdea idea2 = new ProjectIdea()
+            {
+                Title = "Opvoedingsondersteuning bij mensen in armoede"
+            };
+            ProjectIdea idea3 = new ProjectIdea()
+            {
+                Title = "Telewerk opties voor mantelzorgers"
+            };
+
+            context.Add(idea);
+            context.Add(idea2);
+            context.Add(idea3);
+
+
+            //ProjectApplications
+
             Project project = new Project()
             {
                 CreatedAt = DateTime.Now,
                 StudentId = 1,
-                CoachId = 1,
+                CoachId = 4,
                 OrganisationId = 1,
-                Title = "Gezinsgerichte begeleiding in de jeugdhulp"
+                ProjectIdeaId = 1,
             };
 
             Project project2 = new Project()
             {
                 CreatedAt = DateTime.Now.AddDays(-7),
                 StudentId = 2,
-                CoachId = 2,
+                CoachId = 5,
                 OrganisationId = 2,
-                Title = "Opvoedingsondersteuning bij mensen in armoede"
+                ProjectIdeaId = 2,
+
             };
 
             Project project3 = new Project()
             {
                 CreatedAt = DateTime.Now.AddDays(-14),
                 StudentId = 3,
-                CoachId = 3,
+                CoachId = 6,
                 OrganisationId = 3,
-                Title = "Telewerk opties voor mantelzorgers"
+                ProjectIdeaId = 3,
             };
 
             context.Add(project);
             context.Add(project2);
+            context.Add(project3);
 
             ////ProductOrders
             //ProductOrder po = new ProductOrder()

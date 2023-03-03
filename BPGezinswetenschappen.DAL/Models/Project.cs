@@ -5,9 +5,6 @@
         public int Id { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public string Title { get; set; }
-        public string? Description { get; set; }
-        public string? Origin { get; set; }
         public string? Stage { get; set; }
         public Boolean? Active { get; set; }
         public Boolean? Supported { get; set; }
@@ -18,17 +15,21 @@
 
         // foreign keys
 
-        public int StudentId { get; set; }
+        // [ForeignKey("Student")]
+        public int? StudentId { get; set; }
+        // [ForeignKey("Coach")]
+        public int? CoachId { get; set; }
         public int OrganisationId { get; set; }
-        public int CoachId { get; set; }
-        public Student Student { get; set; }
-        public Organisation Organisation { get; set; }
-        public Coach Coach { get; set; }
+        public int ProjectIdeaId { get; set; }
+
 
         // navigation property
 
-        public ICollection<ProjectTopic>? ProjectTopics { get; set; }
 
+        public User Student { get; set; }
+        public User Coach { get; set; }
+        public Organisation Organisation { get; set; }
+        public ProjectIdea ProjectIdea { get; set; }
 
 
     }

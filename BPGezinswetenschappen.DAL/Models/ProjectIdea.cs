@@ -1,14 +1,17 @@
 ﻿namespace BPGezinswetenschappen.DAL.Models
 {
-    public class Topic
+    public class ProjectIdea
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string? Description { get; set; }
+        public string? Origin { get; set; }
+
 
         // navigation property
+
+        public ICollection<Project>? Projects { get; set; }
         public ICollection<ProjectTopic>? ProjectTopics { get; set; }
-        public ICollection<UserTopic>? UserTopics { get; set; }
 
 
     }

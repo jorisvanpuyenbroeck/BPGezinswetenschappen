@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BPGezinswetenschappen.DAL.Models
+﻿namespace BPGezinswetenschappen.DAL.Models
 {
     public class Organisation
     {
@@ -17,6 +11,11 @@ namespace BPGezinswetenschappen.DAL.Models
         public string? Email { get; set; }
         public string? Url { get; set; }
         public string? Contact { get; set; }
+
+        // navigation property
+
+        public ICollection<Project>? Projects { get; set; }
+
 
     }
 }

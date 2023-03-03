@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BPGezinswetenschappen.DAL.Data;
-using BPGezinswetenschappen.DAL.Models;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -14,6 +9,7 @@ namespace BPGezinswetenschappen.API.Controllers
     [ApiController]
     public class TopicsController : ControllerBase
     {
+
         private readonly BPContext _context;
 
         public TopicsController(BPContext context)
