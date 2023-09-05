@@ -2,16 +2,16 @@
 {
     public class ProjectTopic
     {
-        public int Id { get; set; }
+        public int ProjectTopicId { get; set; }
 
-        // foreign keys
 
         public int TopicId { get; set; }
-        public int ProjectId { get; set; }
-
-        // navigation property
-
         public Topic? Topic { get; set; }
-        public ProjectIdea? ProjectIdea { get; set; }
+        public int ProjectId { get; set; }
+        public Project? Project { get; set; }
+
+
+
+
     }
 }

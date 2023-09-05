@@ -1,8 +1,13 @@
-﻿using BPGezinswetenschappen.API.Services;
-using BPGezinswetenschappen.DAL.Data;
-using BPGezinswetenschappen.DAL.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Services;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -12,6 +17,7 @@ namespace BPGezinswetenschappen.API.Controllers
     {
         private readonly BPContext _context;
         private IUserService _userService;
+
 
         public UsersController(BPContext context, IUserService userService)
         {
@@ -57,7 +63,7 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.Id)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
@@ -91,7 +97,7 @@ namespace BPGezinswetenschappen.API.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
         // DELETE: api/Users/5
@@ -112,7 +118,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.UserId == id);
         }
     }
 }

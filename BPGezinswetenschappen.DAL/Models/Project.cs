@@ -2,7 +2,7 @@
 {
     public class Project
     {
-        public int Id { get; set; }
+        public int ProjectId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string? Stage { get; set; }
@@ -13,23 +13,16 @@
         public string? Feedback { get; set; }
 
 
-        // foreign keys
-
-        // [ForeignKey("Student")]
-        public int? StudentId { get; set; }
-        // [ForeignKey("Coach")]
-        public int? CoachId { get; set; }
+        public int UserId { get; set; }
+        public User? User { get; set; }
         public int OrganisationId { get; set; }
-        public int ProjectIdeaId { get; set; }
+        public Organisation? Organisation { get; set; }
+        public int ProposalId { get; set; }
+        public Proposal? Proposal { get; set; }
 
 
-        // navigation property
+        public ICollection<ProjectTopic>? ProjectTopics { get; set; }
 
-
-        public User Student { get; set; }
-        public User Coach { get; set; }
-        public Organisation Organisation { get; set; }
-        public ProjectIdea ProjectIdea { get; set; }
 
 
     }

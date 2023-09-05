@@ -6,14 +6,14 @@ namespace BPGezinswetenschappen.DAL.Data
     {
         public static void Initialize(BPContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+         context.Database.EnsureDeleted();
+         context.Database.EnsureCreated();
 
-            // Look for any products.
-            //if (context.Users.Any())
-            //{
-            //    return;   // DB has been seeded
-            //}
+            // Look for any users
+            if (context.Users.Any())
+                {
+                    return;   // DB has been seeded
+                }
 
             //Add topics
             context.AddRange(
@@ -25,6 +25,9 @@ namespace BPGezinswetenschappen.DAL.Data
                 new Topic { Name = "Migratie" },
                 new Topic { Name = "School" }
                 );
+
+            context.SaveChanges();
+
 
             //Add organisations
 
@@ -101,95 +104,64 @@ namespace BPGezinswetenschappen.DAL.Data
             };
             context.Add(adminJoris);
 
-            context.SaveChanges();
 
 
+            //Proposals
 
-            //ProjectIdeas
-
-            ProjectIdea idea = new ProjectIdea()
+            Proposal idea1 = new Proposal()
             {
                 Title = "Gezinsgerichte begeleiding in de jeugdhulp"
             };
-            ProjectIdea idea2 = new ProjectIdea()
+            Proposal idea2 = new Proposal()
             {
                 Title = "Opvoedingsondersteuning bij mensen in armoede"
             };
-            ProjectIdea idea3 = new ProjectIdea()
+            Proposal idea3 = new Proposal()
             {
                 Title = "Telewerk opties voor mantelzorgers"
             };
 
-            context.Add(idea);
+            context.Add(idea1);
             context.Add(idea2);
             context.Add(idea3);
 
 
-            //ProjectApplications
+            context.SaveChanges();
 
-            Project project = new Project()
+            // User Topics
+
+            UserTopic userTopic = new UserTopic()
             {
-                CreatedAt = DateTime.Now,
-                StudentId = 1,
-                CoachId = 4,
-                OrganisationId = 1,
-                ProjectIdeaId = 1,
+                UserId = 1,
+                TopicId = 1,
             };
 
-            Project project2 = new Project()
-            {
-                CreatedAt = DateTime.Now.AddDays(-7),
-                StudentId = 2,
-                CoachId = 5,
-                OrganisationId = 2,
-                ProjectIdeaId = 2,
+            context.Add(userTopic);
 
-            };
 
-            Project project3 = new Project()
-            {
-                CreatedAt = DateTime.Now.AddDays(-14),
-                StudentId = 3,
-                CoachId = 6,
-                OrganisationId = 3,
-                ProjectIdeaId = 3,
-            };
+            //Projects
 
+           Project project = new Project()
+           {
+               UserId = 1,
+               OrganisationId = 1,
+               ProposalId = 1,
+           };
             context.Add(project);
-            context.Add(project2);
-            context.Add(project3);
 
-            ////ProductOrders
-            //ProductOrder po = new ProductOrder()
-            //{
-            //    OrderId = 1,
-            //    ProductId = 1,
-            //    Quantity = 5
-            //};
+            // Project topics
 
-            //ProductOrder po2 = new ProductOrder()
-            //{
-            //    OrderId = 2,
-            //    ProductId = 2,
-            //    Quantity = 2
-            //};
+            context.SaveChanges();
 
-            //ProductOrder po3 = new ProductOrder()
-            //{
-            //    OrderId = 1,
-            //    ProductId = 2,
-            //    Quantity = 10
-            //};
 
-            //context.Add(po);
-            //context.Add(po2);
-            //context.Add(po3);
+            ProjectTopic projectTopic = new ProjectTopic()
+            {
+                ProjectId = 1,
+                TopicId = 1,
+            };
 
-            //context.AddRange(
-            //    new User { UserName = "micclo", Password = "test", CustomerId = 1 },
-            //    new User { UserName = "jos", Password = "test", CustomerId = 2 },
-            //    new User { UserName = "joris2", Password = "test", CustomerId = 3 }
-            //);
+            context.Add(projectTopic);
+
 
             context.SaveChanges();
         }
