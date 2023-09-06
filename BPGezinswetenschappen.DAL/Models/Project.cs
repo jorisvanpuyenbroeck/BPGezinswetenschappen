@@ -1,4 +1,6 @@
-﻿namespace BPGezinswetenschappen.DAL.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BPGezinswetenschappen.DAL.Models
 {
     public class Project
     {
@@ -12,11 +14,16 @@
         public Boolean? Approved { get; set; }
         public string? Feedback { get; set; }
 
-
-        public int UserId { get; set; }
-        public User? User { get; set; }
+        [ForeignKey("StudentId")]
+        public int? StudentId { get; set; }
+        public User Student { get; set; }
+        [ForeignKey("CoachId")]
+        public int? CoachId { get; set; }
+        public User Coach { get; set; }
+        [ForeignKey("OrganisationId")]
         public int OrganisationId { get; set; }
         public Organisation? Organisation { get; set; }
+        [ForeignKey("ProposalId")]
         public int ProposalId { get; set; }
         public Proposal? Proposal { get; set; }
 

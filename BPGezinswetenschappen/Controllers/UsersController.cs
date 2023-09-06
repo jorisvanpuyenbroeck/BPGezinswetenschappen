@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using BPGezinswetenschappen.API.Services;
 using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
-using BPGezinswetenschappen.API.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -41,7 +36,13 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(x => x.StudentProjects)
+                .Include(x => x.CoachProjects)
+                .Include(x => x.UserTopics)
+                .ThenInclude(x => x.Topic)
+                .Where(x => x.UserTopics.Any(ut => ut.UserId == x.UserId))
+                .ToListAsync();
         }
 
         // GET: api/Users/5

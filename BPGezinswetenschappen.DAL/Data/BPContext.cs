@@ -29,7 +29,16 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Proposal>().ToTable("Proposal");
             modelBuilder.Entity<UserTopic>().ToTable("UserTopic");
-            modelBuilder.Entity<Project>().ToTable("Project");
+            modelBuilder.Entity<Project>().ToTable("Project")
+                .HasOne(p => p.Student)
+                .WithMany(u => u.StudentProjects)
+                .HasForeignKey(p => p.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Project>().ToTable("Project")
+                .HasOne(p => p.Coach)
+                .WithMany(u => u.CoachProjects)
+                .HasForeignKey(p => p.CoachId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ProjectTopic>().ToTable("ProjectTopic");
 
         }
