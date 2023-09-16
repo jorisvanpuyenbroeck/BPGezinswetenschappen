@@ -18,9 +18,9 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // GET: api/Topics
         [HttpGet]
-        public ActionResult<IEnumerable<Topic>> GetTopics()
+        public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
         {
-            return _context.Topics.ToList();
+            return await _context.Topics.ToListAsync();
         }
 
         // GET: api/Topics/5

@@ -20,7 +20,9 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<UserTopic> UserTopics { get; set; }
+        public DbSet<ProposalTopic> ProposalTopics { get; set; }
         public DbSet<ProjectTopic> ProjectTopics { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +30,6 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<Organisation>().ToTable("Organisation");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Proposal>().ToTable("Proposal");
-            modelBuilder.Entity<UserTopic>().ToTable("UserTopic");
             modelBuilder.Entity<Project>().ToTable("Project")
                 .HasOne(p => p.Student)
                 .WithMany(u => u.StudentProjects)
@@ -39,7 +40,10 @@ namespace BPGezinswetenschappen.DAL.Data
                 .WithMany(u => u.CoachProjects)
                 .HasForeignKey(p => p.CoachId)
                 .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<UserTopic>().ToTable("UserTopic");
+            modelBuilder.Entity<ProposalTopic>().ToTable("ProposalTopic");
             modelBuilder.Entity<ProjectTopic>().ToTable("ProjectTopic");
+
 
         }
 

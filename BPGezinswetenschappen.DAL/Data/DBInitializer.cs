@@ -225,6 +225,45 @@ namespace BPGezinswetenschappen.DAL.Data
 
             context.SaveChanges();
 
+
+            // Proposal topics
+
+
+            context.AddRange(
+                new ProposalTopic()
+                {
+                    ProposalId = 1,
+                    TopicId = 1,
+                },
+                new ProposalTopic()
+                {
+                    ProposalId = 1,
+                    TopicId = 2,
+                },
+                new ProposalTopic()
+                {
+                    ProposalId = 2,
+                    TopicId = 3,
+                },
+                new ProposalTopic()
+                {
+                    ProposalId = 2,
+                    TopicId = 4,
+                },
+                new ProposalTopic()
+                {
+                    ProposalId = 3,
+                    TopicId = 5,
+                },
+                new ProposalTopic()
+                {
+                    ProposalId = 3,
+                    TopicId = 6,
+                });
+
+
+            context.SaveChanges();
+
             // Project topics
 
 

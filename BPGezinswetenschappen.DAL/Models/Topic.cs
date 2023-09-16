@@ -7,6 +7,7 @@
         public string? Description { get; set; }
 
         // navigation property
+        public ICollection<ProposalTopic>? ProposalTopics { get; set; }
         public ICollection<ProjectTopic>? ProjectTopics { get; set; }
         public ICollection<UserTopic>? UserTopics { get; set; }
 

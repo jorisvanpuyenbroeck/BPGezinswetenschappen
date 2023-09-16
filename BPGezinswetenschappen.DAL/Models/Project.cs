@@ -31,6 +31,5 @@ namespace BPGezinswetenschappen.DAL.Models
         public ICollection<ProjectTopic>? ProjectTopics { get; set; }
 
 
-
     }
 }
