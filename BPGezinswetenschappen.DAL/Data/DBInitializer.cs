@@ -16,16 +16,16 @@ namespace BPGezinswetenschappen.DAL.Data
             }
 
             //Add topics
-            context.AddRange(
-                new Topic { Name = "Jeugdhulp", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                new Topic { Name = "Opvoedingsondersteuning", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                new Topic { Name = "Mantelzorg", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                new Topic { Name = "Armoede", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                new Topic { Name = "Diversiteit", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                new Topic { Name = "Migratie", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                new Topic { Name = "School", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
-                );
 
+            var topic1 = new Topic { Name = "Jeugdhulp", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+            var topic2 = new Topic { Name = "Opvoedingsondersteuning", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+            var topic3 = new Topic { Name = "Mantelzorg", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+            var topic4 = new Topic { Name = "Armoede", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+            var topic5 = new Topic { Name = "Diversiteit", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+            var topic6 = new Topic { Name = "Migratie", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+            var topic7 = new Topic { Name = "School", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." };
+
+            context.AddRange(topic1, topic2, topic3, topic4, topic5, topic6, topic7);
             context.SaveChanges();
 
             //Add organisations
@@ -48,6 +48,7 @@ namespace BPGezinswetenschappen.DAL.Data
                     Password = "1234",
                     Email = "john.doe@odisee.be",
                     ProgramType = "Traject A",
+                    Topics = new List<Topic> { topic1, topic2 }
                 },
                 new User
                 {
@@ -58,6 +59,7 @@ namespace BPGezinswetenschappen.DAL.Data
                     Password = "1234",
                     Email = "john.doe@odisee.be",
                     ProgramType = "Traject B",
+                    Topics = new List<Topic> { topic3, topic4 }
                 },
                 new User
                 {
@@ -68,6 +70,7 @@ namespace BPGezinswetenschappen.DAL.Data
                     Password = "1234",
                     Email = "john.doe@odisee.be",
                     ProgramType = "Traject C",
+                    Topics = new List<Topic> { topic1, topic2 }
                 },
                 new User
                 {
@@ -77,7 +80,8 @@ namespace BPGezinswetenschappen.DAL.Data
                     UserLevel = "coach",
                     Password = "1234",
                     Email = "john.doe@odisee.be",
-                    Expertise = "Jeugdhulp"
+                    Expertise = "Jeugdhulp",
+                    Topics = new List<Topic> { topic3, topic6 }
                 },
                 new User
                 {
@@ -88,7 +92,8 @@ namespace BPGezinswetenschappen.DAL.Data
                     UserLevel = "coach",
                     Password = "1234",
                     Email = "john.doe@odisee.be",
-                    Expertise = "Digitale communciatie"
+                    Expertise = "Digitale communciatie",
+                    Topics = new List<Topic> { topic5, topic7 }
 
                 },
                 new User
@@ -100,7 +105,8 @@ namespace BPGezinswetenschappen.DAL.Data
                     UserLevel = "coach",
                     Password = "1234",
                     Email = "john.doe@odisee.be",
-                    Expertise = "Armoede"
+                    Expertise = "Armoede",
+                    Topics = new List<Topic> { topic2, topic7 }
 
                 },
                 new User
@@ -112,7 +118,8 @@ namespace BPGezinswetenschappen.DAL.Data
                     UserLevel = "admin",
                     Password = "1234",
                     Email = "joris.vanpuyenbroeck@odisee.be",
-                    Expertise = "Handicap"
+                    Expertise = "Handicap",
+                    Topics = new List<Topic> { topic3, topic6 }
                 });
 
             context.SaveChanges();
@@ -125,53 +132,56 @@ namespace BPGezinswetenschappen.DAL.Data
                 {
                     Title = "Gezinsgerichte begeleiding in de jeugdhulp",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    Origin = "student"
+                    Origin = "student",
+                    Topics = new List<Topic> { topic1, topic2 }
                 },
                 new Proposal
                 {
                     Title = "Opvoedingsondersteuning bij mensen in armoede",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    Origin = "docent"
+                    Origin = "docent",
+                    Topics = new List<Topic> { topic3, topic4 }
                 },
                 new Proposal
                 {
                     Title = "Telewerk opties voor mantelzorgers",
                     Description = "Lorem isum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    Origin = "werkveld"
+                    Origin = "werkveld",
+                    Topics = new List<Topic> { topic5, topic6 }
                 });
 
             context.SaveChanges();
 
             // User Topics
 
-            context.AddRange(
-                 new UserTopic()
-                 {
-                     UserId = 1,
-                     TopicId = 1,
-                 },
-                 new UserTopic()
-                 {
-                     UserId = 1,
-                     TopicId = 2,
-                 },
-                 new UserTopic()
-                 {
-                     UserId = 1,
-                     TopicId = 3,
-                 },
-                 new UserTopic()
-                 {
-                     UserId = 2,
-                     TopicId = 4,
-                 },
-                 new UserTopic()
-                 {
-                     UserId = 2,
-                     TopicId = 5,
-                 });
+            //context.AddRange(
+            //     new UserTopic()
+            //     {
+            //         UserId = 1,
+            //         TopicId = 1,
+            //     },
+            //     new UserTopic()
+            //     {
+            //         UserId = 1,
+            //         TopicId = 2,
+            //     },
+            //     new UserTopic()
+            //     {
+            //         UserId = 1,
+            //         TopicId = 3,
+            //     },
+            //     new UserTopic()
+            //     {
+            //         UserId = 2,
+            //         TopicId = 4,
+            //     },
+            //     new UserTopic()
+            //     {
+            //         UserId = 2,
+            //         TopicId = 5,
+            //     });
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
 
             //Projects
@@ -191,6 +201,7 @@ namespace BPGezinswetenschappen.DAL.Data
                     CoachId = 1,
                     OrganisationId = 1,
                     ProposalId = 1,
+                    Topics = new List<Topic> { topic1, topic2 }
                 },
                 new Project()
                 {
@@ -206,6 +217,7 @@ namespace BPGezinswetenschappen.DAL.Data
                     CoachId = 2,
                     OrganisationId = 2,
                     ProposalId = 2,
+                    Topics = new List<Topic> { topic3, topic4 }
                 },
                 new Project()
                 {
@@ -221,6 +233,7 @@ namespace BPGezinswetenschappen.DAL.Data
                     CoachId = 3,
                     OrganisationId = 3,
                     ProposalId = 3,
+                    Topics = new List<Topic> { topic5, topic6 }
                 });
 
             context.SaveChanges();
@@ -229,109 +242,79 @@ namespace BPGezinswetenschappen.DAL.Data
             // Proposal topics
 
 
-            context.AddRange(
-                new ProposalTopic()
-                {
-                    ProposalId = 1,
-                    TopicId = 1,
-                },
-                new ProposalTopic()
-                {
-                    ProposalId = 1,
-                    TopicId = 2,
-                },
-                new ProposalTopic()
-                {
-                    ProposalId = 2,
-                    TopicId = 3,
-                },
-                new ProposalTopic()
-                {
-                    ProposalId = 2,
-                    TopicId = 4,
-                },
-                new ProposalTopic()
-                {
-                    ProposalId = 3,
-                    TopicId = 5,
-                },
-                new ProposalTopic()
-                {
-                    ProposalId = 3,
-                    TopicId = 6,
-                });
+            //context.AddRange(
+            //    new ProposalTopic()
+            //    {
+            //        ProposalId = 1,
+            //        TopicId = 1,
+            //    },
+            //    new ProposalTopic()
+            //    {
+            //        ProposalId = 1,
+            //        TopicId = 2,
+            //    },
+            //    new ProposalTopic()
+            //    {
+            //        ProposalId = 2,
+            //        TopicId = 3,
+            //    },
+            //    new ProposalTopic()
+            //    {
+            //        ProposalId = 2,
+            //        TopicId = 4,
+            //    },
+            //    new ProposalTopic()
+            //    {
+            //        ProposalId = 3,
+            //        TopicId = 5,
+            //    },
+            //    new ProposalTopic()
+            //    {
+            //        ProposalId = 3,
+            //        TopicId = 6,
+            //    });
 
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
             // Project topics
 
 
-            context.AddRange(
-                new ProjectTopic()
-                {
-                    ProjectId = 1,
-                    TopicId = 1,
-                },
-                new ProjectTopic()
-                {
-                    ProjectId = 1,
-                    TopicId = 2,
-                },
-                new ProjectTopic()
-                {
-                    ProjectId = 2,
-                    TopicId = 3,
-                },
-                new ProjectTopic()
-                {
-                    ProjectId = 2,
-                    TopicId = 4,
-                },
-                new ProjectTopic()
-                {
-                    ProjectId = 3,
-                    TopicId = 5,
-                },
-                new ProjectTopic()
-                {
-                    ProjectId = 3,
-                    TopicId = 6,
-                });
+            //context.AddRange(
+            //    new ProjectTopic()
+            //    {
+            //        ProjectId = 1,
+            //        TopicId = 1,
+            //    },
+            //    new ProjectTopic()
+            //    {
+            //        ProjectId = 1,
+            //        TopicId = 2,
+            //    },
+            //    new ProjectTopic()
+            //    {
+            //        ProjectId = 2,
+            //        TopicId = 3,
+            //    },
+            //    new ProjectTopic()
+            //    {
+            //        ProjectId = 2,
+            //        TopicId = 4,
+            //    },
+            //    new ProjectTopic()
+            //    {
+            //        ProjectId = 3,
+            //        TopicId = 5,
+            //    },
+            //    new ProjectTopic()
+            //    {
+            //        ProjectId = 3,
+            //        TopicId = 6,
+            //    });
 
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
-
-            //User topics
-            context.AddRange(
-                new UserTopic()
-                {
-                    UserId = 1,
-                    TopicId = 1,
-                },
-                new UserTopic()
-                {
-                    UserId = 1,
-                    TopicId = 2,
-                },
-                new UserTopic()
-                {
-                    UserId = 1,
-                    TopicId = 3,
-                },
-                new UserTopic()
-                {
-                    UserId = 2,
-                    TopicId = 4,
-                },
-                new UserTopic()
-                {
-                    UserId = 2,
-                    TopicId = 5,
-                });
-
-            context.SaveChanges();
         }
     }
 }

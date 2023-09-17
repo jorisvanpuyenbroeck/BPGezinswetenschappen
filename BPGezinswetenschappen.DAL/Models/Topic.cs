@@ -7,9 +7,9 @@
         public string? Description { get; set; }
 
         // navigation property
-        public ICollection<ProposalTopic>? ProposalTopics { get; set; }
-        public ICollection<ProjectTopic>? ProjectTopics { get; set; }
-        public ICollection<UserTopic>? UserTopics { get; set; }
+        public ICollection<Proposal>? Proposals { get; set; }
+        public ICollection<Project>? Projects { get; set; }
+        public ICollection<User>? Users { get; set; }
 
 
     }

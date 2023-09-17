@@ -21,9 +21,8 @@ namespace BPGezinswetenschappen.API.Controllers
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposals()
         {
             return await _context.Proposals
-                .Include(x => x.ProposalTopics)
-                .ThenInclude(x => x.Topic)
-                .Where(x => x.ProposalTopics.Any(pt => pt.ProposalId == x.ProposalId))
+                .Include(x => x.Topics)
+                .Include(x => x.Projects)
                 .ToListAsync();
         }
 

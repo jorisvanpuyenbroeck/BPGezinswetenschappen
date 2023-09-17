@@ -11,7 +11,7 @@
         // navigation property
 
         public ICollection<Project>? Projects { get; set; }
-        public ICollection<ProposalTopic>? ProposalTopics { get; set; }
+        public ICollection<Topic>? Topics { get; set; }
 
 
     }

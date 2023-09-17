@@ -28,7 +28,7 @@ namespace BPGezinswetenschappen.DAL.Models
         public Proposal? Proposal { get; set; }
 
 
-        public ICollection<ProjectTopic>? ProjectTopics { get; set; }
+        public ICollection<Topic>? Topics { get; set; }
 
 
     }

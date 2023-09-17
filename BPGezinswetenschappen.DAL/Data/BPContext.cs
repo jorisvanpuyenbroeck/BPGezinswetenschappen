@@ -1,6 +1,5 @@
 ﻿using BPGezinswetenschappen.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Configuration.Json;
 
 
 namespace BPGezinswetenschappen.DAL.Data
@@ -19,9 +18,6 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<UserTopic> UserTopics { get; set; }
-        public DbSet<ProposalTopic> ProposalTopics { get; set; }
-        public DbSet<ProjectTopic> ProjectTopics { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,10 +36,6 @@ namespace BPGezinswetenschappen.DAL.Data
                 .WithMany(u => u.CoachProjects)
                 .HasForeignKey(p => p.CoachId)
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<UserTopic>().ToTable("UserTopic");
-            modelBuilder.Entity<ProposalTopic>().ToTable("ProposalTopic");
-            modelBuilder.Entity<ProjectTopic>().ToTable("ProjectTopic");
-
 
         }
 

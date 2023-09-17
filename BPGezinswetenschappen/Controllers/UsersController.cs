@@ -39,9 +39,7 @@ namespace BPGezinswetenschappen.API.Controllers
             return await _context.Users
                 .Include(x => x.StudentProjects)
                 .Include(x => x.CoachProjects)
-                .Include(x => x.UserTopics)
-                .ThenInclude(x => x.Topic)
-                .Where(x => x.UserTopics.Any(ut => ut.UserId == x.UserId))
+                .Include(x => x.Topics)
                 .ToListAsync();
         }
 

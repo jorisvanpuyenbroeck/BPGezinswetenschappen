@@ -23,7 +23,7 @@ namespace BPGezinswetenschappen.DAL.Models
         public ICollection<Project>? StudentProjects { get; set; }
         [InverseProperty("Coach")]
         public ICollection<Project>? CoachProjects { get; set; }
-        public ICollection<UserTopic>? UserTopics { get; set; }
+        public ICollection<Topic>? Topics { get; set; }
 
 
     }
