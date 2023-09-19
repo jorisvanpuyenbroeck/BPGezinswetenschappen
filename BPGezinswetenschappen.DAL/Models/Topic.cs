@@ -1,7 +1,12 @@
-﻿namespace BPGezinswetenschappen.DAL.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BPGezinswetenschappen.DAL.Models
 {
     public class Topic
     {
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public int TopicId { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }

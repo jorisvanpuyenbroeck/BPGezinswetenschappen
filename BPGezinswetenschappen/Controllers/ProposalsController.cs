@@ -30,7 +30,10 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proposal>> GetProposal(int id)
         {
-            var proposal = await _context.Proposals.FindAsync(id);
+            var proposal = await _context.Proposals
+                .Include(p => p.Projects)
+                .Include(p => p.Topics)
+                .FirstOrDefaultAsync(p => p.ProposalId == id);
 
             if (proposal == null)
             {
