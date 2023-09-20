@@ -31,7 +31,9 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehicle>> GetVehicle(int id)
         {
-            var vehicle = await _context.Vehicles.FindAsync(id);
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Features)
+                .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
             {
@@ -78,6 +80,9 @@ namespace BPGezinswetenschappen.API.Controllers
         public ActionResult<Vehicle> CreateVehicle([FromBody] VehicleResource vehicleResource)
         {
             var vehicle = _mapper.Map<VehicleResource, Vehicle>(vehicleResource);
+
+            _context.Vehicles.Add(vehicle);
+            _context.SaveChanges();
 
             return Ok(vehicle);
         }

@@ -9,7 +9,7 @@ namespace BPGezinswetenschappen.DAL.Models
         [StringLength(255)]
         public string Name { get; set; }
 
-        public List<Vehicle> Vehicles { get; } = new();
+        public ICollection<Vehicle> Vehicles { get; set; }
 
 
     }

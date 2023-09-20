@@ -19,7 +19,7 @@ namespace BPGezinswetenschappen.DAL.Models
         public string ContactPhone { get; set; }
         public DateTime LastUpdate { get; set; }
 
-        public List<Feature> Features { get; } = new();
+        public ICollection<Feature> Features { get; set; }
 
 
     }
