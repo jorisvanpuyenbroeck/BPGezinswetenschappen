@@ -7,7 +7,6 @@ namespace BPGezinswetenschappen.API.Mapping
         public MappingProfile()
         {
             // Domain to API Resource
-            CreateMap
             // CreateMap<Make, MakeResource>();
             // CreateMap<Model, ModelResource>();
             // API Resource to Domain
