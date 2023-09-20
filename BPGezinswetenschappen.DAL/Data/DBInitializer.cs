@@ -6,7 +6,7 @@ namespace BPGezinswetenschappen.DAL.Data
     {
         public static void Initialize(BPContext context)
         {
-            context.Database.EnsureDeleted();
+            // context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             // Look for any users
@@ -208,81 +208,6 @@ namespace BPGezinswetenschappen.DAL.Data
             context.SaveChanges();
 
 
-            // Proposal topics
-
-
-            //context.AddRange(
-            //    new ProposalTopic()
-            //    {
-            //        ProposalId = 1,
-            //        TopicId = 1,
-            //    },
-            //    new ProposalTopic()
-            //    {
-            //        ProposalId = 1,
-            //        TopicId = 2,
-            //    },
-            //    new ProposalTopic()
-            //    {
-            //        ProposalId = 2,
-            //        TopicId = 3,
-            //    },
-            //    new ProposalTopic()
-            //    {
-            //        ProposalId = 2,
-            //        TopicId = 4,
-            //    },
-            //    new ProposalTopic()
-            //    {
-            //        ProposalId = 3,
-            //        TopicId = 5,
-            //    },
-            //    new ProposalTopic()
-            //    {
-            //        ProposalId = 3,
-            //        TopicId = 6,
-            //    });
-
-
-            //context.SaveChanges();
-
-            // Project topics
-
-
-            //context.AddRange(
-            //    new ProjectTopic()
-            //    {
-            //        ProjectId = 1,
-            //        TopicId = 1,
-            //    },
-            //    new ProjectTopic()
-            //    {
-            //        ProjectId = 1,
-            //        TopicId = 2,
-            //    },
-            //    new ProjectTopic()
-            //    {
-            //        ProjectId = 2,
-            //        TopicId = 3,
-            //    },
-            //    new ProjectTopic()
-            //    {
-            //        ProjectId = 2,
-            //        TopicId = 4,
-            //    },
-            //    new ProjectTopic()
-            //    {
-            //        ProjectId = 3,
-            //        TopicId = 5,
-            //    },
-            //    new ProjectTopic()
-            //    {
-            //        ProjectId = 3,
-            //        TopicId = 6,
-            //    });
-
-
-            //context.SaveChanges();
 
         }
     }

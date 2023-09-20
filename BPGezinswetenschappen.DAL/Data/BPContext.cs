@@ -18,6 +18,9 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Make> Makes { get; set; }
+
+        public DbSet<Model> Models { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +29,9 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<Organisation>().ToTable("Organisation");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Proposal>().ToTable("Proposal");
+            modelBuilder.Entity<Make>().ToTable("Make");
+            modelBuilder.Entity<Model>().ToTable("Model");
+
             modelBuilder.Entity<Project>().ToTable("Project")
                 .HasOne(p => p.Student)
                 .WithMany(u => u.StudentProjects)
