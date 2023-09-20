@@ -6,12 +6,6 @@ namespace BPGezinswetenschappen.DAL.Data
 {
     public class BPContext : DbContext
     {
-        public BPContext()
-        {
-        }
-
-        public BPContext(DbContextOptions<BPContext> options) : base(options)
-        { }
 
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Organisation> Organisations { get; set; }
@@ -19,8 +13,17 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Make> Makes { get; set; }
-
         public DbSet<Model> Models { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+
+
+        public BPContext()
+        {
+        }
+
+        public BPContext(DbContextOptions<BPContext> options) : base(options)
+        { }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +34,12 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<Proposal>().ToTable("Proposal");
             modelBuilder.Entity<Make>().ToTable("Make");
             modelBuilder.Entity<Model>().ToTable("Model");
+            modelBuilder.Entity<Feature>().ToTable("Feature")
+                .HasMany(f => f.Vehicles)
+                .WithMany(v => v.Features)
+                .UsingEntity<FeatureVehicle>();
+            modelBuilder.Entity<Vehicle>().ToTable("Vehicle");
+            modelBuilder.Entity<FeatureVehicle>().HasKey(fv => new { fv.FeatureId, fv.VehicleId });
 
             modelBuilder.Entity<Project>().ToTable("Project")
                 .HasOne(p => p.Student)

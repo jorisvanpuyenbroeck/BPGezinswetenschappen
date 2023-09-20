@@ -4,6 +4,7 @@ using BPGezinswetenschappen.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BPGezinswetenschappen.DAL.Migrations
 {
     [DbContext(typeof(BPContext))]
-    partial class BPContextModelSnapshot : ModelSnapshot
+    [Migration("20230920175401_AddVehicle")]
+    partial class AddVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,21 +41,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feature", (string)null);
-                });
-
-            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.FeatureVehicle", b =>
-                {
-                    b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FeatureId", "VehicleId");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("FeatureVehicle");
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Make", b =>
@@ -312,7 +300,22 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("Vehicle", (string)null);
+                    b.ToTable("Vehicle");
+                });
+
+            modelBuilder.Entity("FeatureVehicle", b =>
+                {
+                    b.Property<int>("FeaturesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehiclesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FeaturesId", "VehiclesId");
+
+                    b.HasIndex("VehiclesId");
+
+                    b.ToTable("FeatureVehicle");
                 });
 
             modelBuilder.Entity("ProjectTopic", b =>
@@ -358,21 +361,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasIndex("UsersUserId");
 
                     b.ToTable("TopicUser");
-                });
-
-            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.FeatureVehicle", b =>
-                {
-                    b.HasOne("BPGezinswetenschappen.DAL.Models.Feature", null)
-                        .WithMany()
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BPGezinswetenschappen.DAL.Models.Vehicle", null)
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Model", b =>
@@ -430,6 +418,21 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("FeatureVehicle", b =>
+                {
+                    b.HasOne("BPGezinswetenschappen.DAL.Models.Feature", null)
+                        .WithMany()
+                        .HasForeignKey("FeaturesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BPGezinswetenschappen.DAL.Models.Vehicle", null)
+                        .WithMany()
+                        .HasForeignKey("VehiclesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjectTopic", b =>

@@ -2,20 +2,14 @@
 
 namespace BPGezinswetenschappen.DAL.Models
 {
-
-    // [Table("Models")]
-
-    public class Model
+    public class Feature
     {
         public int Id { get; set; }
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
 
-        public Make Make { get; set; }
-
-        public int MakeId { get; set; }
-
+        public List<Vehicle> Vehicles { get; } = new();
 
 
     }

@@ -16,7 +16,5 @@ namespace BPGezinswetenschappen.DAL.Models
 
         public int MakeId { get; set; }
 
-
-
     }
 }
