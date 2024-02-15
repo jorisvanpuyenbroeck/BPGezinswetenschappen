@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+
 namespace BPGezinswetenschappen.API.Controllers
 {
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
+    
+    [Authorize]
     public class MakesController : ControllerBase
     {
         private readonly BPContext _context;
