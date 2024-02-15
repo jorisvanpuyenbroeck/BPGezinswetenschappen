@@ -46,18 +46,27 @@ namespace BPGezinswetenschappen.API.Controllers
         // PUT: api/Vehicles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVehicle(int id, Vehicle vehicle)
+        public async Task<IActionResult> PutVehicle(int id, [FromBody] VehicleResource vehicleResource)
         {
-            if (id != vehicle.Id)
+            if (id != vehicleResource.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(vehicle).State = EntityState.Modified;
+            // _context.Entry(vehicleResource).State = EntityState.Modified;
 
             try
             {
+                var vehicle = await _context.Vehicles
+                    .Include(v => v.Features)
+                    .FirstOrDefaultAsync(v => v.Id == id);
+                _mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
+                vehicle.LastUpdate = DateTime.Now;
+                var result = _mapper.Map<Vehicle, VehicleResource>(vehicle);
+
                 await _context.SaveChangesAsync();
+
+                return Ok(result);
             }
             catch (DbUpdateConcurrencyException)
             {

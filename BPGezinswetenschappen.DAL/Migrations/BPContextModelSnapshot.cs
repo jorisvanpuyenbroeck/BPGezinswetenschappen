@@ -40,6 +40,21 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.ToTable("Feature", (string)null);
                 });
 
+            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.FeatureVehicle", b =>
+                {
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FeatureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("VehicleId", "FeatureId");
+
+                    b.HasIndex("FeatureId");
+
+                    b.ToTable("FeatureVehicle");
+                });
+
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Make", b =>
                 {
                     b.Property<int>("Id")
@@ -300,21 +315,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.ToTable("Vehicle", (string)null);
                 });
 
-            modelBuilder.Entity("FeatureVehicle", b =>
-                {
-                    b.Property<int>("FeaturesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehiclesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FeaturesId", "VehiclesId");
-
-                    b.HasIndex("VehiclesId");
-
-                    b.ToTable("Featurevehicle", (string)null);
-                });
-
             modelBuilder.Entity("ProjectTopic", b =>
                 {
                     b.Property<int>("ProjectsProjectId")
@@ -358,6 +358,25 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasIndex("UsersUserId");
 
                     b.ToTable("TopicUser");
+                });
+
+            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.FeatureVehicle", b =>
+                {
+                    b.HasOne("BPGezinswetenschappen.DAL.Models.Feature", "Feature")
+                        .WithMany()
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BPGezinswetenschappen.DAL.Models.Vehicle", "Vehicle")
+                        .WithMany("Features")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Feature");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Model", b =>
@@ -415,21 +434,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Model");
-                });
-
-            modelBuilder.Entity("FeatureVehicle", b =>
-                {
-                    b.HasOne("BPGezinswetenschappen.DAL.Models.Feature", null)
-                        .WithMany()
-                        .HasForeignKey("FeaturesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BPGezinswetenschappen.DAL.Models.Vehicle", null)
-                        .WithMany()
-                        .HasForeignKey("VehiclesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjectTopic", b =>
@@ -497,6 +501,11 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Navigation("CoachProjects");
 
                     b.Navigation("StudentProjects");
+                });
+
+            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Vehicle", b =>
+                {
+                    b.Navigation("Features");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,15 +19,6 @@ builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 builder.Services.AddDbContext<BPContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddControllers();
-
-// avoid circular references in json output while still keeping simple format unlike the solution provided by Koen
-
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -71,6 +62,19 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+// add authorization
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddControllers();
+
+// avoid circular references in json output while still keeping simple format unlike the solution provided by Koen
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
 // configure DI for application services
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -88,9 +92,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(builder =>
 {
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
+    builder.AllowAnyMethod()
+           .AllowAnyHeader()
+           .WithOrigins("http://localhost:4200", "https://localhost:4200");
+
 });
 
 app.UseHttpsRedirection();

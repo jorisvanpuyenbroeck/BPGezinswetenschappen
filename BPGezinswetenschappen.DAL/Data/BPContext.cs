@@ -34,11 +34,9 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<Proposal>().ToTable("Proposal");
             modelBuilder.Entity<Make>().ToTable("Make");
             modelBuilder.Entity<Model>().ToTable("Model");
-            modelBuilder.Entity<Feature>().ToTable("Feature")
-                .HasMany(f => f.Vehicles)
-                .WithMany(v => v.Features)
-                .UsingEntity(j => j.ToTable("Featurevehicle"));
+            modelBuilder.Entity<Feature>().ToTable("Feature");
             modelBuilder.Entity<Vehicle>().ToTable("Vehicle");
+            modelBuilder.Entity<FeatureVehicle>().HasKey(vf => new { vf.VehicleId, vf.FeatureId });
 
             modelBuilder.Entity<Project>().ToTable("Project")
                 .HasOne(p => p.Student)

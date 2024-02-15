@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BPGezinswetenschappen.DAL.Models
 {
@@ -19,8 +20,13 @@ namespace BPGezinswetenschappen.DAL.Models
         public string ContactPhone { get; set; }
         public DateTime LastUpdate { get; set; }
 
-        public ICollection<Feature> Features { get; set; }
+        public ICollection<FeatureVehicle> Features { get; set; }
 
+
+        public Vehicle()
+        {
+            Features = new Collection<FeatureVehicle>();
+        }
 
     }
 }

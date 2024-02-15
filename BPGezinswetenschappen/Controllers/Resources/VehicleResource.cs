@@ -8,7 +8,7 @@
         public bool IsRegistered { get; set; }
         public string Name { get; set; }
         public ContactResource Contact { get; set; }
-        public List<int> Features { get; } = new();
+        public List<int> Features { get; set; }
 
 
         public VehicleResource()

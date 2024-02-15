@@ -13,7 +13,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 {
     [DbContext(typeof(BPContext))]
     [Migration("20230920185704_FeatureVehicle")]
-    partial class FeatureVehicle
+    partial class FeatureVehicleMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -5,7 +5,7 @@
 namespace BPGezinswetenschappen.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class FeatureVehicle : Migration
+    public partial class FeatureVehicleMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

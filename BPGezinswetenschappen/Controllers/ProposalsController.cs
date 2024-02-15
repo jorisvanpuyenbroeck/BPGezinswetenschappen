@@ -1,10 +1,13 @@
 ﻿using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
+    // only for users
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProposalsController : ControllerBase
