@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using BPGezinswetenschappen.API.Controllers.Resources;
 using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -15,7 +17,7 @@ namespace BPGezinswetenschappen.API.Controllers
     {
         private readonly BPContext _context;
         private readonly IMapper _mapper;
-
+        
         public MakesController(BPContext context, IMapper mapper)
         {
             _context = context;
@@ -26,6 +28,23 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MakeResource>>> GetMakes()
         {
+            // string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            // string userName = User.FindFirst(ClaimTypes.Name).Value;
+            // string userEmail = User.FindFirst(ClaimTypes.Email).Value;
+            //
+            //
+            // if (userId.IsNullOrEmpty())
+            // {
+            //     Console.WriteLine("No user id found");
+            // }
+            // else
+            // {
+            //     Console.WriteLine(userId);
+            //     Console.WriteLine(userName);
+            //     Console.WriteLine(userEmail);
+            // }
+
+            
             var makes = await _context.Makes.Include(m => m.Models).ToListAsync();
 
             return _mapper.Map<List<Make>, List<MakeResource>>(makes);
