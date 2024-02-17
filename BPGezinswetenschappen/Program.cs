@@ -24,6 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
 
+// this next bit was adapted from the documentation in angular full stack security
 // configure jwt authentication
 builder.Services
     .AddAuthentication(options =>
@@ -37,11 +38,16 @@ builder.Services
         options.Audience = configuration["Authentication:Schemes:Bearer:ValidAudiences:0"];
     });
 
-
-
 // add authorization
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    //We create different policies where each policy contains the permissions required to fulfill them
+    options.AddPolicy("GetAllTopics", policy =>
+        policy.RequireClaim("permissions", "getall:topics"));
+    options.AddPolicy("GetAllProposals", policy =>
+        policy.RequireClaim("permissions", "getall:proposals"));
+});
 
 // avoid circular references in json output while still keeping simple format unlike the solution provided by Koen
 

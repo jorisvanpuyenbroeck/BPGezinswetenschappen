@@ -1,4 +1,5 @@
-﻿using BPGezinswetenschappen.DAL.Data;
+﻿using System.Security.Claims;
+using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace BPGezinswetenschappen.API.Controllers
 {
     // only for users
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProposalsController : ControllerBase
@@ -23,6 +25,21 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposals()
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+
+            if (userIdClaim != null)
+            {
+                var userId = userIdClaim.Value;
+
+                Console.WriteLine(userId);
+
+            }
+            else
+            {
+                Console.WriteLine("No user id found.");
+            }
+            
             return await _context.Proposals
                 .Include(x => x.Topics)
                 .Include(x => x.Projects)

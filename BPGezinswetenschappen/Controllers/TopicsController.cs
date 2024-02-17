@@ -1,10 +1,12 @@
 ﻿using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TopicsController : ControllerBase
@@ -17,6 +19,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Topics
+        [Authorize(Policy = "GetAllTopics")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
         {
