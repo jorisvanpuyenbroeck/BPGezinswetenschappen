@@ -16,15 +16,15 @@ namespace BPGezinswetenschappen.DAL.Models
 
         [ForeignKey("StudentId")]
         public int? StudentId { get; set; }
-        public User Student { get; set; }
+        public User? Student { get; set; }
         [ForeignKey("CoachId")]
         public int? CoachId { get; set; }
-        public User Coach { get; set; }
+        public User? Coach { get; set; }
         [ForeignKey("OrganisationId")]
-        public int OrganisationId { get; set; }
+        public int? OrganisationId { get; set; }
         public Organisation? Organisation { get; set; }
         [ForeignKey("ProposalId")]
-        public int ProposalId { get; set; }
+        public int? ProposalId { get; set; }
         public Proposal? Proposal { get; set; }
 
 

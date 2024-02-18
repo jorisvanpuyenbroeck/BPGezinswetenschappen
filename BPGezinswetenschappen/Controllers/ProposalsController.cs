@@ -9,7 +9,7 @@ namespace BPGezinswetenschappen.API.Controllers
 {
     // only for users
 
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProposalsController : ControllerBase
@@ -104,6 +104,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
             return CreatedAtAction("GetProposal", new { id = proposal.ProposalId }, proposal);
         }
+
 
         // DELETE: api/Proposals/5
         [HttpDelete("{id}")]

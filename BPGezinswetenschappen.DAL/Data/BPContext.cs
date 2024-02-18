@@ -12,10 +12,6 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Make> Makes { get; set; }
-        public DbSet<Model> Models { get; set; }
-        public DbSet<Feature> Features { get; set; }
-        public DbSet<Vehicle> Vehicles { get; set; }
 
 
         public BPContext()
@@ -28,22 +24,17 @@ namespace BPGezinswetenschappen.DAL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Topic>().ToTable("Topic");
-            modelBuilder.Entity<Organisation>().ToTable("Organisation");
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Proposal>().ToTable("Proposal");
-            modelBuilder.Entity<Make>().ToTable("Make");
-            modelBuilder.Entity<Model>().ToTable("Model");
-            modelBuilder.Entity<Feature>().ToTable("Feature");
-            modelBuilder.Entity<Vehicle>().ToTable("Vehicle");
-            modelBuilder.Entity<FeatureVehicle>().HasKey(vf => new { vf.VehicleId, vf.FeatureId });
+            modelBuilder.Entity<Topic>().ToTable("Topics");
+            modelBuilder.Entity<Organisation>().ToTable("Organisations");
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Proposal>().ToTable("Proposals");
 
-            modelBuilder.Entity<Project>().ToTable("Project")
+            modelBuilder.Entity<Project>().ToTable("Projects")
                 .HasOne(p => p.Student)
                 .WithMany(u => u.StudentProjects)
                 .HasForeignKey(p => p.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Project>().ToTable("Project")
+            modelBuilder.Entity<Project>().ToTable("Projects")
                 .HasOne(p => p.Coach)
                 .WithMany(u => u.CoachProjects)
                 .HasForeignKey(p => p.CoachId)

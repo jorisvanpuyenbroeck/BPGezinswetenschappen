@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BPGezinswetenschappen.DAL.Migrations
 {
     [DbContext(typeof(BPContext))]
-    [Migration("20230920125937_SeedDatabase")]
-    partial class SeedDatabase
+    [Migration("20240218130649_topicSeed")]
+    partial class topicSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,47 +24,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Make", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Make", (string)null);
-                });
-
-            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Model", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MakeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MakeId");
-
-                    b.ToTable("Model", (string)null);
-                });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Organisation", b =>
                 {
@@ -101,7 +60,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("OrganisationId");
 
-                    b.ToTable("Organisation", (string)null);
+                    b.ToTable("Organisations", (string)null);
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Project", b =>
@@ -119,7 +78,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("CoachId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -128,10 +86,10 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Property<string>("Feedback")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrganisationId")
+                    b.Property<int?>("OrganisationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProposalId")
+                    b.Property<int?>("ProposalId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("Reviewed")
@@ -141,7 +99,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StudentId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool?>("Supported")
@@ -160,7 +117,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Project", (string)null);
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Proposal", b =>
@@ -183,13 +140,16 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("ProposalId");
 
-                    b.ToTable("Proposal", (string)null);
+                    b.ToTable("Proposals", (string)null);
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Topic", b =>
                 {
                     b.Property<int>("TopicId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TopicId"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -200,7 +160,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("TopicId");
 
-                    b.ToTable("Topic", (string)null);
+                    b.ToTable("Topics", (string)null);
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.User", b =>
@@ -239,7 +199,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ProjectTopic", b =>
@@ -287,42 +247,25 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.ToTable("TopicUser");
                 });
 
-            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Model", b =>
-                {
-                    b.HasOne("BPGezinswetenschappen.DAL.Models.Make", "Make")
-                        .WithMany("Models")
-                        .HasForeignKey("MakeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Make");
-                });
-
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Project", b =>
                 {
                     b.HasOne("BPGezinswetenschappen.DAL.Models.User", "Coach")
                         .WithMany("CoachProjects")
                         .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("BPGezinswetenschappen.DAL.Models.Organisation", "Organisation")
                         .WithMany("Projects")
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrganisationId");
 
                     b.HasOne("BPGezinswetenschappen.DAL.Models.Proposal", "Proposal")
                         .WithMany("Projects")
-                        .HasForeignKey("ProposalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProposalId");
 
                     b.HasOne("BPGezinswetenschappen.DAL.Models.User", "Student")
                         .WithMany("StudentProjects")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Coach");
 
@@ -376,11 +319,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .HasForeignKey("UsersUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Make", b =>
-                {
-                    b.Navigation("Models");
                 });
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.Organisation", b =>
