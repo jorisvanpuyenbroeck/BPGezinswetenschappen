@@ -8,14 +8,14 @@ namespace BPGezinswetenschappen.DAL.Migrations
         {
             // Add users
             migrationBuilder.Sql(@"
-                INSERT INTO Users (UserName, FirstName, LastName, UserLevel, Password, Email, ProgramType)
+                INSERT INTO Users (UserName, GivenName, FamilyName, UserLevel, Password, Email, ProgramType)
                 VALUES ('r0000001', 'Willem', 'Helsen', 'student', '1234', 'john.doe@odisee.be', 'Traject A'),
                        ('r0000002', 'Jonas', 'Quintiens', 'student', '1234', 'john.doe@odisee.be', 'Traject B'),
                        ('r0000003', 'Maarten', 'Willems', 'student', '1234', 'john.doe@odisee.be', 'Traject C');
             ");
 
             migrationBuilder.Sql(@"
-                INSERT INTO Users (UserName, FirstName, LastName, UserLevel, Password, Email, Expertise)
+                INSERT INTO Users (UserName, GivenName, FamilyName, UserLevel, Password, Email, Expertise)
                 VALUES ('u0000001', 'Wilfried', 'Meulenbergs', 'coach', '1234', 'john.doe@odisee.be', 'Jeugdhulp'),
                        ('u0000002', 'Jan', 'Waeben', 'coach', '1234', 'john.doe@odisee.be', 'Digitale communciatie'),
                        ('u0000003', 'Kristien', 'Nys', 'coach', '1234', 'john.doe@odisee.be', 'Armoede'),

@@ -6,7 +6,7 @@
         // [DatabaseGenerated(DatabaseGeneratedOption.None)]
 
         public int TopicId { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public string? Description { get; set; }
 
         // navigation property

@@ -99,11 +99,29 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Proposal>> PostProposal(Proposal proposal)
         {
+            // Fetch the Topic objects based on the incoming Topic IDs
+            if (proposal.Topics != null)
+            {
+                var topicIds = proposal.Topics.Select(t => t.TopicId).ToList();
+                proposal.Topics = new List<Topic>();
+
+                foreach (var id in topicIds)
+                {
+                    var topic = await _context.Topics.FindAsync(id);
+                    if (topic != null)
+                    {
+                        proposal.Topics.Add(topic);
+                    }
+                }
+            }
+
             _context.Proposals.Add(proposal);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProposal", new { id = proposal.ProposalId }, proposal);
         }
+
+
 
 
         // DELETE: api/Proposals/5

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -52,7 +51,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 {
                     TopicId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -66,11 +65,17 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sub = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GivenName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FamilyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NickName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Application = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailVerified = table.Column<bool>(type: "bit", nullable: true),
                     ProgramType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Expertise = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -79,6 +84,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                 });
+
 
             migrationBuilder.CreateTable(
                 name: "ProposalTopic",
