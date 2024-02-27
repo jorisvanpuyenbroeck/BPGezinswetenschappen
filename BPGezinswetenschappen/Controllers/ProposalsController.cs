@@ -25,20 +25,6 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposals()
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
-
-            if (userIdClaim != null)
-            {
-                var userId = userIdClaim.Value;
-
-                Console.WriteLine(userId);
-
-            }
-            else
-            {
-                Console.WriteLine("No user id found.");
-            }
             
             return await _context.Proposals
                 .Include(x => x.Topics)
@@ -46,6 +32,26 @@ namespace BPGezinswetenschappen.API.Controllers
                 .ToListAsync();
         }
 
+        // GET: api/Proposals/by-topic
+
+        [HttpGet("by-topic")]
+        public async Task<ActionResult<IEnumerable<Proposal>>> GetProposalsByTopicIds([FromQuery] List<int> topicIds)
+        {
+            IQueryable<Proposal> query = _context.Proposals
+                .Include(x => x.Topics)
+                .Include(x => x.Projects);
+
+            if (topicIds != null && topicIds.Any())
+            {
+                // Fetch proposals filtered by topicIds
+                query = query.Where(p => p.Topics.Any(t => topicIds.Contains(t.TopicId)));
+            }
+
+            var filteredProposals = await query.ToListAsync();
+            return filteredProposals;
+        }
+        
+        
         // GET: api/Proposals/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Proposal>> GetProposal(int id)
