@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BPGezinswetenschappen.DAL.Data;
-using BPGezinswetenschappen.DAL.Models;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -78,6 +73,25 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Project>> PostProject(Project project)
         {
+
+            Console.WriteLine("arrived at PostProject");
+
+            // Fetch the Topic objects based on the incoming Topic IDs
+            if (project.Topics != null)
+            {
+                var topicIds = project.Topics.Select(t => t.TopicId).ToList();
+                project.Topics = new List<Topic>();
+
+                foreach (var id in topicIds)
+                {
+                    var topic = await _context.Topics.FindAsync(id);
+                    if (topic != null)
+                    {
+                        project.Topics.Add(topic);
+                    }
+                }
+            }
+
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
 

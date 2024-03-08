@@ -28,7 +28,6 @@ namespace BPGezinswetenschappen.API.Controllers
             
             return await _context.Proposals
                 .Include(x => x.Topics)
-                .Include(x => x.Projects)
                 .ToListAsync();
         }
 
@@ -38,8 +37,7 @@ namespace BPGezinswetenschappen.API.Controllers
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposalsByTopicIds([FromQuery] List<int> topicIds)
         {
             IQueryable<Proposal> query = _context.Proposals
-                .Include(x => x.Topics)
-                .Include(x => x.Projects);
+                .Include(x => x.Topics);
 
             if (topicIds != null && topicIds.Any())
             {

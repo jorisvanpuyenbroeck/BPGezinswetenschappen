@@ -7,6 +7,8 @@ namespace BPGezinswetenschappen.DAL.Models
         public int ProjectId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public string? Stage { get; set; }
         public Boolean? Active { get; set; }
         public Boolean? Supported { get; set; }
