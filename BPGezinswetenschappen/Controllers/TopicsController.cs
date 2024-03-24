@@ -29,6 +29,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Topics/5
+        [Authorize(Policy = "GetTopic")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Topic>> GetTopic(int id)
         {
@@ -44,6 +45,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Topics/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "UpdateTopic")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTopic(int id, Topic topic)
         {
@@ -75,7 +77,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Topics
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        
+        [Authorize(Policy = "CreateTopic")]
         [HttpPost]
         public async Task<ActionResult<Topic>> PostTopic(Topic topic)
         {
@@ -86,6 +88,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // DELETE: api/Topics/5
+        [Authorize(Policy = "DeleteTopic")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTopic(int id)
         {

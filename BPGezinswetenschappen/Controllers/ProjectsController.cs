@@ -1,7 +1,9 @@
 ﻿using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -17,6 +19,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Projects
+        [Authorize(Policy = "GetAllProjects")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
         {
@@ -24,6 +27,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Projects/5
+        [Authorize(Policy = "GetProject")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Project>> GetProject(int id)
         {
@@ -39,6 +43,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Projects/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "UpdateProject")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProject(int id, Project project)
         {
@@ -70,6 +75,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Projects
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "CreateProject")]
         [HttpPost]
         public async Task<ActionResult<Project>> PostProject(Project project)
         {
@@ -99,6 +105,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // DELETE: api/Projects/5
+        [Authorize(Policy = "DeleteProject")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {

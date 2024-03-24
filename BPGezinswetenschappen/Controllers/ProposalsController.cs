@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using BPGezinswetenschappen.DAL.Data;
+﻿using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +21,11 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Proposals
+        [Authorize(Policy = "GetAllProposals")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposals()
         {
-            
+
             return await _context.Proposals
                 .Include(x => x.Topics)
                 .ToListAsync();
@@ -33,6 +33,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // GET: api/Proposals/by-topic
 
+        [Authorize(Policy = "GetAllProposals")]
         [HttpGet("by-topic")]
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposalsByTopicIds([FromQuery] List<int> topicIds)
         {
@@ -48,9 +49,10 @@ namespace BPGezinswetenschappen.API.Controllers
             var filteredProposals = await query.ToListAsync();
             return filteredProposals;
         }
-        
-        
+
+
         // GET: api/Proposals/5
+        [Authorize(Policy = "GetProposal")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Proposal>> GetProposal(int id)
         {
@@ -69,6 +71,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Proposals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "UpdateProposal")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProposal(int id, Proposal proposal)
         {
@@ -100,6 +103,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Proposals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "CreateProposal")]
         [HttpPost]
         public async Task<ActionResult<Proposal>> PostProposal(Proposal proposal)
         {
@@ -129,6 +133,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
 
         // DELETE: api/Proposals/5
+        [Authorize(Policy = "DeleteProposal")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProposal(int id)
         {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BPGezinswetenschappen.DAL.Data;
-using BPGezinswetenschappen.DAL.Models;
+
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -22,6 +19,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Organisations
+        [Authorize(Policy = "GetAllOrganisations")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Organisation>>> GetOrganisations()
         {
@@ -29,6 +27,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Organisations/5
+        [Authorize(Policy = "GetOrganisation")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Organisation>> GetOrganisation(int id)
         {
@@ -44,6 +43,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Organisations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "UpdateOrganisation")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrganisation(int id, Organisation organisation)
         {
@@ -75,6 +75,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Organisations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "CreateOrganisation")]
         [HttpPost]
         public async Task<ActionResult<Organisation>> PostOrganisation(Organisation organisation)
         {
@@ -85,6 +86,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // DELETE: api/Organisations/5
+        [Authorize(Policy = "DeleteOrganisation")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganisation(int id)
         {
