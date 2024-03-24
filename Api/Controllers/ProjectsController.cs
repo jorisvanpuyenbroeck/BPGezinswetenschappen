@@ -23,15 +23,28 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
         {
-            return await _context.Projects.ToListAsync();
+            return await _context.Projects
+                .Include(p => p.Student)
+                .Include(p => p.Coach)
+                .Include(p => p.Organisation)
+                .Include(p => p.Proposal)
+                .Include(p => p.Topics)
+                .ToListAsync();
         }
+
 
         // GET: api/Projects/5
         [Authorize(Policy = "GetProject")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Project>> GetProject(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
+            var project = await _context.Projects
+                .Include(p => p.Student)
+                .Include(p => p.Coach)
+                .Include(p => p.Organisation)
+                .Include(p => p.Proposal)
+                .Include(p => p.Topics)
+                .SingleOrDefaultAsync(p => p.ProjectId == id);
 
             if (project == null)
             {

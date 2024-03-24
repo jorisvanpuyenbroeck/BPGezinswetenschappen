@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BPGezinswetenschappen.DAL\BPGezinswetenschappen.DAL.csproj" />
+    <ProjectReference Include="..\Dal\DAL.csproj" />
   </ItemGroup>
 
 </Project>
