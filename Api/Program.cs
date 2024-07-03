@@ -26,59 +26,59 @@ builder.Services.Configure<AppSettings>(appSettingsSection);
 
 // this next bit was adapted from the documentation in angular full stack security
 // configure jwt authentication
-builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.Authority = configuration["Authentication:Schemes:Bearer:Authority"];
-        options.Audience = configuration["Authentication:Schemes:Bearer:ValidAudiences:0"];
-    });
+// builder.Services
+//     .AddAuthentication(options =>
+//     {
+//         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//     })
+//     .AddJwtBearer(options =>
+//     {
+//         options.Authority = configuration["Authentication:Schemes:Bearer:Authority"];
+//         options.Audience = configuration["Authentication:Schemes:Bearer:ValidAudiences:0"];
+//     });
 
 // add authorization
 
-builder.Services.AddAuthorization(options =>
-{
-    //We create different policies where each policy contains the permissions required to fulfill them
-    // Policies for Topics
-    options.AddPolicy("GetAllTopics", policy => policy.RequireClaim("permissions", "getall:topics"));
-    options.AddPolicy("GetTopic", policy => policy.RequireClaim("permissions", "get:topic"));
-    options.AddPolicy("UpdateTopic", policy => policy.RequireClaim("permissions", "update:topic"));
-    options.AddPolicy("CreateTopic", policy => policy.RequireClaim("permissions", "create:topic"));
-    options.AddPolicy("DeleteTopic", policy => policy.RequireClaim("permissions", "delete:topic"));
-
-    // Policies for Proposals
-    options.AddPolicy("GetAllProposals", policy => policy.RequireClaim("permissions", "getall:proposals"));
-    options.AddPolicy("GetProposal", policy => policy.RequireClaim("permissions", "get:proposal"));
-    options.AddPolicy("UpdateProposal", policy => policy.RequireClaim("permissions", "update:proposal"));
-    options.AddPolicy("CreateProposal", policy => policy.RequireClaim("permissions", "create:proposal"));
-    options.AddPolicy("DeleteProposal", policy => policy.RequireClaim("permissions", "delete:proposal"));
-
-    // Policies for Organisations
-    options.AddPolicy("GetAllOrganisations", policy => policy.RequireClaim("permissions", "getall:organisations"));
-    options.AddPolicy("GetOrganisation", policy => policy.RequireClaim("permissions", "get:organisation"));
-    options.AddPolicy("UpdateOrganisation", policy => policy.RequireClaim("permissions", "update:organisation"));
-    options.AddPolicy("CreateOrganisation", policy => policy.RequireClaim("permissions", "create:organisation"));
-    options.AddPolicy("DeleteOrganisation", policy => policy.RequireClaim("permissions", "delete:organisation"));
-
-    // Policies for Projects
-    options.AddPolicy("GetAllProjects", policy => policy.RequireClaim("permissions", "getall:projects"));
-    options.AddPolicy("GetProject", policy => policy.RequireClaim("permissions", "get:project"));
-    options.AddPolicy("UpdateProject", policy => policy.RequireClaim("permissions", "update:project"));
-    options.AddPolicy("CreateProject", policy => policy.RequireClaim("permissions", "create:project"));
-    options.AddPolicy("DeleteProject", policy => policy.RequireClaim("permissions", "delete:project"));
-
-    // Policies for Users
-    options.AddPolicy("GetAllUsers", policy => policy.RequireClaim("permissions", "getall:users"));
-    options.AddPolicy("GetUser", policy => policy.RequireClaim("permissions", "get:user"));
-    options.AddPolicy("UpdateUser", policy => policy.RequireClaim("permissions", "update:user"));
-    options.AddPolicy("CreateUser", policy => policy.RequireClaim("permissions", "create:user"));
-    options.AddPolicy("DeleteUser", policy => policy.RequireClaim("permissions", "delete:user"));
-
-});
+// builder.Services.AddAuthorization(options =>
+// {
+//     //We create different policies where each policy contains the permissions required to fulfill them
+//     // Policies for Topics
+//     options.AddPolicy("GetAllTopics", policy => policy.RequireClaim("permissions", "getall:topics"));
+//     options.AddPolicy("GetTopic", policy => policy.RequireClaim("permissions", "get:topic"));
+//     options.AddPolicy("UpdateTopic", policy => policy.RequireClaim("permissions", "update:topic"));
+//     options.AddPolicy("CreateTopic", policy => policy.RequireClaim("permissions", "create:topic"));
+//     options.AddPolicy("DeleteTopic", policy => policy.RequireClaim("permissions", "delete:topic"));
+//
+//     // Policies for Proposals
+//     options.AddPolicy("GetAllProposals", policy => policy.RequireClaim("permissions", "getall:proposals"));
+//     options.AddPolicy("GetProposal", policy => policy.RequireClaim("permissions", "get:proposal"));
+//     options.AddPolicy("UpdateProposal", policy => policy.RequireClaim("permissions", "update:proposal"));
+//     options.AddPolicy("CreateProposal", policy => policy.RequireClaim("permissions", "create:proposal"));
+//     options.AddPolicy("DeleteProposal", policy => policy.RequireClaim("permissions", "delete:proposal"));
+//
+//     // Policies for Organisations
+//     options.AddPolicy("GetAllOrganisations", policy => policy.RequireClaim("permissions", "getall:organisations"));
+//     options.AddPolicy("GetOrganisation", policy => policy.RequireClaim("permissions", "get:organisation"));
+//     options.AddPolicy("UpdateOrganisation", policy => policy.RequireClaim("permissions", "update:organisation"));
+//     options.AddPolicy("CreateOrganisation", policy => policy.RequireClaim("permissions", "create:organisation"));
+//     options.AddPolicy("DeleteOrganisation", policy => policy.RequireClaim("permissions", "delete:organisation"));
+//
+//     // Policies for Projects
+//     options.AddPolicy("GetAllProjects", policy => policy.RequireClaim("permissions", "getall:projects"));
+//     options.AddPolicy("GetProject", policy => policy.RequireClaim("permissions", "get:project"));
+//     options.AddPolicy("UpdateProject", policy => policy.RequireClaim("permissions", "update:project"));
+//     options.AddPolicy("CreateProject", policy => policy.RequireClaim("permissions", "create:project"));
+//     options.AddPolicy("DeleteProject", policy => policy.RequireClaim("permissions", "delete:project"));
+//
+//     // Policies for Users
+//     options.AddPolicy("GetAllUsers", policy => policy.RequireClaim("permissions", "getall:users"));
+//     options.AddPolicy("GetUser", policy => policy.RequireClaim("permissions", "get:user"));
+//     options.AddPolicy("UpdateUser", policy => policy.RequireClaim("permissions", "update:user"));
+//     options.AddPolicy("CreateUser", policy => policy.RequireClaim("permissions", "create:user"));
+//     options.AddPolicy("DeleteUser", policy => policy.RequireClaim("permissions", "delete:user"));
+//
+// });
 
 // avoid circular references in json output while still keeping simple format unlike the solution provided by Koen
 

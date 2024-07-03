@@ -19,7 +19,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Organisations
-        [Authorize(Policy = "GetAllOrganisations")]
+        // [Authorize(Policy = "GetAllOrganisations")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Organisation>>> GetOrganisations()
         {

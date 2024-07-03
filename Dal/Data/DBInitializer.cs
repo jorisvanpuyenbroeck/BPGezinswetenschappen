@@ -5,7 +5,7 @@
         public static void Initialize(BPContext context)
         {
 
-            //context.Database.EnsureCreated();
+            context.Database.EnsureCreated();
             //context.Database.EnsureDeleted();
 
 
