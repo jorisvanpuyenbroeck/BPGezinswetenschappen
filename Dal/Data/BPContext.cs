@@ -47,7 +47,7 @@ namespace BPGezinswetenschappen.DAL.Data
             if (!optionsBuilder.IsConfigured)
             {
                 // optionsBuilder.UseSqlServer("Server=tcp:bpzinswetenschappen.database.windows.net,1433;Initial Catalog=BPGezinswetenschappenAPI;Persist Security Info=False;User ID=joris;Password=Angular1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=GWBPDB;User Id=SA;Password=Abajom99!;Encrypt=True;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:gezinswetenschappen.database.windows.net,1433;Initial Catalog=GWBP;Persist Security Info=False;User ID=sqladmin;Password=Konneneveugel99!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
