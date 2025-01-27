@@ -22,7 +22,7 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Replace connection string in appsettings.json
       run: |
-          sed -i 's|PLACEHOLDER_CONNECTION_STRING|${{ secrets.AZURE_SQL_CONNECTION_STRING }}|' "${{ env.WORKING_DIRECTORY }}/appsettings.json"
+          sed -i 's|PLACEHOLDER_CONNECTION_STRING|${{ secrets.AZURE_SQL_CONNECTION_STRING }}|' "${{ env.WORKING_DIRECTORY }}/Api/appsettings.json"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Test
