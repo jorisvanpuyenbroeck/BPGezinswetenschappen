@@ -54,4 +54,4 @@ jobs:
           app-name: 'GWBPApi'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_392101015711445892BDE170ED5572BB }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
