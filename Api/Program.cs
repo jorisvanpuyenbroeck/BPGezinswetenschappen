@@ -26,17 +26,17 @@ builder.Services.Configure<AppSettings>(appSettingsSection);
 
 // this next bit was adapted from the documentation in angular full stack security
 // configure jwt authentication
-// builder.Services
-//     .AddAuthentication(options =>
-//     {
-//         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//     })
-//     .AddJwtBearer(options =>
-//     {
-//         options.Authority = configuration["Authentication:Schemes:Bearer:Authority"];
-//         options.Audience = configuration["Authentication:Schemes:Bearer:ValidAudiences:0"];
-//     });
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.Authority = configuration["Authentication:Schemes:Bearer:Authority"];
+        options.Audience = configuration["Authentication:Schemes:Bearer:ValidAudiences:0"];
+    });
 
 // add authorization
 
@@ -101,7 +101,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+            builder.WithOrigins("http://localhost:4200", "https://127.0.0.1:4200", "https://lively-glacier-082d11d03.4.azurestaticapps.net/")
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
