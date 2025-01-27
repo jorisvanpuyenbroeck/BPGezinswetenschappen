@@ -21,7 +21,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Proposals
-        [Authorize(Policy = "GetAllProposals")]
+        // [Authorize(Policy = "GetAllProposals")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposals()
         {
@@ -33,7 +33,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // GET: api/Proposals/by-topic
 
-        [Authorize(Policy = "GetAllProposals")]
+        // [Authorize(Policy = "GetAllProposals")]
         [HttpGet("by-topic")]
         public async Task<ActionResult<IEnumerable<Proposal>>> GetProposalsByTopicIds([FromQuery] List<int> topicIds)
         {
@@ -52,7 +52,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
 
         // GET: api/Proposals/5
-        [Authorize(Policy = "GetProposal")]
+        // [Authorize(Policy = "GetProposal")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Proposal>> GetProposal(int id)
         {
@@ -71,7 +71,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Proposals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Policy = "UpdateProposal")]
+        // [Authorize(Policy = "UpdateProposal")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProposal(int id, Proposal proposal)
         {
@@ -103,7 +103,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Proposals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Policy = "CreateProposal")]
+        // [Authorize(Policy = "CreateProposal")]
         [HttpPost]
         public async Task<ActionResult<Proposal>> PostProposal(Proposal proposal)
         {
@@ -133,7 +133,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
 
         // DELETE: api/Proposals/5
-        [Authorize(Policy = "DeleteProposal")]
+        // [Authorize(Policy = "DeleteProposal")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProposal(int id)
         {

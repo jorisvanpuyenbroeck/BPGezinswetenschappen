@@ -18,7 +18,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Users
-        [Authorize(Policy = "GetAllUsers")]
+        // [Authorize(Policy = "GetAllUsers")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -26,7 +26,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Users/5
-        [Authorize(Policy = "GetUser")]
+        // [Authorize(Policy = "GetUser")]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -42,7 +42,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Policy = "UpdateUser")]
+        // [Authorize(Policy = "UpdateUser")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
@@ -74,7 +74,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Policy = "CreateUser")]
+        // [Authorize(Policy = "CreateUser")]
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -85,7 +85,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // DELETE: api/Users/5
-        [Authorize(Policy = "DeleteUser")]
+        // [Authorize(Policy = "DeleteUser")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

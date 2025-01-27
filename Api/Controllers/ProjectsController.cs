@@ -19,7 +19,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // GET: api/Projects
-        [Authorize(Policy = "GetAllProjects")]
+        // [Authorize(Policy = "GetAllProjects")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
         {
@@ -34,7 +34,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
 
         // GET: api/Projects/5
-        [Authorize(Policy = "GetProject")]
+        // [Authorize(Policy = "GetProject")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Project>> GetProject(int id)
         {
@@ -56,7 +56,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // PUT: api/Projects/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Policy = "UpdateProject")]
+        // [Authorize(Policy = "UpdateProject")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProject(int id, Project project)
         {
@@ -88,7 +88,7 @@ namespace BPGezinswetenschappen.API.Controllers
 
         // POST: api/Projects
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Policy = "CreateProject")]
+        // [Authorize(Policy = "CreateProject")]
         [HttpPost]
         public async Task<ActionResult<Project>> PostProject(Project project)
         {
@@ -118,7 +118,7 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // DELETE: api/Projects/5
-        [Authorize(Policy = "DeleteProject")]
+        // [Authorize(Policy = "DeleteProject")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
