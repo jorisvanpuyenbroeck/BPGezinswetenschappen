@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TopicsController : ControllerBase
