@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models;
 
 namespace BPGezinswetenschappen.DAL.Models
 {
@@ -30,6 +31,12 @@ namespace BPGezinswetenschappen.DAL.Models
         [InverseProperty("Coach")]
         public ICollection<Project>? CoachProjects { get; set; }
         public ICollection<Topic>? Topics { get; set; }
+        // Presentations where the user is the student
+        public ICollection<Presentation>? StudentPresentations { get; set; } = new List<Presentation>();
+        // Presentations where the user is the coach
+        public ICollection<Presentation>? CoachPresentations { get; set; } = new List<Presentation>();
+        // Presentations where the user is the expert
+        public ICollection<Presentation>? ExpertPresentations { get; set; } = new List<Presentation>();
 
 
     }

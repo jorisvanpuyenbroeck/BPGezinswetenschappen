@@ -4,6 +4,7 @@ using BPGezinswetenschappen.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BPGezinswetenschappen.DAL.Migrations
 {
     [DbContext(typeof(BPContext))]
-    partial class BPContextModelSnapshot : ModelSnapshot
+    [Migration("20250513061652_presentations")]
+    partial class presentations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,7 +240,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("ClassroomId");
 
-                    b.ToTable("ClassRoom", (string)null);
+                    b.ToTable("ClassRoom");
                 });
 
             modelBuilder.Entity("DAL.Models.ExamPeriod", b =>
@@ -334,14 +337,14 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Property<int?>("ClassRoomId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("PresentationDayId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("SlotId");
 
