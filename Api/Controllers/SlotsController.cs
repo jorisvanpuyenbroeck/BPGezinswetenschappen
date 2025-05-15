@@ -12,52 +12,47 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class YearsController : ControllerBase
+    public class SlotsController : ControllerBase
     {
         private readonly BPContext _context;
 
-        public YearsController(BPContext context)
+        public SlotsController(BPContext context)
         {
             _context = context;
         }
 
-        // GET: api/Years
+        // GET: api/Slots
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Year>>> GetYears()
+        public async Task<ActionResult<IEnumerable<Slot>>> GetSlots()
         {
-            return await _context.Years
-                .Include(y => y.ExamPeriods)
-                .ThenInclude(e => e.PresentationDays)
-                .ToListAsync();
+            return await _context.Slots.ToListAsync();
         }
 
-        // GET: api/Years/5
+        // GET: api/Slots/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Year>> GetYear(int id)
+        public async Task<ActionResult<Slot>> GetSlot(int id)
         {
-            var year = await _context.Years
-                .Include(y => y.ExamPeriods)
-                .FirstOrDefaultAsync(y => y.YearId == id);
+            var slot = await _context.Slots.FindAsync(id);
 
-            if (year == null)
+            if (slot == null)
             {
                 return NotFound();
             }
 
-            return year;
+            return slot;
         }
 
-        // PUT: api/Years/5
+        // PUT: api/Slots/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutYear(int id, Year year)
+        public async Task<IActionResult> PutSlot(int id, Slot slot)
         {
-            if (id != year.YearId)
+            if (id != slot.SlotId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(year).State = EntityState.Modified;
+            _context.Entry(slot).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +60,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!YearExists(id))
+                if (!SlotExists(id))
                 {
                     return NotFound();
                 }
@@ -78,36 +73,36 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Years
+        // POST: api/Slots
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Year>> PostYear(Year year)
+        public async Task<ActionResult<Slot>> PostSlot(Slot slot)
         {
-            _context.Years.Add(year);
+            _context.Slots.Add(slot);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetYear", new { id = year.YearId }, year);
+            return CreatedAtAction("GetSlot", new { id = slot.SlotId }, slot);
         }
 
-        // DELETE: api/Years/5
+        // DELETE: api/Slots/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteYear(int id)
+        public async Task<IActionResult> DeleteSlot(int id)
         {
-            var year = await _context.Years.FindAsync(id);
-            if (year == null)
+            var slot = await _context.Slots.FindAsync(id);
+            if (slot == null)
             {
                 return NotFound();
             }
 
-            _context.Years.Remove(year);
+            _context.Slots.Remove(slot);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool YearExists(int id)
+        private bool SlotExists(int id)
         {
-            return _context.Years.Any(e => e.YearId == id);
+            return _context.Slots.Any(e => e.SlotId == id);
         }
     }
 }

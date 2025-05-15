@@ -12,52 +12,47 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class YearsController : ControllerBase
+    public class ClassRoomsController : ControllerBase
     {
         private readonly BPContext _context;
 
-        public YearsController(BPContext context)
+        public ClassRoomsController(BPContext context)
         {
             _context = context;
         }
 
-        // GET: api/Years
+        // GET: api/ClassRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Year>>> GetYears()
+        public async Task<ActionResult<IEnumerable<ClassRoom>>> GetClassrooms()
         {
-            return await _context.Years
-                .Include(y => y.ExamPeriods)
-                .ThenInclude(e => e.PresentationDays)
-                .ToListAsync();
+            return await _context.Classrooms.ToListAsync();
         }
 
-        // GET: api/Years/5
+        // GET: api/ClassRooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Year>> GetYear(int id)
+        public async Task<ActionResult<ClassRoom>> GetClassRoom(int id)
         {
-            var year = await _context.Years
-                .Include(y => y.ExamPeriods)
-                .FirstOrDefaultAsync(y => y.YearId == id);
+            var classRoom = await _context.Classrooms.FindAsync(id);
 
-            if (year == null)
+            if (classRoom == null)
             {
                 return NotFound();
             }
 
-            return year;
+            return classRoom;
         }
 
-        // PUT: api/Years/5
+        // PUT: api/ClassRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutYear(int id, Year year)
+        public async Task<IActionResult> PutClassRoom(int id, ClassRoom classRoom)
         {
-            if (id != year.YearId)
+            if (id != classRoom.ClassroomId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(year).State = EntityState.Modified;
+            _context.Entry(classRoom).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +60,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!YearExists(id))
+                if (!ClassRoomExists(id))
                 {
                     return NotFound();
                 }
@@ -78,36 +73,36 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Years
+        // POST: api/ClassRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Year>> PostYear(Year year)
+        public async Task<ActionResult<ClassRoom>> PostClassRoom(ClassRoom classRoom)
         {
-            _context.Years.Add(year);
+            _context.Classrooms.Add(classRoom);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetYear", new { id = year.YearId }, year);
+            return CreatedAtAction("GetClassRoom", new { id = classRoom.ClassroomId }, classRoom);
         }
 
-        // DELETE: api/Years/5
+        // DELETE: api/ClassRooms/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteYear(int id)
+        public async Task<IActionResult> DeleteClassRoom(int id)
         {
-            var year = await _context.Years.FindAsync(id);
-            if (year == null)
+            var classRoom = await _context.Classrooms.FindAsync(id);
+            if (classRoom == null)
             {
                 return NotFound();
             }
 
-            _context.Years.Remove(year);
+            _context.Classrooms.Remove(classRoom);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool YearExists(int id)
+        private bool ClassRoomExists(int id)
         {
-            return _context.Years.Any(e => e.YearId == id);
+            return _context.Classrooms.Any(e => e.ClassroomId == id);
         }
     }
 }

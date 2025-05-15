@@ -12,52 +12,47 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class YearsController : ControllerBase
+    public class PresentationsController : ControllerBase
     {
         private readonly BPContext _context;
 
-        public YearsController(BPContext context)
+        public PresentationsController(BPContext context)
         {
             _context = context;
         }
 
-        // GET: api/Years
+        // GET: api/Presentations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Year>>> GetYears()
+        public async Task<ActionResult<IEnumerable<Presentation>>> GetPresentations()
         {
-            return await _context.Years
-                .Include(y => y.ExamPeriods)
-                .ThenInclude(e => e.PresentationDays)
-                .ToListAsync();
+            return await _context.Presentations.ToListAsync();
         }
 
-        // GET: api/Years/5
+        // GET: api/Presentations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Year>> GetYear(int id)
+        public async Task<ActionResult<Presentation>> GetPresentation(int id)
         {
-            var year = await _context.Years
-                .Include(y => y.ExamPeriods)
-                .FirstOrDefaultAsync(y => y.YearId == id);
+            var presentation = await _context.Presentations.FindAsync(id);
 
-            if (year == null)
+            if (presentation == null)
             {
                 return NotFound();
             }
 
-            return year;
+            return presentation;
         }
 
-        // PUT: api/Years/5
+        // PUT: api/Presentations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutYear(int id, Year year)
+        public async Task<IActionResult> PutPresentation(int id, Presentation presentation)
         {
-            if (id != year.YearId)
+            if (id != presentation.PresentationId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(year).State = EntityState.Modified;
+            _context.Entry(presentation).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +60,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!YearExists(id))
+                if (!PresentationExists(id))
                 {
                     return NotFound();
                 }
@@ -78,36 +73,36 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Years
+        // POST: api/Presentations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Year>> PostYear(Year year)
+        public async Task<ActionResult<Presentation>> PostPresentation(Presentation presentation)
         {
-            _context.Years.Add(year);
+            _context.Presentations.Add(presentation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetYear", new { id = year.YearId }, year);
+            return CreatedAtAction("GetPresentation", new { id = presentation.PresentationId }, presentation);
         }
 
-        // DELETE: api/Years/5
+        // DELETE: api/Presentations/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteYear(int id)
+        public async Task<IActionResult> DeletePresentation(int id)
         {
-            var year = await _context.Years.FindAsync(id);
-            if (year == null)
+            var presentation = await _context.Presentations.FindAsync(id);
+            if (presentation == null)
             {
                 return NotFound();
             }
 
-            _context.Years.Remove(year);
+            _context.Presentations.Remove(presentation);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool YearExists(int id)
+        private bool PresentationExists(int id)
         {
-            return _context.Years.Any(e => e.YearId == id);
+            return _context.Presentations.Any(e => e.PresentationId == id);
         }
     }
 }

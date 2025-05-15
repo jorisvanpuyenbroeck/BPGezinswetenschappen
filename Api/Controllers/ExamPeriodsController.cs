@@ -12,52 +12,47 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class YearsController : ControllerBase
+    public class ExamPeriodsController : ControllerBase
     {
         private readonly BPContext _context;
 
-        public YearsController(BPContext context)
+        public ExamPeriodsController(BPContext context)
         {
             _context = context;
         }
 
-        // GET: api/Years
+        // GET: api/ExamPeriods
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Year>>> GetYears()
+        public async Task<ActionResult<IEnumerable<ExamPeriod>>> GetExamPeriods()
         {
-            return await _context.Years
-                .Include(y => y.ExamPeriods)
-                .ThenInclude(e => e.PresentationDays)
-                .ToListAsync();
+            return await _context.ExamPeriods.ToListAsync();
         }
 
-        // GET: api/Years/5
+        // GET: api/ExamPeriods/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Year>> GetYear(int id)
+        public async Task<ActionResult<ExamPeriod>> GetExamPeriod(int id)
         {
-            var year = await _context.Years
-                .Include(y => y.ExamPeriods)
-                .FirstOrDefaultAsync(y => y.YearId == id);
+            var examPeriod = await _context.ExamPeriods.FindAsync(id);
 
-            if (year == null)
+            if (examPeriod == null)
             {
                 return NotFound();
             }
 
-            return year;
+            return examPeriod;
         }
 
-        // PUT: api/Years/5
+        // PUT: api/ExamPeriods/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutYear(int id, Year year)
+        public async Task<IActionResult> PutExamPeriod(int id, ExamPeriod examPeriod)
         {
-            if (id != year.YearId)
+            if (id != examPeriod.ExamPeriodId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(year).State = EntityState.Modified;
+            _context.Entry(examPeriod).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +60,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!YearExists(id))
+                if (!ExamPeriodExists(id))
                 {
                     return NotFound();
                 }
@@ -78,36 +73,36 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Years
+        // POST: api/ExamPeriods
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Year>> PostYear(Year year)
+        public async Task<ActionResult<ExamPeriod>> PostExamPeriod(ExamPeriod examPeriod)
         {
-            _context.Years.Add(year);
+            _context.ExamPeriods.Add(examPeriod);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetYear", new { id = year.YearId }, year);
+            return CreatedAtAction("GetExamPeriod", new { id = examPeriod.ExamPeriodId }, examPeriod);
         }
 
-        // DELETE: api/Years/5
+        // DELETE: api/ExamPeriods/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteYear(int id)
+        public async Task<IActionResult> DeleteExamPeriod(int id)
         {
-            var year = await _context.Years.FindAsync(id);
-            if (year == null)
+            var examPeriod = await _context.ExamPeriods.FindAsync(id);
+            if (examPeriod == null)
             {
                 return NotFound();
             }
 
-            _context.Years.Remove(year);
+            _context.ExamPeriods.Remove(examPeriod);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool YearExists(int id)
+        private bool ExamPeriodExists(int id)
         {
-            return _context.Years.Any(e => e.YearId == id);
+            return _context.ExamPeriods.Any(e => e.ExamPeriodId == id);
         }
     }
 }
