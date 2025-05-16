@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BPGezinswetenschappen.DAL.Migrations
 {
     [DbContext(typeof(BPContext))]
-    [Migration("20250514184202_looseEnds")]
-    partial class looseEnds
+    [Migration("20250516155818_AddSlotRelations")]
+    partial class AddSlotRelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -279,9 +279,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Property<int?>("ExpertId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SlotId")
-                        .HasColumnType("int");
-
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
@@ -290,10 +287,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasIndex("CoachId");
 
                     b.HasIndex("ExpertId");
-
-                    b.HasIndex("SlotId")
-                        .IsUnique()
-                        .HasFilter("[SlotId] IS NOT NULL");
 
                     b.HasIndex("StudentId");
 
@@ -319,6 +312,21 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasIndex("ExamPeriodId");
 
                     b.ToTable("PresentationDays", (string)null);
+                });
+
+            modelBuilder.Entity("DAL.Models.PresentationSlot", b =>
+                {
+                    b.Property<int>("PresentationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SlotId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PresentationId", "SlotId");
+
+                    b.HasIndex("SlotId");
+
+                    b.ToTable("PresentationSlots", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Models.Slot", b =>
@@ -348,6 +356,25 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasIndex("PresentationDayId");
 
                     b.ToTable("Slots", (string)null);
+                });
+
+            modelBuilder.Entity("DAL.Models.UserSlot", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SlotId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "SlotId");
+
+                    b.HasIndex("SlotId");
+
+                    b.ToTable("UserSlots", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Models.Year", b =>
@@ -462,12 +489,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasOne("BPGezinswetenschappen.DAL.Models.User", "Expert")
                         .WithMany("ExpertPresentations")
-                        .HasForeignKey("ExpertId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DAL.Models.Slot", "Slot")
-                        .WithOne("Presentation")
-                        .HasForeignKey("DAL.Models.Presentation", "SlotId");
+                        .HasForeignKey("ExpertId");
 
                     b.HasOne("BPGezinswetenschappen.DAL.Models.User", "Student")
                         .WithMany("StudentPresentations")
@@ -478,8 +500,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Navigation("Coach");
 
                     b.Navigation("Expert");
-
-                    b.Navigation("Slot");
 
                     b.Navigation("Student");
                 });
@@ -495,6 +515,25 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Navigation("ExamPeriod");
                 });
 
+            modelBuilder.Entity("DAL.Models.PresentationSlot", b =>
+                {
+                    b.HasOne("DAL.Models.Presentation", "Presentation")
+                        .WithMany("Slots")
+                        .HasForeignKey("PresentationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Slot", "Slot")
+                        .WithMany("Presentations")
+                        .HasForeignKey("SlotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Presentation");
+
+                    b.Navigation("Slot");
+                });
+
             modelBuilder.Entity("DAL.Models.Slot", b =>
                 {
                     b.HasOne("DAL.Models.ClassRoom", "Classroom")
@@ -502,12 +541,31 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .HasForeignKey("ClassRoomId");
 
                     b.HasOne("DAL.Models.PresentationDay", "PresentationDay")
-                        .WithMany()
+                        .WithMany("Slots")
                         .HasForeignKey("PresentationDayId");
 
                     b.Navigation("Classroom");
 
                     b.Navigation("PresentationDay");
+                });
+
+            modelBuilder.Entity("DAL.Models.UserSlot", b =>
+                {
+                    b.HasOne("DAL.Models.Slot", "Slot")
+                        .WithMany("Availabilities")
+                        .HasForeignKey("SlotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BPGezinswetenschappen.DAL.Models.User", "User")
+                        .WithMany("AvailableSlots")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Slot");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectTopic", b =>
@@ -567,6 +625,8 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
             modelBuilder.Entity("BPGezinswetenschappen.DAL.Models.User", b =>
                 {
+                    b.Navigation("AvailableSlots");
+
                     b.Navigation("CoachPresentations");
 
                     b.Navigation("CoachProjects");
@@ -588,9 +648,21 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Navigation("PresentationDays");
                 });
 
+            modelBuilder.Entity("DAL.Models.Presentation", b =>
+                {
+                    b.Navigation("Slots");
+                });
+
+            modelBuilder.Entity("DAL.Models.PresentationDay", b =>
+                {
+                    b.Navigation("Slots");
+                });
+
             modelBuilder.Entity("DAL.Models.Slot", b =>
                 {
-                    b.Navigation("Presentation");
+                    b.Navigation("Availabilities");
+
+                    b.Navigation("Presentations");
                 });
 
             modelBuilder.Entity("DAL.Models.Year", b =>

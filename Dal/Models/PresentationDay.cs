@@ -14,6 +14,6 @@ namespace DAL.Models
         public int ExamPeriodId { get; set; }
         public ExamPeriod ExamPeriod { get; set; } = null!;
 
-        public ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
+        public ICollection<Slot> Slots { get; set; } = new List<Slot>();
     }
 }

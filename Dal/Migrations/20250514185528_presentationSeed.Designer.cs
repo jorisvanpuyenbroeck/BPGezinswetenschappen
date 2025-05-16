@@ -279,9 +279,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Property<int?>("ExpertId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PresentationDayId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SlotId")
                         .HasColumnType("int");
 
@@ -293,8 +290,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.HasIndex("CoachId");
 
                     b.HasIndex("ExpertId");
-
-                    b.HasIndex("PresentationDayId");
 
                     b.HasIndex("SlotId")
                         .IsUnique()
@@ -470,14 +465,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
                         .HasForeignKey("ExpertId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("DAL.Models.PresentationDay", null)
-                        .WithMany("Presentations")
-                        .HasForeignKey("PresentationDayId");
-
-                    b.HasOne("DAL.Models.Slot", "Slot")
-                        .WithOne("Presentation")
-                        .HasForeignKey("DAL.Models.Presentation", "SlotId");
-
                     b.HasOne("BPGezinswetenschappen.DAL.Models.User", "Student")
                         .WithMany("StudentPresentations")
                         .HasForeignKey("StudentId")
@@ -488,7 +475,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.Navigation("Expert");
 
-                    b.Navigation("Slot");
+                   // b.Navigation("Slot");
 
                     b.Navigation("Student");
                 });
@@ -595,16 +582,6 @@ namespace BPGezinswetenschappen.DAL.Migrations
             modelBuilder.Entity("DAL.Models.ExamPeriod", b =>
                 {
                     b.Navigation("PresentationDays");
-                });
-
-            modelBuilder.Entity("DAL.Models.PresentationDay", b =>
-                {
-                    b.Navigation("Presentations");
-                });
-
-            modelBuilder.Entity("DAL.Models.Slot", b =>
-                {
-                    b.Navigation("Presentation");
                 });
 
             modelBuilder.Entity("DAL.Models.Year", b =>

@@ -19,7 +19,7 @@ namespace DAL.Models
         public int? ExpertId { get; set; }
         public User? Expert { get; set; } = null!;
 
-        public int? SlotId { get; set; }
-        public Slot? Slot { get; set; } = null!;
+        public ICollection<PresentationSlot> Slots { get; set; } = new List<PresentationSlot>();
+
     }
 }

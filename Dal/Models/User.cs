@@ -38,6 +38,9 @@ namespace BPGezinswetenschappen.DAL.Models
         // Presentations where the user is the expert
         public ICollection<Presentation>? ExpertPresentations { get; set; } = new List<Presentation>();
 
+        public ICollection<UserSlot> AvailableSlots { get; set; } = new List<UserSlot>(); // in User
+
+
 
     }
 }

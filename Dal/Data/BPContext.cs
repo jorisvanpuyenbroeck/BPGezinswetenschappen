@@ -19,6 +19,8 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<PresentationDay> PresentationDays { get; set; }
         public DbSet<Presentation> Presentations { get; set; }
         public DbSet<Slot> Slots { get; set; }
+        public DbSet<PresentationSlot> PresentationSlots { get; set; }
+        public DbSet<UserSlot> UserSlots { get; set; }
 
 
 
@@ -41,10 +43,16 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<PresentationDay>().ToTable("PresentationDays");
             modelBuilder.Entity<Presentation>().ToTable("Presentations");
             modelBuilder.Entity<ClassRoom>().ToTable("ClassRoom");
+
             modelBuilder.Entity<Slot>().ToTable("Slots")
                 .HasOne(s => s.Classroom)
                 .WithMany(c => c.Slots)
                 .HasForeignKey(s => s.ClassRoomId);
+
+            modelBuilder.Entity<Slot>().ToTable("Slots")
+                .HasOne(s => s.PresentationDay)
+                .WithMany(pd => pd.Slots)
+                .HasForeignKey(s => s.PresentationDayId);
 
             modelBuilder.Entity<Project>().ToTable("Projects")
                 .HasOne(p => p.Student)
@@ -70,13 +78,40 @@ namespace BPGezinswetenschappen.DAL.Data
                 .HasForeignKey(p => p.CoachId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Presentation>()
-                .HasOne(p => p.Expert)
-                .WithMany(u => u.ExpertPresentations)
-                .HasForeignKey(p => p.ExpertId)
-                .OnDelete(DeleteBehavior.NoAction);
+            // userslots and presentationslots
+
+            modelBuilder.Entity<PresentationSlot>().ToTable("PresentationSlots")
+                    .HasKey(ps => new { ps.PresentationId, ps.SlotId });
+
+            modelBuilder.Entity<PresentationSlot>()
+                .HasOne(ps => ps.Presentation)
+                .WithMany(p => p.Slots)
+                .HasForeignKey(ps => ps.PresentationId);
+
+            modelBuilder.Entity<PresentationSlot>()
+                .HasOne(ps => ps.Slot)
+                .WithMany(s => s.Presentations)
+                .HasForeignKey(ps => ps.SlotId);
+
+            modelBuilder.Entity<UserSlot>().ToTable("UserSlots")
+                    .HasKey(us => new { us.UserId, us.SlotId });
+
+            modelBuilder.Entity<UserSlot>()
+                .HasOne(us => us.User)
+                .WithMany(u => u.AvailableSlots)
+                .HasForeignKey(usa => usa.UserId);
+
+            modelBuilder.Entity<UserSlot>()
+                .HasOne(us => us.Slot)
+                .WithMany(s => s.Availabilities)
+                .HasForeignKey(us => us.SlotId);
+
+            modelBuilder.Entity<UserSlot>()
+                .Property(us => us.Role)
+                .IsRequired();
 
             //date time conversion
+
 
             modelBuilder.Entity<Slot>()
                 .Property(s => s.StartTime)
@@ -98,7 +133,7 @@ namespace BPGezinswetenschappen.DAL.Data
             if (!optionsBuilder.IsConfigured)
             {
                 // optionsBuilder.UseSqlServer("Server=tcp:bpzinswetenschappen.database.windows.net,1433;Initial Catalog=BPGezinswetenschappenAPI;Persist Security Info=False;User ID=joris;Password=Angular1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GWBP;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GWBPDEV;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
             }
         }
 

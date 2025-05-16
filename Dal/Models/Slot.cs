@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BPGezinswetenschappen.DAL.Models;
 
 namespace DAL.Models
 { 
@@ -17,7 +18,10 @@ namespace DAL.Models
 
         public int? ClassRoomId { get; set; }
         public ClassRoom? Classroom { get; set; }
-        public Presentation? Presentation { get; set; }
+
+        public ICollection<PresentationSlot> Presentations { get; set; } = new List<PresentationSlot>();
+        public ICollection<UserSlot> Availabilities { get; set; } = new List<UserSlot>();
+
     }
 
 

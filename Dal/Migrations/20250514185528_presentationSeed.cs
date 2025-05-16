@@ -12,9 +12,9 @@ namespace BPGezinswetenschappen.DAL.Migrations
             migrationBuilder.Sql(@"
                 INSERT INTO Presentations (StudentId, CoachId, ExpertId, SlotId)
                 VALUES 
-                    (1, 4, 18, 1),
-                    (2, 5, 19, 2),
-                    (3, 6, 20, 3);
+                    (1, 4, 7, 1),
+                    (2, 5, 8, 2),
+                    (3, 6, 9, 3);
             ");
         }
 
