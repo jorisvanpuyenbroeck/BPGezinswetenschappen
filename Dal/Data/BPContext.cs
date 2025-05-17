@@ -21,6 +21,7 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<Slot> Slots { get; set; }
         public DbSet<PresentationSlot> PresentationSlots { get; set; }
         public DbSet<UserSlot> UserSlots { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
 
@@ -43,6 +44,7 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<PresentationDay>().ToTable("PresentationDays");
             modelBuilder.Entity<Presentation>().ToTable("Presentations");
             modelBuilder.Entity<ClassRoom>().ToTable("ClassRoom");
+            modelBuilder.Entity<Role>().ToTable("Roles");
 
             modelBuilder.Entity<Slot>().ToTable("Slots")
                 .HasOne(s => s.Classroom)
@@ -107,8 +109,9 @@ namespace BPGezinswetenschappen.DAL.Data
                 .HasForeignKey(us => us.SlotId);
 
             modelBuilder.Entity<UserSlot>()
-                .Property(us => us.Role)
-                .IsRequired();
+                .HasOne(us => us.Role)
+                .WithMany(s => s.UserSlots)
+                .HasForeignKey(us => us.RoleId);
 
             //date time conversion
 

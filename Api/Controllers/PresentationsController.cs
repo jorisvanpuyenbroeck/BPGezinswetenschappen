@@ -25,7 +25,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Presentation>>> GetPresentations()
         {
-            return await _context.Presentations.ToListAsync();
+            return await _context.Presentations
+                .Include(p => p.Slots)
+                .ToListAsync();
         }
 
         // GET: api/Presentations/5

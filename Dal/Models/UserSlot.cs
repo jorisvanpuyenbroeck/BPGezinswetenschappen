@@ -15,6 +15,8 @@ namespace DAL.Models
         public int SlotId { get; set; }
         public Slot Slot { get; set; } = null!;
 
-        public string Role { get; set; } = null!; // "student", "coach", "expert"
+        public int? RoleId { get; set; }
+        public Role? Role { get; set; }
+
     }
 }
