@@ -9,7 +9,7 @@ namespace BPGezinswetenschappen.API.Mapping
         public MappingProfile()
         {
             CreateMap<Proposal, ProposalResource>();
-            CreateMap<Topic, TopicResource>();
+            CreateMap<Topic, TopicResource>().ReverseMap(); 
             CreateMap<Project, ProjectResource>();
             CreateMap<User, UserResource>();
         }

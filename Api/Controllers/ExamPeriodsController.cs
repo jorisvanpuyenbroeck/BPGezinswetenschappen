@@ -25,7 +25,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ExamPeriod>>> GetExamPeriods()
         {
-            return await _context.ExamPeriods.ToListAsync();
+            return await _context.ExamPeriods
+                .Include(ep => ep.Year)
+                .ToListAsync();
         }
 
         // GET: api/ExamPeriods/5

@@ -1,5 +1,7 @@
-﻿using BPGezinswetenschappen.DAL.Data;
+﻿using AutoMapper;
+using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.DAL.Models.dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +14,12 @@ namespace BPGezinswetenschappen.API.Controllers
     public class TopicsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public TopicsController(BPContext context)
+        public TopicsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Topics
@@ -79,12 +83,14 @@ namespace BPGezinswetenschappen.API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "CreateTopic")]
         [HttpPost]
-        public async Task<ActionResult<Topic>> PostTopic(Topic topic)
+        public async Task<ActionResult<TopicResource>> PostTopic(TopicResource topicResource)
         {
+            var topic = _mapper.Map<Topic>(topicResource);
             _context.Topics.Add(topic);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTopic", new { id = topic.TopicId }, topic);
+            var result = _mapper.Map<TopicResource>(topic);
+            return CreatedAtAction("GetTopic", new { id = topic.TopicId }, result);
         }
 
         // DELETE: api/Topics/5
