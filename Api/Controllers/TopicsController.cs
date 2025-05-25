@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
-using BPGezinswetenschappen.DAL.Models.dto;
+using BPGezinswetenschappen.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -83,13 +83,13 @@ namespace BPGezinswetenschappen.API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "CreateTopic")]
         [HttpPost]
-        public async Task<ActionResult<TopicResource>> PostTopic(TopicResource topicResource)
+        public async Task<ActionResult<TopicDto>> PostTopic(TopicDto topicDto)
         {
-            var topic = _mapper.Map<Topic>(topicResource);
+            var topic = _mapper.Map<Topic>(topicDto);
             _context.Topics.Add(topic);
             await _context.SaveChangesAsync();
 
-            var result = _mapper.Map<TopicResource>(topic);
+            var result = _mapper.Map<TopicDto>(topic);
             return CreatedAtAction("GetTopic", new { id = topic.TopicId }, result);
         }
 

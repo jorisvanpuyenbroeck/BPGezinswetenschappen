@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using BPGezinswetenschappen.API.Dtos;
 using BPGezinswetenschappen.DAL.Models;
-using BPGezinswetenschappen.DAL.Models.dto;
+
 
 namespace BPGezinswetenschappen.API.Mapping
 {
@@ -8,10 +9,10 @@ namespace BPGezinswetenschappen.API.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Proposal, ProposalResource>();
-            CreateMap<Topic, TopicResource>().ReverseMap(); 
-            CreateMap<Project, ProjectResource>();
-            CreateMap<User, UserResource>();
+            CreateMap<Proposal, ProposalDto>();
+            CreateMap<Topic, TopicDto>().ReverseMap(); 
+            CreateMap<Project, ProjectDto>();
+            CreateMap<User, UserDto>();
         }
     }
 }

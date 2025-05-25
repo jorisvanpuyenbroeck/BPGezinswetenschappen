@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BPGezinswetenschappen.DAL.Models.dto
+namespace BPGezinswetenschappen.API.Dtos
 {
-    public class UserResource
+    public class UserDto
     {
         public int UserId { get; set; }
         public string UserName { get; set; }

@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace BPGezinswetenschappen.API.Dtos
 
-namespace BPGezinswetenschappen.DAL.Models.dto
 {
-    public class TopicResource
+    public class TopicDto
     {
         //public int TopicId { get; set; }
         public string Name { get; set; }

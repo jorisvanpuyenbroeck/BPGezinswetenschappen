@@ -1,6 +1,6 @@
-﻿namespace BPGezinswetenschappen.DAL.Models.dto
+﻿namespace BPGezinswetenschappen.API.Dtos
 {
-    public class ProjectResource
+    public class ProjectDto
     {
         public int ProjectId { get; set; }
         public DateTime? CreatedAt { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace BPGezinswetenschappen.DAL.Models.dto
+﻿namespace BPGezinswetenschappen.API.Dtos
 {
-    public class OrganisationResource
+    public class OrganisationDto
     {
         public int OrganisationId { get; set; }
         public string Name { get; set; }
