@@ -23,9 +23,45 @@
       }
     },
     {
+      "name": "Angular Client",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/Client",
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${webRoot}/*",
+        "/./*": "${webRoot}/*",
+        "/src/*": "${webRoot}/src/*",
+        "/*": "*",
+        "/./~/*": "${webRoot}/node_modules/*"
+      }
+    },
+    {
+      "name": "Full-Stack-Classic",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "start-full-stack",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/Client",
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${webRoot}/*",
+        "/./*": "${webRoot}/*",
+        "/src/*": "${webRoot}/src/*",
+        "/*": "*",
+        "/./~/*": "${webRoot}/node_modules/*"
+      }
+    },
+    {
       "name": ".NET Core Attach",
       "type": "coreclr",
       "request": "attach"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack",
+      "configurations": ["API", "Angular Client"]
     }
   ]
 }

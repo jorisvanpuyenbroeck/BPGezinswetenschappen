@@ -40,6 +40,39 @@
         "${workspaceFolder}/Api/API.csproj"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "npm: start",
+      "type": "npm",
+      "script": "start",
+      "path": "Client",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "(.*?)"
+          },
+          "endsPattern": {
+            "regexp": "bundle generation complete"
+          }
+        }
+      }
+    },
+    {
+      "label": "start-api",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["run", "--project", "Api/API.csproj"],
+      "problemMatcher": "$msCompile",
+      "isBackground": true
+    },
+    {
+      "label": "start-full-stack",
+      "dependsOn": ["start-api", "npm: start"],
+      "problemMatcher": []
     }
   ]
 }
