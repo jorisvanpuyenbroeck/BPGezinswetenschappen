@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Project } from '../models/project'; // Make sure to import your Project model
-import { ProjectDto } from '../models/dto/project.dto'; // Import your ProjectDto model
+import { Project, ProjectCreateDto, ProjectUpdateDto } from '../models/project'; // Import Project and DTO interfaces
 import { ApiConfigService } from '../../app.config'; // Inject the config service
 
 @Injectable({
@@ -35,13 +34,12 @@ export class ProjectService {
     const url = `${this.apiConfigService.apiBaseUrl}${this.projectsEndpoint}/${id}`;
     return this.httpClient.put<Project>(url, project);
   }
-
-  postProject(project: ProjectDto): Observable<any> {
+  postProject(project: ProjectCreateDto): Observable<any> {
     const url = `${this.apiConfigService.apiBaseUrl}${this.projectsEndpoint}`;
     return this.httpClient.post(url, project);
   }
 
-  putProject(project: ProjectDto): Observable<any> {
+  putProject(project: ProjectUpdateDto): Observable<any> {
     const url = `${this.apiConfigService.apiBaseUrl}${this.projectsEndpoint}`;
     return this.httpClient.put(url, project);
   }

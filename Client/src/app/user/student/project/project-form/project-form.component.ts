@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Project } from '../../../../shared/models/project';
+import { Project, ProjectCreateDto } from '../../../../shared/models/project';
 import { ProjectService } from '../../../../shared/services/project.service';
 import { TopicService } from '../../../../shared/services/topic.service';
 import { Topic } from '../../../../shared/models/topic';
@@ -12,7 +12,6 @@ import { User } from '../../../../shared/models/user';
 import { UserService } from '../../../user.service';
 import { ProposalService } from '../../../../shared/services/proposal.service';
 import { OrganisationService } from '../../../../shared/services/organisation.service';
-import { ProjectDto } from '../../../../shared/models/dto/project.dto';
 
 @Component({
   selector: 'app-project-form',
@@ -135,9 +134,8 @@ export class StudentProjectFormComponent implements OnInit, OnDestroy {
     this.postProjectSubscription.unsubscribe();
     this.putProjectSubscription.unsubscribe();
   }
-
   onSubmit() {
-    const projectDto: ProjectDto = {
+    const projectDto: ProjectCreateDto = {
       createdAt: this.project.createdAt,
       updatedAt: this.project.updatedAt,
       title: this.project.proposal?.title || '',

@@ -4,9 +4,8 @@ import { UserStore } from '../store/user-store';
 import { map, tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject, first, take, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../shared/models/user';
+import { User, UserCreateDto } from '../shared/models/user';
 import { Application } from '../shared/models/application';
-import { UserDto } from '../shared/models/dto/user.dto';
 import { RoleService } from './role.service';
 import { ApiConfigService } from '../app.config'; // Import the config service
 
@@ -168,8 +167,7 @@ export class UserService {
         return false;
     }
   }
-
-  mapUserToUserDto(user: User): UserDto {
+  mapUserToUserDto(user: User): UserCreateDto {
     const { application, ...userDto } = user;
     return userDto;
   }

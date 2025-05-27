@@ -1,6 +1,5 @@
-import { UserDto } from './dto/user.dto';
 import { Slot } from './slot';
-import { User } from './user';
+import { User, UserReadDto } from './user';
 
 // Note: To avoid circular reference issues, use 'any' for User and PresentationSlot for now.
 export interface Presentation {

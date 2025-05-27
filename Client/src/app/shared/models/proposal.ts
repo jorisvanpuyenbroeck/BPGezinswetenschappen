@@ -9,3 +9,24 @@ export interface Proposal {
   origin?: string;
   topics?: Topic[];
 }
+
+export interface ProposalCreateDto {
+  title: string;
+  description: string;
+  origin?: string;
+  topicIds?: number[];
+}
+
+export interface ProposalReadDto {
+  proposalId: number;
+  title: string;
+  description: string;
+  origin?: string;
+}
+
+export interface ProposalUpdateDto {
+  title?: string;
+  description?: string;
+  origin?: string;
+  topicIds?: number[];
+}

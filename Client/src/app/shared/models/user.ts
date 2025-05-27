@@ -21,3 +21,37 @@ export interface User {
   coachProjects?: null;
   userTopics?: null;
 }
+
+export interface UserCreateDto {
+  sub?: string;
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
+  password?: string;
+  email?: string;
+  programType?: string;
+  userLevel?: string;
+  expertise?: string;
+}
+
+export interface UserReadDto {
+  userId: number;
+  userName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  programType: string;
+  userLevel: string;
+  expertise: string;
+}
+
+export interface UserUpdateDto {
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
+  password?: string;
+  email?: string;
+  programType?: string;
+  userLevel?: string;
+  expertise?: string;
+}

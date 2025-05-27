@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Topic } from '../../../../shared/models/topic';
-import { TopicDto } from '../../../../shared/models/dto/topic.dto';
+import { Topic, TopicCreateDto } from '../../../../shared/models/topic';
 import { TopicService } from '../../../../shared/services/topic.service';
 import { Location } from '@angular/common';
 
@@ -57,7 +56,7 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isSubmitted = true;
     if (this.isAdd) {
-      const dto: TopicDto = {
+      const dto: TopicCreateDto = {
         name: this.topic.name,
         description: this.topic.description,
       };

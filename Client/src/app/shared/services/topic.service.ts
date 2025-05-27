@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Topic } from '../models/topic'; // Make sure to import your Topic model
+import { Topic, TopicCreateDto, TopicUpdateDto } from '../models/topic'; // Import Topic and DTO interfaces
 import { ApiConfigService } from '../../app.config'; // Inject the config service
-import { TopicDto } from '../models/dto/topic.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,13 +24,11 @@ export class TopicService {
     const url = `${this.apiConfigService.apiBaseUrl}${this.topicsEndpoint}/${topicId}`;
     return this.httpClient.get<Topic>(url);
   }
-
-  postTopic(dto: TopicDto): Observable<Topic> {
+  postTopic(dto: TopicCreateDto): Observable<Topic> {
     const url = `${this.apiConfigService.apiBaseUrl}${this.topicsEndpoint}`;
     return this.httpClient.post<Topic>(url, dto);
   }
-
-  putTopic(id: number, topic: Topic): Observable<Topic> {
+  putTopic(id: number, topic: TopicUpdateDto): Observable<Topic> {
     const url = `${this.apiConfigService.apiBaseUrl}${this.topicsEndpoint}/${id}`;
     return this.httpClient.put<Topic>(url, topic);
   }
