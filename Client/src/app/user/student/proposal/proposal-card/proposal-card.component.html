@@ -1,0 +1,33 @@
+<mat-card class="relative">
+  <div class="pin"></div>
+
+  <div [ngClass]="{
+        'triangle-green': proposal.origin === 'student',
+        'triangle-red': proposal.origin === 'docent',
+        'triangle-blue': proposal.origin === 'werkveld'
+      }"></div>
+  <mat-card-header class="flex flex-col">
+    <mat-card-title>
+      {{ proposal.title }}
+    </mat-card-title>
+    <div class="my-2 p-2 rounded border-t-2 border-b-2 border-dotted">
+      {{ proposal.origin }}
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      {{ proposal.description }}
+    </p>
+  </mat-card-content>
+  <mat-card-content>
+    <div class="my-2">
+      <div *ngFor="let topic of proposal.topics" class="label">{{ topic.name }}</div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="flex justify-end">
+    <button (click)="toggleFavourite(proposal.proposalId)">
+      <mat-icon *ngIf="isFavourite(proposal.proposalId); else notFav" class="text-yellow-400">star</mat-icon>
+      <ng-template #notFav><mat-icon class="text-gray-400">star_border</mat-icon></ng-template>
+    </button>
+  </mat-card-actions>
+</mat-card>

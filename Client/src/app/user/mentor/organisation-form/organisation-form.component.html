@@ -1,0 +1,132 @@
+<div class="container mx-auto mt-8 mb-8">
+    <div class="rounded p-4 mb-4 text-lg bg-red-200 text-red-800 border-2 border-red-300"
+         *ngIf="isSubmitted && errorMessage">
+        {{errorMessage}}
+    </div>
+<!--    <div class="rounded p-4 mb-4 text-md bg-yellow-200 text-orange-500 border-2 border-yellow-500">-->
+<!--        {{organisationForm.status}}-->
+<!--    </div>-->
+    <form [formGroup]="organisationForm" (ngSubmit)="onSubmit()">
+        <div class="m-1 mb-2 form-group">
+            <label class="block mb-1 text-sm font-medium text-gray-900" for="name"
+            >Name</label
+            >
+            <input
+                class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                id="name"
+                placeholder="Name"
+                formControlName="name"
+                required
+                type="text"
+            >
+            <span *ngIf="!organisationForm.get('name')?.valid && organisationForm.get('name')?.touched" class="help-block">
+                <span *ngIf="organisationForm.get('name')?.errors?['required'] : false">
+                    Please enter a name for your organisation!
+                </span>
+<!--                <span *ngIf="organisationForm.get('name')?.errors?['nameIstaken'] : false">-->
+<!--                    This organisation name is already taken!-->
+<!--                </span>-->
+            </span>
+        </div>
+        <div class="m-1 mb-2 form-group">
+            <label class="block mb-1 text-sm font-medium text-gray-900" for="address">Address</label>
+            <input
+                    class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    id="address"
+                    placeholder="Address"
+                    formControlName="address"
+                    required
+                    type="text"
+            >
+        </div>
+        <div class="m-1 sm:flex sm:space-x-4 form-group">
+            <div class="mb-2 form-group flex-1">
+                <label class="block mb-1 text-sm font-medium text-gray-900" for="postalCode">Postal Code</label>
+                <input
+                        class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        id="postalCode"
+                        placeholder="Postal Code"
+                        formControlName="postalCode"
+                        required
+                        type="text"
+                >
+            </div>
+            <div class="mb-2 form-group flex-1">
+                <label class="block mb-1 text-sm font-medium text-gray-900" for="city">City</label>
+                <input
+                        class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        id="city"
+                        placeholder="City"
+                        formControlName="city"
+                        required
+                        type="text"
+                >
+            </div>
+        </div>
+        <div class="m-1 sm:flex sm:space-x-4 form-group">
+
+            <div class="mb-2 form-group flex-1">
+                <label class="block mb-1 text-sm font-medium text-gray-900" for="phone">Phone</label>
+                <input
+                        class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        id="phone"
+                        placeholder="Phone"
+                        formControlName="phone"
+                        required
+                        type="text"
+                >
+            </div>
+
+            <div class="mb-2 form-group flex-1">
+                <label class="block mb-1 text-sm font-medium text-gray-900" for="email">Email</label>
+                <input
+                        class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        id="email"
+                        placeholder="Email"
+                        formControlName="email"
+                        required
+                        type="email"
+                >
+            </div>
+        </div>
+        <div class="m-1 sm:flex sm:space-x-4 form-group">
+
+            <div class="mb-2 form-group flex-1">
+                <label class="block mb-1 text-sm font-medium text-gray-900" for="url">URL</label>
+                <input
+                        class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        id="url"
+                        placeholder="URL"
+                        formControlName="url"
+                        required
+                        type="url"
+                >
+            </div>
+
+            <div class="mb-6 form-group flex-1">
+                <label class="block mb-1 text-sm font-medium text-gray-900" for="contact">Contact</label>
+                <input
+                        class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        id="contact"
+                        placeholder="Contact"
+                        formControlName="contact"
+                        required
+                        type="text"
+                >
+            </div>
+        </div>
+        <button
+                class="m-1 text-white bg-blue-700 enabled:hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:opacity-75"
+                type="submit"
+        >
+            Add
+        </button>
+        <button
+                class="m-1 text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:opacity-75"
+                (click)="goBack()"
+        >
+            Cancel
+        </button>
+
+    </form>
+</div>

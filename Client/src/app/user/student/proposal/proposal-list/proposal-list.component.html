@@ -1,0 +1,13 @@
+<div
+  class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 justify-between"
+>
+  <div *ngFor="let proposal of proposals">
+    <app-proposal-card [proposal]="proposal" [user]="user"></app-proposal-card>
+  </div>
+</div>
+<button [ngStyle]="{'background-color': userService.checkApplicationProgress(user, 'proposals') ? '#68d391' : 'gray'}"
+        mat-fab
+        (click)="saveProposals()"
+        style="position: fixed; bottom: 20px; right: 20px;">
+  <mat-icon>save</mat-icon>
+</button>

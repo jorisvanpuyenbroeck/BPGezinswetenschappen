@@ -1,0 +1,5 @@
+.icon {
+    font-size: 16px; /* Adjust the size as needed */
+    color: transparent; /* This makes the fill color transparent */
+    -webkit-text-stroke: 1px grey; /* This creates a grey outline */
+}

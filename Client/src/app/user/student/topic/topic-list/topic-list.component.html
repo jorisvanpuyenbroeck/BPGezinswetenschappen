@@ -1,0 +1,32 @@
+<div
+  class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 justify-between"
+>
+  <div *ngFor="let topic of topics">
+    <mat-card>
+      <mat-card-header class="flex flex-col">
+        <mat-card-title class="my-2 rounded border-b-2 border-dotted">
+          {{ topic.name }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="my-2 p-2">
+        <p>
+          {{ topic.description }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions class="flex justify-end">
+        <button (click)="toggleFavourite(topic.topicId)">
+          <mat-icon *ngIf="isFavourite(topic.topicId); else notFav" class="text-yellow-400">star</mat-icon>
+          <ng-template #notFav><mat-icon class="text-gray-400">star_border</mat-icon></ng-template>
+        </button>
+      </mat-card-actions>
+      </mat-card>
+  </div>
+</div>
+<button [ngStyle]="{'background-color': userService.checkApplicationProgress(user, 'topics') ? '#68d391' : 'gray'}"
+        mat-fab
+        (click)="saveTopics()"
+        style="position: fixed; bottom: 20px; right: 20px;">
+  <mat-icon>save</mat-icon>
+</button>
+
+

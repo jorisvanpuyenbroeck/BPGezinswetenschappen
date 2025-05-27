@@ -1,0 +1,47 @@
+<div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 justify-between">
+  <div *ngFor="let organisation of organisations">
+    <mat-card class="relative">
+      <div class="pin"></div>
+
+      <mat-card-header class="flex flex-col mb-3">
+        <mat-card-title>
+          {{ organisation.name }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="border-b-2 border-dotted py-1">
+          Address:{{ organisation.address }}
+        </p>
+        <p class="border-b-2 border-dotted py-1">
+          Postal Code:{{ organisation.postalCode }}
+        </p>
+        <p class="border-b-2 border-dotted py-1">
+          City: {{ organisation.city }}
+        </p>
+        <p class="border-b-2 border-dotted py-1">
+          Phone: {{ organisation.phone }}
+        </p>
+        <p class="border-b-2 border-dotted py-1">
+          Email: {{ organisation.email }}
+        </p>
+        <p class="border-b-2 border-dotted py-1">
+          Website: {{ organisation.url }}
+        </p>
+        <p class="border-b-2 border-dotted py-1">
+          Contact:{{ organisation.contact }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions class="flex justify-end">
+        <button (click)="toggleFavourite(organisation.organisationId)">
+          <mat-icon *ngIf="isFavourite(organisation.organisationId); else notFav" class="text-yellow-400">star</mat-icon>
+          <ng-template #notFav><mat-icon class="text-gray-400">star_border</mat-icon></ng-template>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<button [ngStyle]="{'background-color': userService.checkApplicationProgress(user, 'organisations') ? '#68d391' : 'gray'}" mat-fab (click)="saveOrganisations()" style="position: fixed; bottom: 20px; right: 20px;">
+  <mat-icon>save</mat-icon>
+</button>
+
+

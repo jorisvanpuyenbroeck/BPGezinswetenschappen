@@ -1,0 +1,40 @@
+<div class="max-w-xxl mx-auto my-4 border-b-1">
+  <div class="flex text-xs content-center text-center">
+    <app-application-stage
+      class="w-1/4"
+      [name]="'topics'"
+      [number]="1"
+      [completed]="
+        user.application?.topicsSaved &&
+        userService.checkApplicationProgress(user, 'topics')
+      "
+    ></app-application-stage>
+    <app-application-stage
+      class="w-1/4"
+      [name]="'organisations'"
+      [number]="2"
+      [completed]="
+        user.application?.organisationsSaved &&
+        userService.checkApplicationProgress(user, 'organisations')
+      "
+    ></app-application-stage>
+    <app-application-stage
+      class="w-1/4"
+      [name]="'proposals'"
+      [number]="3"
+      [completed]="
+        user.application?.proposalsSaved &&
+        userService.checkApplicationProgress(user, 'proposals')
+      "
+    ></app-application-stage>
+    <app-application-stage
+      class="w-1/4"
+      [name]="'project'"
+      [number]="4"
+      [completed]="
+        user.application?.projectSaved &&
+        userService.checkApplicationProgress(user, 'project')
+      "
+    ></app-application-stage>
+  </div>
+</div>

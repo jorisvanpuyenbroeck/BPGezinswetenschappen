@@ -1,0 +1,84 @@
+<app-project-requirements *ngIf="!canProposeProject"></app-project-requirements>
+<div *ngIf="canProposeProject" class="container mx-auto mt-8 mb-8">
+    <div class="container mx-auto">
+
+    <div
+            *ngIf="isSubmitted && errorMessage"
+            class="rounded p-4 mb-4 text-lg bg-red-200 text-red-800 border-2 border-red-300"
+    >
+        {{ errorMessage }}
+    </div>
+      <mat-card class="p-4">
+        <mat-card-title>Your Project</mat-card-title>
+        <mat-card-subtitle>Name: {{project.student.name}}</mat-card-subtitle>
+        <mat-card-subtitle>Id: {{project.student.sub}}</mat-card-subtitle>
+        <mat-card-subtitle>Organisation: {{project.organisation.name}}</mat-card-subtitle>
+          <mat-card-subtitle>Topics: <div class="label" *ngFor="let topic of project.topics">{{topic.name}}</div></mat-card-subtitle>
+        <form #projectForm="ngForm" (ngSubmit)="onSubmit()">
+            <div class="m-1 mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900" for="title"
+                >Title</label
+                >
+                <input
+                    #title="ngModel"
+                    [(ngModel)]="project.title"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    id="title"
+                    name="title"
+                    value="{{project.proposal.title}}"
+                    required
+                    type="text"
+                />
+                <div [hidden]="title.valid || title.pristine" class="text-red-500 mt-2">
+                    Title is required
+                </div>
+            </div>
+            <div class="m-1 mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900" for="title"
+                >Description</label
+                >
+                <textarea
+                    #description="ngModel"
+                    [(ngModel)]="project.description"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    cols="40"
+                    id="description"
+                    name="description"
+                    value="{{project.proposal.description}}"
+                    required
+                    rows="4"
+                    type="text"
+                ></textarea>
+                <div
+                        [hidden]="description.valid || description.pristine"
+                        class="text-red-500 mt-2"
+                >
+                    Description is required
+                </div>
+            </div>
+
+            <button
+                    *ngIf="isAdd"
+                    class="m-1 text-white bg-blue-700 enabled:hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:opacity-75"
+                    type="submit"
+            >
+                Create my project
+            </button>
+            <button
+                    *ngIf="isEdit"
+                    [disabled]="!projectForm.form.valid || isSubmitted"
+                    class="m-1 text-white bg-blue-700 enabled:hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:opacity-75"
+                    type="submit"
+            >
+                Save my project
+            </button>
+            <button
+                    class="m-1 text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:opacity-75"
+                    (click)="goBack()"
+            >
+                Cancel
+            </button>
+        </form>
+    </mat-card>
+  </div>
+</div>

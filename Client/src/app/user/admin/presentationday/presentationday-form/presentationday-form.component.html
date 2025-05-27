@@ -1,0 +1,64 @@
+<div class="container mx-auto mt-8 mb-8">
+  <div
+    *ngIf="isSubmitted && errorMessage"
+    class="rounded p-4 mb-4 text-lg bg-red-200 text-red-800 border-2 border-red-300"
+  >
+    {{ errorMessage }}
+  </div>
+  <form #presentationDayForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="m-1 mb-6">
+      <label class="block mb-2 text-sm font-medium text-gray-900" for="date"
+        >Date</label
+      >
+      <input
+        #date="ngModel"
+        [(ngModel)]="presentationDay.date"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        id="date"
+        name="date"
+        placeholder="Date (YYYY-MM-DD)"
+        required
+        type="date"
+      />
+      <div [hidden]="date.valid || date.pristine" class="text-red-500 mt-2">
+        Date is required
+      </div>
+    </div>
+    <div class="m-1 mb-6">
+      <label
+        class="block mb-2 text-sm font-medium text-gray-900"
+        for="examPeriodId"
+        >Exam Period</label
+      >
+      <select
+        #examPeriodId="ngModel"
+        [(ngModel)]="presentationDay.examPeriodId"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        id="examPeriodId"
+        name="examPeriodId"
+        required
+      >
+        <option
+          *ngFor="let examPeriod of examPeriods"
+          [value]="examPeriod.examPeriodId"
+        >
+          {{ examPeriod.name }}
+        </option>
+      </select>
+      <div
+        [hidden]="examPeriodId.valid || examPeriodId.pristine"
+        class="text-red-500 mt-2"
+      >
+        Exam Period is required
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        class="px-4 py-2 rounded-md bg-blue-200 hover:bg-blue-300 text-blue-800 font-medium"
+      >
+        {{ isAdd ? "Create" : "Save" }} presentation day
+      </button>
+    </div>
+  </form>
+</div>

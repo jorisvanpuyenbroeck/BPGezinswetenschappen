@@ -1,0 +1,47 @@
+<div class="bg-gray-100 p-4">
+    <div *ngIf="!isAuthenticated()">
+        <h1 class="text-xl font-medium text-black mb-3">Please sign up or log in.</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
+            <div class="bg-white rounded p-4">
+                <h2>As a student, you can:</h2>
+                <ul class="list-disc pl-5">
+                    <li>Browse through topics and themes that interest you</li>
+                    <li>Mark proposals from teachers as interesting and save them in your preference selection</li>
+                    <li>View organization files and also indicate your preference here</li>
+                    <li>Finally, you can propose and submit a project description and title tailored to your needs</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded p-4">
+                <h2>As a mentor in the field organization, you can:</h2>
+                <ul class="list-disc pl-5">
+                    <li>Offer your own organization as a possible project place</li>
+                    <li>Browse through the topics on which students can make a project</li>
+                    <li>Submit a proposal for a project that you want to supervise</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded p-4">
+                <h2>As a coach, you can:</h2>
+                <ul class="list-disc pl-5">
+                    <li>Browse through topics and themes that interest you</li>
+                    <li>Mark proposals from teachers as interesting and save them in your preference selection</li>
+                    <li>View organization files and also indicate your preference here</li>
+                    <li>Finally, you can propose and submit a project description and title tailored to your needs</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded p-4">
+                <h2>As an admin...</h2>
+                <p> ... you can do all of the above and more!</p>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="isAuthenticated()">
+    <h1>Welcome {{ user.givenName }}</h1>
+    <app-admin-home *ngIf="isAdmin()"></app-admin-home>
+    <app-student-home *ngIf="isStudent()"></app-student-home>
+    <app-mentor-home *ngIf="isMentor()"></app-mentor-home>
+    <app-coach-home *ngIf="isCoach()"></app-coach-home>
+    </div>
+</div>
+

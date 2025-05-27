@@ -1,0 +1,40 @@
+.triangle-green {
+    @apply absolute top-0 right-0 w-8 h-8 bg-transparent;
+    &::after {
+        content: "";
+        @apply absolute top-0 right-0 w-8 h-8 bg-orange-300 rounded;
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+    }
+}
+
+.triangle-red {
+    @apply absolute top-0 right-0 w-8 h-8 bg-transparent;
+    &::after {
+        content: "";
+        @apply absolute top-0 right-0 w-8 h-8 bg-green-300 rounded;
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+    }
+}
+
+.triangle-blue {
+    @apply absolute top-0 right-0 w-8 h-8 bg-transparent;
+    &::after {
+        content: "";
+        @apply absolute top-0 right-0 w-8 h-8 bg-blue-300 rounded;
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+    }
+}
+
+
+
+.icon {
+    font-size: 16px; /* Adjust the size as needed */
+    color: transparent; /* This makes the fill color transparent */
+    -webkit-text-stroke: 1px grey; /* This creates a grey outline */
+}
+
+
+
+.label {
+    @apply inline-block py-1 px-2 mr-2 mb-2 border rounded;
+}
