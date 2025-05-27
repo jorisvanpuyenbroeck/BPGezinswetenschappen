@@ -16,8 +16,8 @@ namespace DAL.Models
         public int? PresentationDayId { get; set; }
         public PresentationDay? PresentationDay { get; set; }
 
-        public int? ClassRoomId { get; set; }
-        public ClassRoom? Classroom { get; set; }
+        public int? ClassroomId { get; set; }
+        public Classroom? Classroom { get; set; }
 
         public ICollection<PresentationSlot> Presentations { get; set; } = new List<PresentationSlot>();
         public ICollection<UserSlot> Availabilities { get; set; } = new List<UserSlot>();

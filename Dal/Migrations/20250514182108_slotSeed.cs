@@ -11,13 +11,13 @@ namespace BPGezinswetenschappen.DAL.Migrations
         {
             var slots = new object[42 * 12, 4]; // 42 presentation days × 12 slots/day
             int index = 0;
-            int classroomCount = 9;
+            int ClassroomCount = 9;
 
             for (int dayId = 1; dayId <= 42; dayId++)
             {
                 var startTime = new DateTime(2025, 1, 1, 9, 0, 0); // date is arbitrary here
                 int slotCount = 0;
-                int classroomCycle = 0;
+                int ClassroomCycle = 0;
 
                 while (slotCount < 12)
                 {
@@ -32,18 +32,18 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     slots[index, 0] = startTime;
                     slots[index, 1] = endTime;
                     slots[index, 2] = dayId;
-                    slots[index, 3] = (classroomCycle % classroomCount) + 1;
+                    slots[index, 3] = (ClassroomCycle % ClassroomCount) + 1;
 
                     startTime = endTime;
                     slotCount++;
-                    classroomCycle++;
+                    ClassroomCycle++;
                     index++;
                 }
             }
 
             migrationBuilder.InsertData(
                 table: "Slots",
-                columns: new[] { "StartTime", "EndTime", "PresentationDayId", "ClassRoomId" },
+                columns: new[] { "StartTime", "EndTime", "PresentationDayId", "ClassroomId" },
                 values: slots
             );
         }

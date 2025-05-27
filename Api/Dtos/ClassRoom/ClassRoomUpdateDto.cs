@@ -1,6 +1,6 @@
-namespace BPGezinswetenschappen.API.Dtos.ClassRoom
+namespace BPGezinswetenschappen.API.Dtos.Classroom
 {
-    public class ClassRoomUpdateDto
+    public class ClassroomUpdateDto
     {
         public string Name { get; set; }
         public string Level { get; set; }

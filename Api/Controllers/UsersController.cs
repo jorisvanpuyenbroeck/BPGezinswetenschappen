@@ -1,5 +1,7 @@
-﻿using BPGezinswetenschappen.DAL.Data;
+﻿using AutoMapper;
+using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,48 +13,47 @@ namespace BPGezinswetenschappen.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public UsersController(BPContext context)
+        public UsersController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Users
         // [Authorize(Policy = "GetAllUsers")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
         }
 
         // GET: api/Users/5
         // [Authorize(Policy = "GetUser")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserReadDto>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
-
             if (user == null)
             {
                 return NotFound();
             }
-
-            return user;
+            return Ok(_mapper.Map<UserReadDto>(user));
         }
 
         // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "UpdateUser")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
         {
-            if (id != user.UserId)
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(user).State = EntityState.Modified;
-
+            _mapper.Map(userUpdateDto, user);
             try
             {
                 await _context.SaveChangesAsync();
@@ -68,20 +69,19 @@ namespace BPGezinswetenschappen.API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "CreateUser")]
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<UserReadDto>> PostUser(UserCreateDto userCreateDto)
         {
+            var user = _mapper.Map<User>(userCreateDto);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            var result = _mapper.Map<UserReadDto>(user);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, result);
         }
 
         // DELETE: api/Users/5
@@ -94,10 +94,8 @@ namespace BPGezinswetenschappen.API.Controllers
             {
                 return NotFound();
             }
-
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

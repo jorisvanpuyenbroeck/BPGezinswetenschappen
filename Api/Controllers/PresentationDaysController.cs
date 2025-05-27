@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.PresentationDay;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BPGezinswetenschappen.DAL.Data;
 using DAL.Models;
 
 namespace API.Controllers
@@ -15,52 +19,51 @@ namespace API.Controllers
     public class PresentationDaysController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public PresentationDaysController(BPContext context)
+        public PresentationDaysController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/PresentationDays
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PresentationDay>>> GetPresentationDays()
+        public async Task<ActionResult<IEnumerable<PresentationDayReadDto>>> GetPresentationDays()
         {
-            return await _context.PresentationDays.ToListAsync();
+            var days = await _context.PresentationDays.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<PresentationDayReadDto>>(days));
         }
 
         // GET: api/PresentationDays/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PresentationDay>> GetPresentationDay(int id)
+        public async Task<ActionResult<PresentationDayReadDto>> GetPresentationDay(int id)
         {
-            var presentationDay = await _context.PresentationDays.FindAsync(id);
-
-            if (presentationDay == null)
+            var day = await _context.PresentationDays.FindAsync(id);
+            if (day == null)
             {
                 return NotFound();
             }
-
-            return presentationDay;
+            return Ok(_mapper.Map<PresentationDayReadDto>(day));
         }
 
         // PUT: api/PresentationDays/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPresentationDay(int id, PresentationDay presentationDay)
+        public async Task<IActionResult> PutPresentationDay(int id, PresentationDayUpdateDto updateDto)
         {
-            if (id != presentationDay.PresentationDayId)
+            var day = await _context.PresentationDays.FindAsync(id);
+            if (day == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(presentationDay).State = EntityState.Modified;
-
+            _mapper.Map(updateDto, day);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PresentationDayExists(id))
+                if (!_context.PresentationDays.Any(e => e.PresentationDayId == id))
                 {
                     return NotFound();
                 }
@@ -69,34 +72,31 @@ namespace API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/PresentationDays
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PresentationDay>> PostPresentationDay(PresentationDay presentationDay)
+        public async Task<ActionResult<PresentationDayReadDto>> PostPresentationDay(PresentationDayCreateDto createDto)
         {
-            _context.PresentationDays.Add(presentationDay);
+            var day = _mapper.Map<PresentationDay>(createDto);
+            _context.PresentationDays.Add(day);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPresentationDay", new { id = presentationDay.PresentationDayId }, presentationDay);
+            var result = _mapper.Map<PresentationDayReadDto>(day);
+            return CreatedAtAction("GetPresentationDay", new { id = day.PresentationDayId }, result);
         }
 
         // DELETE: api/PresentationDays/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePresentationDay(int id)
         {
-            var presentationDay = await _context.PresentationDays.FindAsync(id);
-            if (presentationDay == null)
+            var day = await _context.PresentationDays.FindAsync(id);
+            if (day == null)
             {
                 return NotFound();
             }
-
-            _context.PresentationDays.Remove(presentationDay);
+            _context.PresentationDays.Remove(day);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

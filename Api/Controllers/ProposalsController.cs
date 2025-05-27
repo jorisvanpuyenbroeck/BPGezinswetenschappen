@@ -1,5 +1,7 @@
-﻿using BPGezinswetenschappen.DAL.Data;
+﻿using AutoMapper;
+using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.Proposal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,74 +16,61 @@ namespace BPGezinswetenschappen.API.Controllers
     public class ProposalsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public ProposalsController(BPContext context)
+        public ProposalsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Proposals
         // [Authorize(Policy = "GetAllProposals")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Proposal>>> GetProposals()
+        public async Task<ActionResult<IEnumerable<ProposalReadDto>>> GetProposals()
         {
-
-            return await _context.Proposals
-                .Include(x => x.Topics)
-                .ToListAsync();
+            var proposals = await _context.Proposals.Include(x => x.Topics).ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<ProposalReadDto>>(proposals));
         }
 
         // GET: api/Proposals/by-topic
-
         // [Authorize(Policy = "GetAllProposals")]
         [HttpGet("by-topic")]
-        public async Task<ActionResult<IEnumerable<Proposal>>> GetProposalsByTopicIds([FromQuery] List<int> topicIds)
+        public async Task<ActionResult<IEnumerable<ProposalReadDto>>> GetProposalsByTopicIds([FromQuery] List<int> topicIds)
         {
-            IQueryable<Proposal> query = _context.Proposals
-                .Include(x => x.Topics);
-
+            IQueryable<Proposal> query = _context.Proposals.Include(x => x.Topics);
             if (topicIds != null && topicIds.Any())
             {
-                // Fetch proposals filtered by topicIds
                 query = query.Where(p => p.Topics.Any(t => topicIds.Contains(t.TopicId)));
             }
-
             var filteredProposals = await query.ToListAsync();
-            return filteredProposals;
+            return Ok(_mapper.Map<IEnumerable<ProposalReadDto>>(filteredProposals));
         }
-
 
         // GET: api/Proposals/5
         // [Authorize(Policy = "GetProposal")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Proposal>> GetProposal(int id)
+        public async Task<ActionResult<ProposalReadDto>> GetProposal(int id)
         {
-            var proposal = await _context.Proposals
-                .Include(p => p.Projects)
-                .Include(p => p.Topics)
-                .FirstOrDefaultAsync(p => p.ProposalId == id);
-
+            var proposal = await _context.Proposals.Include(p => p.Projects).Include(p => p.Topics).FirstOrDefaultAsync(p => p.ProposalId == id);
             if (proposal == null)
             {
                 return NotFound();
             }
-
-            return proposal;
+            return Ok(_mapper.Map<ProposalReadDto>(proposal));
         }
 
         // PUT: api/Proposals/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "UpdateProposal")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProposal(int id, Proposal proposal)
+        public async Task<IActionResult> PutProposal(int id, ProposalUpdateDto proposalUpdateDto)
         {
-            if (id != proposal.ProposalId)
+            var proposal = await _context.Proposals.FindAsync(id);
+            if (proposal == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(proposal).State = EntityState.Modified;
-
+            _mapper.Map(proposalUpdateDto, proposal);
             try
             {
                 await _context.SaveChangesAsync();
@@ -97,40 +86,20 @@ namespace BPGezinswetenschappen.API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Proposals
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "CreateProposal")]
         [HttpPost]
-        public async Task<ActionResult<Proposal>> PostProposal(Proposal proposal)
+        public async Task<ActionResult<ProposalReadDto>> PostProposal(ProposalCreateDto proposalCreateDto)
         {
-            // Fetch the Topic objects based on the incoming Topic IDs
-            if (proposal.Topics != null)
-            {
-                var topicIds = proposal.Topics.Select(t => t.TopicId).ToList();
-                proposal.Topics = new List<Topic>();
-
-                foreach (var id in topicIds)
-                {
-                    var topic = await _context.Topics.FindAsync(id);
-                    if (topic != null)
-                    {
-                        proposal.Topics.Add(topic);
-                    }
-                }
-            }
-
+            var proposal = _mapper.Map<Proposal>(proposalCreateDto);
             _context.Proposals.Add(proposal);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProposal", new { id = proposal.ProposalId }, proposal);
+            var result = _mapper.Map<ProposalReadDto>(proposal);
+            return CreatedAtAction("GetProposal", new { id = proposal.ProposalId }, result);
         }
-
-
-
 
         // DELETE: api/Proposals/5
         // [Authorize(Policy = "DeleteProposal")]
@@ -142,10 +111,8 @@ namespace BPGezinswetenschappen.API.Controllers
             {
                 return NotFound();
             }
-
             _context.Proposals.Remove(proposal);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

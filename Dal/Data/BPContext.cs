@@ -14,7 +14,7 @@ namespace BPGezinswetenschappen.DAL.Data
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Year> Years { get; set; }
-        public DbSet<ClassRoom> Classrooms { get; set; }
+        public DbSet<Classroom> Classrooms { get; set; }
         public DbSet<ExamPeriod> ExamPeriods { get; set; }
         public DbSet<PresentationDay> PresentationDays { get; set; }
         public DbSet<Presentation> Presentations { get; set; }
@@ -43,13 +43,13 @@ namespace BPGezinswetenschappen.DAL.Data
             modelBuilder.Entity<ExamPeriod>().ToTable("ExamPeriods");
             modelBuilder.Entity<PresentationDay>().ToTable("PresentationDays");
             modelBuilder.Entity<Presentation>().ToTable("Presentations");
-            modelBuilder.Entity<ClassRoom>().ToTable("ClassRoom");
+            modelBuilder.Entity<Classroom>().ToTable("Classroom");
             modelBuilder.Entity<Role>().ToTable("Roles");
 
             modelBuilder.Entity<Slot>().ToTable("Slots")
                 .HasOne(s => s.Classroom)
                 .WithMany(c => c.Slots)
-                .HasForeignKey(s => s.ClassRoomId);
+                .HasForeignKey(s => s.ClassroomId);
 
             modelBuilder.Entity<Slot>().ToTable("Slots")
                 .HasOne(s => s.PresentationDay)

@@ -13,6 +13,6 @@ namespace BPGezinswetenschappen.API.Dtos.Slot
         
         public int? PresentationDayId { get; set; }
         
-        public int? ClassRoomId { get; set; }
+        public int? ClassroomId { get; set; }
     }
 }

@@ -5,12 +5,12 @@
 namespace BPGezinswetenschappen.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class classRoomSeed : Migration
+    public partial class ClassroomSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "ClassRoom",
+                table: "Classroom",
                 columns: new[] { "Name", "Level" },
                 values: new object[,]
                 {
@@ -29,7 +29,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "ClassRoom",
+                table: "Classroom",
                 keyColumn: "Name",
                 keyValues: new object[]
                 {

@@ -14,6 +14,6 @@ namespace DAL.Models
         public int YearId { get; set; }
         public Year Year { get; set; }
 
-        public ICollection<PresentationDay>? PresentationDays { get; set; } = new List<PresentationDay>();
+        public ICollection<DAL.Models.PresentationDay>? PresentationDays { get; set; } = new List<DAL.Models.PresentationDay>();
     }
 }

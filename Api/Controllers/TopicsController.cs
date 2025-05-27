@@ -2,6 +2,7 @@
 using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
 using BPGezinswetenschappen.API.Dtos;
+using BPGezinswetenschappen.API.Dtos.Topic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,40 +26,43 @@ namespace BPGezinswetenschappen.API.Controllers
         // GET: api/Topics
         // [Authorize(Policy = "GetAllTopics")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
+        public async Task<ActionResult<IEnumerable<TopicReadDto>>> GetTopics()
         {
-            return await _context.Topics
+            var topics = await _context.Topics
                 .Include(t => t.Proposals)
                 .ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<TopicReadDto>>(topics));
         }
 
         // GET: api/Topics/5
         // [Authorize(Policy = "GetTopic")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Topic>> GetTopic(int id)
+        public async Task<ActionResult<TopicReadDto>> GetTopic(int id)
         {
-            var topic = await _context.Topics.FindAsync(id);
+            var topic = await _context.Topics
+                .Include(t => t.Proposals)
+                .FirstOrDefaultAsync(t => t.TopicId == id);
 
             if (topic == null)
             {
                 return NotFound();
             }
 
-            return topic;
+            return Ok(_mapper.Map<TopicReadDto>(topic));
         }
 
         // PUT: api/Topics/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "UpdateTopic")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTopic(int id, Topic topic)
+        public async Task<IActionResult> PutTopic(int id, TopicUpdateDto topicUpdateDto)
         {
-            if (id != topic.TopicId)
+            var topic = await _context.Topics.FindAsync(id);
+            if (topic == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(topic).State = EntityState.Modified;
+            _mapper.Map(topicUpdateDto, topic);
 
             try
             {
@@ -80,16 +84,15 @@ namespace BPGezinswetenschappen.API.Controllers
         }
 
         // POST: api/Topics
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "CreateTopic")]
         [HttpPost]
-        public async Task<ActionResult<TopicDto>> PostTopic(TopicDto topicDto)
+        public async Task<ActionResult<TopicReadDto>> PostTopic(TopicCreateDto topicCreateDto)
         {
-            var topic = _mapper.Map<Topic>(topicDto);
+            var topic = _mapper.Map<Topic>(topicCreateDto);
             _context.Topics.Add(topic);
             await _context.SaveChangesAsync();
 
-            var result = _mapper.Map<TopicDto>(topic);
+            var result = _mapper.Map<TopicReadDto>(topic);
             return CreatedAtAction("GetTopic", new { id = topic.TopicId }, result);
         }
 

@@ -1,5 +1,7 @@
-﻿using BPGezinswetenschappen.DAL.Data;
+﻿using AutoMapper;
+using BPGezinswetenschappen.DAL.Data;
 using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,31 +14,34 @@ namespace BPGezinswetenschappen.API.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public ProjectsController(BPContext context)
+        public ProjectsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Projects
         // [Authorize(Policy = "GetAllProjects")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
+        public async Task<ActionResult<IEnumerable<ProjectReadDto>>> GetProjects()
         {
-            return await _context.Projects
+            var projects = await _context.Projects
                 .Include(p => p.Student)
                 .Include(p => p.Coach)
                 .Include(p => p.Organisation)
                 .Include(p => p.Proposal)
                 .Include(p => p.Topics)
                 .ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<ProjectReadDto>>(projects));
         }
 
 
         // GET: api/Projects/5
         // [Authorize(Policy = "GetProject")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProject(int id)
+        public async Task<ActionResult<ProjectReadDto>> GetProject(int id)
         {
             var project = await _context.Projects
                 .Include(p => p.Student)
@@ -51,22 +56,20 @@ namespace BPGezinswetenschappen.API.Controllers
                 return NotFound();
             }
 
-            return project;
+            return Ok(_mapper.Map<ProjectReadDto>(project));
         }
 
         // PUT: api/Projects/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "UpdateProject")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProject(int id, Project project)
+        public async Task<IActionResult> PutProject(int id, ProjectUpdateDto projectUpdateDto)
         {
-            if (id != project.ProjectId)
+            var project = await _context.Projects.FindAsync(id);
+            if (project == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(project).State = EntityState.Modified;
-
+            _mapper.Map(projectUpdateDto, project);
             try
             {
                 await _context.SaveChangesAsync();
@@ -82,39 +85,19 @@ namespace BPGezinswetenschappen.API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Projects
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // [Authorize(Policy = "CreateProject")]
         [HttpPost]
-        public async Task<ActionResult<Project>> PostProject(Project project)
+        public async Task<ActionResult<ProjectReadDto>> PostProject(ProjectCreateDto projectCreateDto)
         {
-
-            Console.WriteLine("arrived at PostProject");
-
-            // Fetch the Topic objects based on the incoming Topic IDs
-            if (project.Topics != null)
-            {
-                var topicIds = project.Topics.Select(t => t.TopicId).ToList();
-                project.Topics = new List<Topic>();
-
-                foreach (var id in topicIds)
-                {
-                    var topic = await _context.Topics.FindAsync(id);
-                    if (topic != null)
-                    {
-                        project.Topics.Add(topic);
-                    }
-                }
-            }
-
+            var project = _mapper.Map<Project>(projectCreateDto);
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProject", new { id = project.ProjectId }, project);
+            var result = _mapper.Map<ProjectReadDto>(project);
+            return CreatedAtAction("GetProject", new { id = project.ProjectId }, result);
         }
 
         // DELETE: api/Projects/5
@@ -127,10 +110,8 @@ namespace BPGezinswetenschappen.API.Controllers
             {
                 return NotFound();
             }
-
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

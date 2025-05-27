@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using BPGezinswetenschappen.API.Dtos.ClassRoom;
+using BPGezinswetenschappen.API.Dtos.Classroom;
 using BPGezinswetenschappen.API.Dtos.PresentationDay;
 using BPGezinswetenschappen.API.Dtos.PresentationSlot;
 using BPGezinswetenschappen.API.Dtos.UserSlot;
@@ -16,8 +16,8 @@ namespace BPGezinswetenschappen.API.Dtos.Slot
         public int? PresentationDayId { get; set; }
         public PresentationDayReadDto PresentationDay { get; set; }
         
-        public int? ClassRoomId { get; set; }
-        public ClassRoomReadDto Classroom { get; set; }
+        public int? ClassroomId { get; set; }
+        public ClassroomReadDto Classroom { get; set; }
         
         public ICollection<PresentationSlotReadDto> Presentations { get; set; }
         public ICollection<UserSlotReadDto> Availabilities { get; set; }

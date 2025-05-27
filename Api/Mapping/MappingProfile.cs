@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BPGezinswetenschappen.API.Dtos;
-using BPGezinswetenschappen.API.Dtos.ClassRoom;
+using BPGezinswetenschappen.API.Dtos.Classroom;
 using BPGezinswetenschappen.API.Dtos.ExamPeriod;
 using BPGezinswetenschappen.API.Dtos.Organisation;
 using BPGezinswetenschappen.API.Dtos.Presentation;
@@ -83,12 +83,12 @@ namespace BPGezinswetenschappen.API.Mapping
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             CreateMap<PresentationDay, PresentationDayDetailDto>();
 
-            // ClassRoom mappings
-            CreateMap<ClassRoom, ClassRoomReadDto>();
-            CreateMap<ClassRoomCreateDto, ClassRoom>();
-            CreateMap<ClassRoomUpdateDto, ClassRoom>()
+            // Classroom mappings
+            CreateMap<Classroom, ClassroomReadDto>();
+            CreateMap<ClassroomCreateDto, Classroom>();
+            CreateMap<ClassroomUpdateDto, Classroom>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            CreateMap<ClassRoom, ClassRoomDetailDto>();
+            CreateMap<Classroom, ClassroomDetailDto>();
 
             // Slot mappings
             CreateMap<Slot, SlotReadDto>();

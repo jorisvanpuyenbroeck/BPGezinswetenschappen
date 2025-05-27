@@ -223,7 +223,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Models.ClassRoom", b =>
+            modelBuilder.Entity("DAL.Models.Classroom", b =>
                 {
                     b.Property<int>("ClassroomId")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("ClassroomId");
 
-                    b.ToTable("ClassRoom", (string)null);
+                    b.ToTable("Classroom", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Models.ExamPeriod", b =>
@@ -329,7 +329,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SlotId"));
 
-                    b.Property<int?>("ClassRoomId")
+                    b.Property<int?>("ClassroomId")
                         .HasColumnType("int");
 
                     b.Property<TimeSpan>("EndTime")
@@ -343,7 +343,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
                     b.HasKey("SlotId");
 
-                    b.HasIndex("ClassRoomId");
+                    b.HasIndex("ClassroomId");
 
                     b.HasIndex("PresentationDayId");
 
@@ -493,9 +493,9 @@ namespace BPGezinswetenschappen.DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Slot", b =>
                 {
-                    b.HasOne("DAL.Models.ClassRoom", "Classroom")
+                    b.HasOne("DAL.Models.Classroom", "Classroom")
                         .WithMany("Slots")
-                        .HasForeignKey("ClassRoomId");
+                        .HasForeignKey("ClassroomId");
 
                     b.HasOne("DAL.Models.PresentationDay", "PresentationDay")
                         .WithMany()
@@ -574,7 +574,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     b.Navigation("StudentProjects");
                 });
 
-            modelBuilder.Entity("DAL.Models.ClassRoom", b =>
+            modelBuilder.Entity("DAL.Models.Classroom", b =>
                 {
                     b.Navigation("Slots");
                 });

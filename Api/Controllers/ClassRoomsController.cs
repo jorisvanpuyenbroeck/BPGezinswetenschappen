@@ -2,65 +2,67 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.Classroom;
 using DAL.Models;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClassRoomsController : ControllerBase
+    public class ClassroomsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public ClassRoomsController(BPContext context)
+        public ClassroomsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: api/ClassRooms
+        // GET: api/Classrooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClassRoom>>> GetClassrooms()
+        public async Task<ActionResult<IEnumerable<ClassroomReadDto>>> GetClassrooms()
         {
-            return await _context.Classrooms.ToListAsync();
+            var classrooms = await _context.Classrooms.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<ClassroomReadDto>>(classrooms));
         }
 
-        // GET: api/ClassRooms/5
+        // GET: api/Classrooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClassRoom>> GetClassRoom(int id)
+        public async Task<ActionResult<ClassroomReadDto>> GetClassroom(int id)
         {
-            var classRoom = await _context.Classrooms.FindAsync(id);
-
-            if (classRoom == null)
+            var classroom = await _context.Classrooms.FindAsync(id);
+            if (classroom == null)
             {
                 return NotFound();
             }
-
-            return classRoom;
+            return Ok(_mapper.Map<ClassroomReadDto>(classroom));
         }
 
-        // PUT: api/ClassRooms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: api/Classrooms/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClassRoom(int id, ClassRoom classRoom)
+        public async Task<IActionResult> PutClassroom(int id, ClassroomUpdateDto classroomUpdateDto)
         {
-            if (id != classRoom.ClassroomId)
+            var classroom = await _context.Classrooms.FindAsync(id);
+            if (classroom == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(classRoom).State = EntityState.Modified;
-
+            _mapper.Map(classroomUpdateDto, classroom);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClassRoomExists(id))
+                if (!_context.Classrooms.Any(e => e.ClassroomId == id))
                 {
                     return NotFound();
                 }
@@ -69,38 +71,35 @@ namespace API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
-        // POST: api/ClassRooms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Classrooms
         [HttpPost]
-        public async Task<ActionResult<ClassRoom>> PostClassRoom(ClassRoom classRoom)
+        public async Task<ActionResult<ClassroomReadDto>> PostClassroom(ClassroomCreateDto classroomCreateDto)
         {
-            _context.Classrooms.Add(classRoom);
+            var classroom = _mapper.Map<Classroom>(classroomCreateDto);
+            _context.Classrooms.Add(classroom);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetClassRoom", new { id = classRoom.ClassroomId }, classRoom);
+            var result = _mapper.Map<ClassroomReadDto>(classroom);
+            return CreatedAtAction("GetClassroom", new { id = classroom.ClassroomId }, result);
         }
 
-        // DELETE: api/ClassRooms/5
+        // DELETE: api/Classrooms/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClassRoom(int id)
+        public async Task<IActionResult> DeleteClassroom(int id)
         {
-            var classRoom = await _context.Classrooms.FindAsync(id);
-            if (classRoom == null)
+            var classroom = await _context.Classrooms.FindAsync(id);
+            if (classroom == null)
             {
                 return NotFound();
             }
-
-            _context.Classrooms.Remove(classRoom);
+            _context.Classrooms.Remove(classroom);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
-        private bool ClassRoomExists(int id)
+        private bool ClassroomExists(int id)
         {
             return _context.Classrooms.Any(e => e.ClassroomId == id);
         }

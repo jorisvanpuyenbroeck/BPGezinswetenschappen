@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.Presentation;
+using AutoMapper;
 using DAL.Models;
 
 namespace API.Controllers
@@ -15,54 +18,51 @@ namespace API.Controllers
     public class PresentationsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public PresentationsController(BPContext context)
+        public PresentationsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Presentations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Presentation>>> GetPresentations()
+        public async Task<ActionResult<IEnumerable<PresentationReadDto>>> GetPresentations()
         {
-            return await _context.Presentations
-                .Include(p => p.Slots)
-                .ToListAsync();
+            var presentations = await _context.Presentations.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<PresentationReadDto>>(presentations));
         }
 
         // GET: api/Presentations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Presentation>> GetPresentation(int id)
+        public async Task<ActionResult<PresentationReadDto>> GetPresentation(int id)
         {
             var presentation = await _context.Presentations.FindAsync(id);
-
             if (presentation == null)
             {
                 return NotFound();
             }
-
-            return presentation;
+            return Ok(_mapper.Map<PresentationReadDto>(presentation));
         }
 
         // PUT: api/Presentations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPresentation(int id, Presentation presentation)
+        public async Task<IActionResult> PutPresentation(int id, PresentationUpdateDto updateDto)
         {
-            if (id != presentation.PresentationId)
+            var presentation = await _context.Presentations.FindAsync(id);
+            if (presentation == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(presentation).State = EntityState.Modified;
-
+            _mapper.Map(updateDto, presentation);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PresentationExists(id))
+                if (!_context.Presentations.Any(e => e.PresentationId == id))
                 {
                     return NotFound();
                 }
@@ -71,19 +71,18 @@ namespace API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Presentations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Presentation>> PostPresentation(Presentation presentation)
+        public async Task<ActionResult<PresentationReadDto>> PostPresentation(PresentationCreateDto createDto)
         {
+            var presentation = _mapper.Map<Presentation>(createDto);
             _context.Presentations.Add(presentation);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPresentation", new { id = presentation.PresentationId }, presentation);
+            var result = _mapper.Map<PresentationReadDto>(presentation);
+            return CreatedAtAction("GetPresentation", new { id = presentation.PresentationId }, result);
         }
 
         // DELETE: api/Presentations/5
@@ -95,10 +94,8 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
             _context.Presentations.Remove(presentation);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

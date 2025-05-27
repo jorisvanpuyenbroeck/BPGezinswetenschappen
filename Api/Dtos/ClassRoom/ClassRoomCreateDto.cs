@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BPGezinswetenschappen.API.Dtos.ClassRoom
+namespace BPGezinswetenschappen.API.Dtos.Classroom
 {
-    public class ClassRoomCreateDto
+    public class ClassroomCreateDto
     {
         [Required]
         public string Name { get; set; }

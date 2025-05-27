@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.Slot;
 using DAL.Models;
 
 namespace API.Controllers
@@ -15,52 +18,51 @@ namespace API.Controllers
     public class SlotsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public SlotsController(BPContext context)
+        public SlotsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Slots
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Slot>>> GetSlots()
+        public async Task<ActionResult<IEnumerable<SlotReadDto>>> GetSlots()
         {
-            return await _context.Slots.ToListAsync();
+            var slots = await _context.Slots.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<SlotReadDto>>(slots));
         }
 
         // GET: api/Slots/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Slot>> GetSlot(int id)
+        public async Task<ActionResult<SlotReadDto>> GetSlot(int id)
         {
             var slot = await _context.Slots.FindAsync(id);
-
             if (slot == null)
             {
                 return NotFound();
             }
-
-            return slot;
+            return Ok(_mapper.Map<SlotReadDto>(slot));
         }
 
         // PUT: api/Slots/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSlot(int id, Slot slot)
+        public async Task<IActionResult> PutSlot(int id, SlotUpdateDto updateDto)
         {
-            if (id != slot.SlotId)
+            var slot = await _context.Slots.FindAsync(id);
+            if (slot == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(slot).State = EntityState.Modified;
-
+            _mapper.Map(updateDto, slot);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SlotExists(id))
+                if (!_context.Slots.Any(e => e.SlotId == id))
                 {
                     return NotFound();
                 }
@@ -69,19 +71,18 @@ namespace API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Slots
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Slot>> PostSlot(Slot slot)
+        public async Task<ActionResult<SlotReadDto>> PostSlot(SlotCreateDto createDto)
         {
+            var slot = _mapper.Map<Slot>(createDto);
             _context.Slots.Add(slot);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSlot", new { id = slot.SlotId }, slot);
+            var result = _mapper.Map<SlotReadDto>(slot);
+            return CreatedAtAction("GetSlot", new { id = slot.SlotId }, result);
         }
 
         // DELETE: api/Slots/5
@@ -93,10 +94,8 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
             _context.Slots.Remove(slot);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

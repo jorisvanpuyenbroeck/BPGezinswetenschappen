@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using BPGezinswetenschappen.API.Dtos.Slot;
 
-namespace BPGezinswetenschappen.API.Dtos.ClassRoom
+namespace BPGezinswetenschappen.API.Dtos.Classroom
 {
-    public class ClassRoomDetailDto
+    public class ClassroomDetailDto
     {
         public int ClassroomId { get; set; }
         public string Name { get; set; }

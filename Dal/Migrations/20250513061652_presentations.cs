@@ -13,7 +13,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
         {
 
             migrationBuilder.CreateTable(
-                name: "ClassRoom",
+                name: "Classroom",
                 columns: table => new
                 {
                     ClassroomId = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClassRoom", x => x.ClassroomId);
+                    table.PrimaryKey("PK_Classroom", x => x.ClassroomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,15 +88,15 @@ namespace BPGezinswetenschappen.DAL.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PresentationDayId = table.Column<int>(type: "int", nullable: true),
-                    ClassRoomId = table.Column<int>(type: "int", nullable: true)
+                    ClassroomId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Slots", x => x.SlotId);
                     table.ForeignKey(
-                        name: "FK_Slots_ClassRoom_ClassRoomId",
-                        column: x => x.ClassRoomId,
-                        principalTable: "ClassRoom",
+                        name: "FK_Slots_Classroom_ClassroomId",
+                        column: x => x.ClassroomId,
+                        principalTable: "Classroom",
                         principalColumn: "ClassroomId");
                     table.ForeignKey(
                         name: "FK_Slots_PresentationDays_PresentationDayId",
@@ -185,9 +185,9 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Slots_ClassRoomId",
+                name: "IX_Slots_ClassroomId",
                 table: "Slots",
-                column: "ClassRoomId");
+                column: "ClassroomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Slots_PresentationDayId",
@@ -205,7 +205,7 @@ namespace BPGezinswetenschappen.DAL.Migrations
                 name: "Slots");
 
             migrationBuilder.DropTable(
-                name: "ClassRoom");
+                name: "Classroom");
 
             migrationBuilder.DropTable(
                 name: "PresentationDays");

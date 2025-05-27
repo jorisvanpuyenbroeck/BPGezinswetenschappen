@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BPGezinswetenschappen.DAL.Data;
+using BPGezinswetenschappen.DAL.Models;
+using BPGezinswetenschappen.API.Dtos.Year;
+using AutoMapper;
 using DAL.Models;
 
 namespace API.Controllers
@@ -15,57 +18,52 @@ namespace API.Controllers
     public class YearsController : ControllerBase
     {
         private readonly BPContext _context;
+        private readonly IMapper _mapper;
 
-        public YearsController(BPContext context)
+        public YearsController(BPContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Years
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Year>>> GetYears()
+        public async Task<ActionResult<IEnumerable<YearReadDto>>> GetYears()
         {
-            return await _context.Years
-                .Include(y => y.ExamPeriods)
-                .ThenInclude(e => e.PresentationDays)
-                .ToListAsync();
+            var years = await _context.Years.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<YearReadDto>>(years));
         }
 
         // GET: api/Years/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Year>> GetYear(int id)
+        public async Task<ActionResult<YearReadDto>> GetYear(int id)
         {
-            var year = await _context.Years
-                .Include(y => y.ExamPeriods)
-                .FirstOrDefaultAsync(y => y.YearId == id);
-
+            var year = await _context.Years.FindAsync(id);
             if (year == null)
             {
                 return NotFound();
             }
-
-            return year;
+            return Ok(_mapper.Map<YearReadDto>(year));
         }
 
         // PUT: api/Years/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutYear(int id, Year year)
+        public async Task<IActionResult> PutYear(int id, YearUpdateDto updateDto)
         {
-            if (id != year.YearId)
+            var year = await _context.Years.FindAsync(id);
+            if (year == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(year).State = EntityState.Modified;
-
+            _mapper.Map(updateDto, year);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!YearExists(id))
+                if (!_context.Years.Any(e => e.YearId == id))
                 {
                     return NotFound();
                 }
@@ -74,19 +72,19 @@ namespace API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Years
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Year>> PostYear(Year year)
+        public async Task<ActionResult<YearReadDto>> PostYear(YearCreateDto createDto)
         {
+            var year = _mapper.Map<Year>(createDto);
             _context.Years.Add(year);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetYear", new { id = year.YearId }, year);
+            var result = _mapper.Map<YearReadDto>(year);
+            return CreatedAtAction("GetYear", new { id = year.YearId }, result);
         }
 
         // DELETE: api/Years/5
@@ -98,10 +96,8 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
             _context.Years.Remove(year);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
