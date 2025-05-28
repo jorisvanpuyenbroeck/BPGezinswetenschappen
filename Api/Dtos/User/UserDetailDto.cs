@@ -1,4 +1,5 @@
 using BPGezinswetenschappen.API.Dtos.Project;
+using BPGezinswetenschappen.API.Dtos.Topic;
 using System.Collections.Generic;
 
 namespace BPGezinswetenschappen.API.Dtos.User
@@ -17,6 +18,6 @@ namespace BPGezinswetenschappen.API.Dtos.User
         // Related entities
         public IEnumerable<ProjectReadDto> StudentProjects { get; set; }
         public IEnumerable<ProjectReadDto> CoachProjects { get; set; }
-        public IEnumerable<TopicDto> Topics { get; set; }
+        public IEnumerable<TopicReadDto> Topics { get; set; }
     }
 }
