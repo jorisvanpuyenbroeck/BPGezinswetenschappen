@@ -56,9 +56,13 @@
             "regexp": "(.*?)"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": "Compiled successfully|Failed to compile"
           }
         }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
       }
     },
     {
@@ -67,12 +71,36 @@
       "type": "process",
       "args": ["run", "--project", "Api/API.csproj"],
       "problemMatcher": "$msCompile",
-      "isBackground": true
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
     },
     {
       "label": "start-full-stack",
       "dependsOn": ["start-api", "npm: start"],
-      "problemMatcher": []
+      "dependsOrder": "sequence",
+      "problemMatcher": [
+        "$msCompile",
+        {
+          "owner": "typescript",
+          "pattern": "$tsc",
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": {
+              "regexp": "(.*?)"
+            },
+            "endsPattern": {
+              "regexp": "Compiled successfully|Failed to compile"
+            }
+          }
+        }
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
     }
   ]
 }

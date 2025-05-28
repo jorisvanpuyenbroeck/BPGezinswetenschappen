@@ -22,6 +22,7 @@ export interface ProposalReadDto {
   title: string;
   description: string;
   origin?: string;
+  topics?: Topic[];
 }
 
 export interface ProposalUpdateDto {

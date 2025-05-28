@@ -29,16 +29,15 @@ namespace BPGezinswetenschappen.API.Mapping
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            CreateMap<User, UserDetailDto>();
-
-            // Topic mappings
+            CreateMap<User, UserDetailDto>();            // Topic mappings
             CreateMap<Topic, TopicReadDto>();
             CreateMap<TopicCreateDto, Topic>();
             CreateMap<TopicUpdateDto, Topic>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             
             // Proposal mappings
-            CreateMap<Proposal, ProposalReadDto>();
+            CreateMap<Proposal, ProposalReadDto>()
+                .ForMember(dest => dest.Topics, opt => opt.MapFrom(src => src.Topics));
             CreateMap<ProposalCreateDto, Proposal>();
             CreateMap<ProposalUpdateDto, Proposal>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
@@ -57,10 +56,11 @@ namespace BPGezinswetenschappen.API.Mapping
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             
             // Legacy mappings (for backward compatibility)
-            CreateMap<Proposal, ProposalDto>();
-            CreateMap<Topic, TopicDto>().ReverseMap();            CreateMap<Project, ProjectDto>();
-            CreateMap<User, UserDto>();
-            CreateMap<Organisation, OrganisationDto>();
+            CreateMap<Proposal, ProposalReadDto>();
+            CreateMap<Topic, TopicReadDto>().ReverseMap();
+            CreateMap<Project, ProjectReadDto>();
+            CreateMap<User, UserReadDto>();
+            CreateMap<Organisation, OrganisationReadDto>();
 
             // Year mappings
             CreateMap<Year, YearReadDto>();

@@ -18,7 +18,6 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
   proposalId: number = 0;
   origins: string[] = ['student', 'docent', 'werkveld'];
   allTopics: Topic[] = [];
-
   proposal: Proposal = {
     proposalId: 0,
     title: '',
@@ -26,6 +25,9 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
     origin: '',
     topics: [],
   };
+
+  // This will store just the selected topic IDs for the mat-select
+  selectedTopicIds: number[] = [];
 
   isSubmitted: boolean = false;
   errorMessage: string = '';
@@ -49,19 +51,29 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
 
     if (!this.isAdd && !this.isEdit) {
       this.isAdd = true;
-    }
+    } // First get all topics
+    this.allTopicsSubscription = this.topicService
+      .getTopics()
+      .subscribe((result) => {
+        this.allTopics = result;
 
-    if (this.proposalId != null && this.proposalId > 0) {
-      this.proposalSubscription = this.proposalService
-        .getProposalById(this.proposalId)
-        .subscribe((result) => (this.proposal = result));
+        // After getting all topics, fetch the proposal (if editing)
+        if (this.proposalId != null && this.proposalId > 0) {
+          this.proposalSubscription = this.proposalService
+            .getProposalById(this.proposalId)
+            .subscribe((result) => {
+              this.proposal = result;
 
-      // console.log(this.proposal);
-    }
-
-    this.allTopicsSubscription = this.topicService.getTopics().subscribe((result) => {
-      this.allTopics = result.map((t) => t);
-    });
+              // Set the selected topic IDs for the mat-select
+              if (this.proposal.topics && this.proposal.topics.length > 0) {
+                this.selectedTopicIds = this.proposal.topics.map(
+                  (t) => t.topicId
+                );
+                console.log('Selected topic IDs:', this.selectedTopicIds);
+              }
+            });
+        }
+      });
   }
 
   ngOnInit(): void {}
@@ -71,9 +83,20 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
     this.postProposalSubscription.unsubscribe();
     this.putProposalSubscription.unsubscribe();
   }
-
   onSubmit() {
     this.isSubmitted = true;
+
+    // Update the proposal.topics array from the selectedTopicIds
+    if (this.selectedTopicIds && this.selectedTopicIds.length > 0) {
+      this.proposal.topics = this.selectedTopicIds.map((id) => {
+        // Find the full topic object from allTopics
+        const fullTopic = this.allTopics.find((t) => t.topicId === id);
+        return fullTopic || { topicId: id, name: '', description: '' };
+      });
+    } else {
+      this.proposal.topics = [];
+    }
+
     if (this.isAdd) {
       this.postProposalSubscription = this.proposalService
         .postProposal(this.proposal)
@@ -83,19 +106,16 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
         });
     }
     if (this.isEdit) {
-      // console.log(this.proposal);
       this.putProposalSubscription = this.proposalService
         .putProposal(this.proposalId, this.proposal)
         .subscribe({
           next: (v) => this.router.navigateByUrl('/admin/proposal'),
           error: (e) => (this.errorMessage = e.message),
         });
-      //console.log(this.proposal);
     }
   }
 
   goBack() {
     this.location.back();
   }
-
 }
