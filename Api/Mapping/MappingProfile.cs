@@ -29,7 +29,7 @@ namespace BPGezinswetenschappen.API.Mapping
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            CreateMap<User, UserDetailDto>();            // Topic mappings
+            CreateMap<User, UserDetailDto>();            
             CreateMap<Topic, TopicReadDto>();
             CreateMap<TopicCreateDto, Topic>();
             CreateMap<TopicUpdateDto, Topic>()
@@ -55,13 +55,6 @@ namespace BPGezinswetenschappen.API.Mapping
             CreateMap<OrganisationUpdateDto, Organisation>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             
-            // Legacy mappings (for backward compatibility)
-            CreateMap<Proposal, ProposalReadDto>();
-            CreateMap<Topic, TopicReadDto>().ReverseMap();
-            CreateMap<Project, ProjectReadDto>();
-            CreateMap<User, UserReadDto>();
-            CreateMap<Organisation, OrganisationReadDto>();
-
             // Year mappings
             CreateMap<Year, YearReadDto>();
             CreateMap<YearCreateDto, Year>();

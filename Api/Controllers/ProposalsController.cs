@@ -5,6 +5,7 @@ using BPGezinswetenschappen.API.Dtos.Proposal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BPGezinswetenschappen.API.Dtos.Topic;
 
 namespace BPGezinswetenschappen.API.Controllers
 {
@@ -29,8 +30,22 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProposalReadDto>>> GetProposals()
         {
-            var proposals = await _context.Proposals.Include(x => x.Topics).ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<ProposalReadDto>>(proposals));
+            var proposals = await _context.Proposals
+                .Include(x => x.Topics)
+                .Select(t => new ProposalReadDto
+                {
+                    ProposalId = t.ProposalId,
+                    Title = t.Title,
+                    Description = t.Description,
+                    Origin = t.Origin,
+                    Topics = t.Topics.Select(topic => new TopicReadDto
+                    {
+                        TopicId = topic.TopicId,
+                        Name = topic.Name
+                    }).ToList()
+                })
+                .ToListAsync();
+            return Ok(proposals);
         }
 
         // GET: api/Proposals/by-topic
