@@ -96,6 +96,7 @@ namespace BPGezinswetenschappen.API.Controllers
             var project = _mapper.Map<Project>(projectCreateDto);
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
+
             var result = _mapper.Map<ProjectReadDto>(project);
             return CreatedAtAction("GetProject", new { id = project.ProjectId }, result);
         }

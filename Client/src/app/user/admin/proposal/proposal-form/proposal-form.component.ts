@@ -51,7 +51,9 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
 
     if (!this.isAdd && !this.isEdit) {
       this.isAdd = true;
-    } // First get all topics
+    }
+
+    // First get all topics
     this.allTopicsSubscription = this.topicService
       .getTopics()
       .subscribe((result) => {
@@ -62,14 +64,23 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
           this.proposalSubscription = this.proposalService
             .getProposalById(this.proposalId)
             .subscribe((result) => {
-              this.proposal = result;
-
-              // Set the selected topic IDs for the mat-select
+              this.proposal = result; // Set the selected topic IDs for the mat-select
               if (this.proposal.topics && this.proposal.topics.length > 0) {
                 this.selectedTopicIds = this.proposal.topics.map(
                   (t) => t.topicId
                 );
-                console.log('Selected topic IDs:', this.selectedTopicIds);
+                console.log(
+                  'Loaded proposal with topics:',
+                  this.proposal.topics
+                );
+                console.log(
+                  'Mapped to selectedTopicIds:',
+                  this.selectedTopicIds
+                );
+              } else {
+                // Initialize with empty array if no topics
+                this.selectedTopicIds = [];
+                console.log('No topics found for this proposal');
               }
             });
         }
@@ -86,31 +97,52 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isSubmitted = true;
 
-    // Update the proposal.topics array from the selectedTopicIds
-    if (this.selectedTopicIds && this.selectedTopicIds.length > 0) {
-      this.proposal.topics = this.selectedTopicIds.map((id) => {
-        // Find the full topic object from allTopics
-        const fullTopic = this.allTopics.find((t) => t.topicId === id);
-        return fullTopic || { topicId: id, name: '', description: '' };
-      });
-    } else {
-      this.proposal.topics = [];
-    }
+    // Ensure we have valid topic IDs array (not null or undefined)
+    const topicIdsArray = this.selectedTopicIds || [];
 
+    // Create data transfer object for API - same format for both add and edit
+    const proposalDto = {
+      title: this.proposal.title,
+      description: this.proposal.description,
+      origin: this.proposal.origin,
+      topicIds: topicIdsArray,
+    };
     if (this.isAdd) {
+      console.log('Posting proposal with DTO:', proposalDto);
+
       this.postProposalSubscription = this.proposalService
-        .postProposal(this.proposal)
+        .postProposal(proposalDto)
         .subscribe({
-          next: (v) => this.router.navigateByUrl('/admin/proposal'),
-          error: (e) => (this.errorMessage = e.message),
+          next: (v) => {
+            console.log('Proposal created successfully:', v);
+            this.router.navigateByUrl('/admin/proposal');
+          },
+          error: (e) => {
+            console.error('Error creating proposal:', e);
+            this.errorMessage = e.message || 'Error creating proposal';
+          },
         });
     }
     if (this.isEdit) {
+      console.log(
+        'Updating proposal with ID:',
+        this.proposalId,
+        'and DTO:',
+        proposalDto
+      );
+      console.log('Selected topic IDs:', this.selectedTopicIds);
+
       this.putProposalSubscription = this.proposalService
-        .putProposal(this.proposalId, this.proposal)
+        .putProposal(this.proposalId, proposalDto)
         .subscribe({
-          next: (v) => this.router.navigateByUrl('/admin/proposal'),
-          error: (e) => (this.errorMessage = e.message),
+          next: (v) => {
+            console.log('Proposal updated successfully:', v);
+            this.router.navigateByUrl('/admin/proposal');
+          },
+          error: (e) => {
+            console.error('Error updating proposal:', e);
+            this.errorMessage = e.message || 'Error updating proposal';
+          },
         });
     }
   }

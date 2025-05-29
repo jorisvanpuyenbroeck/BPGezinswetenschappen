@@ -34,12 +34,15 @@ namespace BPGezinswetenschappen.API.Mapping
             CreateMap<TopicCreateDto, Topic>();
             CreateMap<TopicUpdateDto, Topic>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            
-            // Proposal mappings
+              // Proposal mappings
             CreateMap<Proposal, ProposalReadDto>()
                 .ForMember(dest => dest.Topics, opt => opt.MapFrom(src => src.Topics));
-            CreateMap<ProposalCreateDto, Proposal>();
+            
+            CreateMap<ProposalCreateDto, Proposal>()
+                .ForMember(dest => dest.Topics, opt => opt.Ignore()); // Topics are handled manually in controller
+            
             CreateMap<ProposalUpdateDto, Proposal>()
+                .ForMember(dest => dest.Topics, opt => opt.Ignore()) // Topics are handled manually in controller
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             
             // Project mappings
