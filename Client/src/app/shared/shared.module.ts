@@ -10,8 +10,10 @@ import { ProposalService } from './services/proposal.service';
 import { ProjectService } from './services/project.service';
 import { UserService } from '../user/user.service';
 import { MaterialModule } from '../layout/material/material.module';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
+  declarations: [TruncatePipe],
   imports: [
     StoreModule,
     CommonModule,
@@ -31,6 +33,7 @@ import { MaterialModule } from '../layout/material/material.module';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
+    TruncatePipe,
   ],
   providers: [
     TopicService,

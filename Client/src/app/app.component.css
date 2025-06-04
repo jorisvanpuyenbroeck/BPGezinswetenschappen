@@ -7,3 +7,38 @@
 .hide {
   display: none;
 }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.main-content {
+  flex: 1;
+}
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+.router-container {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--footer-height); /* Make room for the footer */
+}
+app-copyright {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-index-base);
+}
+app-menu {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-menu);
+}

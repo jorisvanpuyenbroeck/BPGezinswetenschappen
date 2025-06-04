@@ -2,8 +2,25 @@
   margin: 20px;
 }
 
+.topic-list-card {
+  width: 100%;
+  /* Using the list-component-container class from styles.css for consistent sizing */
+}
+
 mat-card {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: calc(
+    100vh - 100px
+  ); /* Adjusted height to fit in viewport with some padding */
+}
+
+mat-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 mat-card-header {
@@ -28,17 +45,37 @@ mat-form-field {
 
 .table-container {
   position: relative;
-  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.table-responsive {
   overflow: auto;
+  flex: 1;
 }
 
 table {
   width: 100%;
 }
 
+mat-paginator {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-index-paginator);
+  background: white;
+  box-shadow: var(--shadow-up-md);
+}
+
 th.mat-header-cell {
   font-weight: bold;
   color: rgba(0, 0, 0, 0.7);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-table-header);
+  background-color: white;
+  box-shadow: var(--shadow-md);
 }
 
 .mat-column-topicId {
@@ -51,6 +88,10 @@ th.mat-header-cell {
 
 .mat-column-description {
   width: 45%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .mat-column-actions {
@@ -60,4 +101,19 @@ th.mat-header-cell {
 
 tr.mat-row:hover {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Custom styling for the description tooltip */
+::ng-deep .description-tooltip {
+  max-width: 400px !important;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px !important;
+  background-color: var(--anthracite-primary);
+  color: white;
+  white-space: pre-wrap;
+  z-index: var(
+    --z-index-tooltip
+  ); /* Ensure tooltips appear above table headers but below menu */
+  box-shadow: var(--shadow-lg);
 }

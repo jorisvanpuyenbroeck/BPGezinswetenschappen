@@ -7,9 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from '@auth0/auth0-angular';
-import { UserModule} from "./user/user.module";
-import { LayoutModule} from "./layout/layout.module";
-import {ApiConfigService} from "./app.config";
+import { UserModule } from './user/user.module';
+import { LayoutModule } from './layout/layout.module';
+import { BodyModule } from './layout/body/body.module';
+import { ApiConfigService } from './app.config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,23 +23,19 @@ import {ApiConfigService} from "./app.config";
         redirect_uri: window.location.origin,
       },
       httpInterceptor: {
-        allowedList: [
-          `${environment.api_url}/*`
-        ]
-      }
+        allowedList: [`${environment.api_url}/*`],
+      },
     }),
     AppRoutingModule,
     SharedModule,
     LayoutModule,
+    BodyModule,
     UserModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
-      multi: true
-    },
-    ApiConfigService
-],
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+    ApiConfigService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

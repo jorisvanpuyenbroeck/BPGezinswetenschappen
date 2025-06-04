@@ -6,22 +6,140 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Z-index hierarchy for consistent stacking across the application */
+  --z-index-base: 1;
+  --z-index-card: 5;
+  --z-index-table-content: 10;
+  --z-index-table-header: 11;
+  --z-index-paginator: 12;
+  --z-index-tooltip: 1001;
+  --z-index-dropdown: 1002;
+  --z-index-modal: 1050;
+  --z-index-menu: 1100;
+
+  /* Shadow definitions for consistency */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-up-md: 0 -2px 5px rgba(0, 0, 0, 0.1);
+
+  /* Color variables */
+  --anthracite-primary: #333333;
+  --error-bg: rgba(244, 67, 54, 0.1);
+  /* Layout variables */
+  --footer-height: 48px;
+  --header-height: 64px;
+  --windows-taskbar-height: 48px; /* Approximate height of Windows 11 taskbar */
+  --content-max-height: calc(
+    100vh - var(--footer-height) - var(--header-height) -
+      var(--windows-taskbar-height)
+  );
+}
+
 html,
 body {
   height: 100%;
-}
-
-body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-html,
-body {
-  height: 100%;
+  padding: 0;
+  overflow: hidden; /* Prevent body scrolling, let individual components handle their scrolling */
 }
 
 body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: calc(100vh - var(--windows-taskbar-height));
+  max-height: calc(100vh - var(--windows-taskbar-height));
+  overflow: hidden;
+  padding-bottom: var(
+    --footer-height
+  ); /* Ensure content doesn't go under the footer */
+  box-sizing: border-box;
+}
+
+/* Fix for mat-card stretching properly */
+mat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Ensure the main content area doesn't overflow the viewport */
+.router-container {
+  max-height: var(--content-max-height);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Add a base class for list component containers */
+.list-component-container {
+  height: calc(
+    100vh - var(--header-height) - var(--footer-height) -
+      var(--windows-taskbar-height) - 24px
+  ); /* 24px for padding */
+  max-height: calc(
+    100vh - var(--header-height) - var(--footer-height) -
+      var(--windows-taskbar-height) - 24px
+  );
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+/* Ensure Material tables scroll properly */
+.table-container {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fix for table headers and footers */
+mat-paginator {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-index-paginator);
+  background: white;
+  box-shadow: var(--shadow-up-md);
+}
+
+th.mat-header-cell {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-table-header);
+  background-color: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* Ensure menu is on top of other components */
+.main-toolbar {
+  position: sticky !important;
+  top: 0;
+  z-index: var(--z-index-menu) !important;
+}
+
+/* Tooltip should be visible but not overlap the menu */
+.description-tooltip {
+  z-index: var(--z-index-tooltip) !important;
+}
+
+/* Material table improvements */
+th.mat-header-cell {
+  box-shadow: var(--shadow-md);
+}
+
+mat-paginator {
+  box-shadow: var(--shadow-up-md);
+}
+
+/* Error message styling */
+.error-message {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: var(--error-bg);
 }

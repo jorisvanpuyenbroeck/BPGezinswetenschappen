@@ -1,12 +1,13 @@
 .footer-toolbar {
-  padding: 10px 16px;
+  padding: 4px 16px;
   position: relative;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
-  height: auto;
-  min-height: 64px;
+  z-index: var(--z-index-base);
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+  max-height: var(--footer-height);
   font-size: 14px;
 }
 

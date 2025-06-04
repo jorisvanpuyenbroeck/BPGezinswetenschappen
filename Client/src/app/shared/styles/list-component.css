@@ -1,0 +1,149 @@
+/* Common styles for list components with description tooltips */
+::ng-deep .description-tooltip {
+  max-width: 400px !important;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px !important;
+  background-color: var(--anthracite-primary);
+  color: white;
+  white-space: pre-wrap;
+  z-index: var(
+    --z-index-tooltip
+  ); /* Ensure tooltips appear above table headers but below menu */
+  box-shadow: var(--shadow-lg);
+}
+
+.truncated-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* Material table styling */
+.mat-column-description {
+  width: 45%;
+  max-width: 300px;
+}
+
+/* For transition to Material design */
+mat-card {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  /* Height is now controlled by the list-component-container class in styles.css */
+}
+
+mat-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-actions {
+  margin-left: auto;
+}
+
+.filter-container {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.filter-container mat-form-field {
+  width: 100%;
+}
+
+/* Improved styling for search fields without labels */
+.filter-container ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.filter-container ::ng-deep .mat-form-field-flex {
+  align-items: center;
+}
+
+.filter-container ::ng-deep .mat-form-field-infix {
+  border-top: 0;
+  padding: 0.75em 0;
+}
+
+.filter-container ::ng-deep .mat-form-field-underline {
+  bottom: 0;
+}
+
+/* Hide empty space reserved for the label */
+.filter-container
+  ::ng-deep
+  .mat-form-field-appearance-outline
+  .mat-form-field-flex {
+  margin-top: 0;
+}
+
+.table-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.table-responsive {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+  scrollbar-width: thin; /* For Firefox */
+}
+
+table {
+  width: 100%;
+}
+
+mat-paginator {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-index-paginator);
+  background: white;
+  box-shadow: var(--shadow-up-md);
+}
+
+th.mat-header-cell {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.7);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-index-table-header);
+  background-color: white;
+  box-shadow: var(--shadow-md);
+}
+
+tr.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Custom scrollbar styling for consistent look */
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}

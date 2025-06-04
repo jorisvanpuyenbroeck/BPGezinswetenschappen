@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HomeComponent} from "./home/home.component";
-import {AdminModule} from "../../user/admin/admin.module";
-import {StudentModule} from "../../user/student/student.module";
-import {CoachModule} from "../../user/coach/coach.module";
-import {MentorModule} from "../../user/mentor/mentor.module";
-
+import { HomeComponent } from './home/home.component';
+import { AdminModule } from '../../user/admin/admin.module';
+import { StudentModule } from '../../user/student/student.module';
+import { CoachModule } from '../../user/coach/coach.module';
+import { MentorModule } from '../../user/mentor/mentor.module';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -14,8 +14,9 @@ import {MentorModule} from "../../user/mentor/mentor.module";
     AdminModule,
     StudentModule,
     CoachModule,
-    MentorModule
+    MentorModule,
+    MaterialModule, // Import MaterialModule directly instead of via LayoutModule to avoid circular dependency
   ],
-    exports: [HomeComponent]
+  exports: [HomeComponent],
 })
-export class BodyModule { }
+export class BodyModule {}

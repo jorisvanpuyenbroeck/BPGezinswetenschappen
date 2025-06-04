@@ -1,20 +1,11 @@
-<div class="flex flex-col">
-  <!-- <a href="#home">
-    <section id="hero" class="hero bg-cover bg-center h-screen flex items-center" style="background-image: url('assets/pexels-pixabay-267885-1080.jpg');">
-    <div class="container text-white text-center">
-    <div class="px-2 md:text-4xl graduate-regular">Welcome to My Bachelor's project</div>
-    <p class="text-lg mb-8">Choose your path to your bachelor's degree</p>
-    <span class="bg-red-900 hover:bg-red-700 text-white py-2 px-4 rounded-full">Get Started</span>
-    </div>
-    </section>
-  </a> -->
-  <section class="sticky top-0" id="home">
-    <div class="flex flex-col min-h-screen text-black bg-gray-100">
-      <app-menu class="sticky top-0"></app-menu>
+<div class="app-container">
+  <section class="main-content">
+    <div class="content-wrapper">
+      <app-menu></app-menu>
       <app-application-flow
         *ngIf="isAuthenticated() && isStudent()"
       ></app-application-flow>
-      <div class="flex-grow">
+      <div class="router-container">
         <router-outlet></router-outlet>
       </div>
       <app-copyright></app-copyright>
