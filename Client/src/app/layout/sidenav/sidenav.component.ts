@@ -1,27 +1,18 @@
-import {
-  Component,
-  signal,
-  OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, signal, OnInit, OnDestroy } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
-import { User } from '../../../shared/models/user';
-import { UserService } from '../../../user/user.service';
+import { User } from '../../shared/models/user';
+import { UserService } from '../../user/user.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.css'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
-  @Output() toggleSidenav = new EventEmitter<void>();
-
+export class SidenavComponent implements OnInit, OnDestroy {
   user: User = {} as User;
   userSubscription: Subscription | undefined;
-  hamburgerOpen = false;
 
   isAuthenticated = signal(false);
   isAdmin = signal(false);
@@ -29,12 +20,10 @@ export class MenuComponent implements OnInit, OnDestroy {
   isStudent = signal(false);
   isMentor = signal(false);
 
-  constructor(public userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.userSubscription = this.userService.userStore$.subscribe((user) => {
-      console.log('menu component initialized');
-      // Update the local user property
       this.user = user;
     });
 
@@ -50,16 +39,8 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.userSubscription.unsubscribe();
     }
   }
-  toggleHamburger(): void {
-    this.hamburgerOpen = !this.hamburgerOpen;
-  }
 
-  onToggleSidenav(): void {
-    this.toggleSidenav.emit();
-  }
-
-  navigateTo(path: string) {
-    this.hamburgerOpen = false;
+  navigateTo(path: string): void {
     this.router.navigate([path]);
   }
 }

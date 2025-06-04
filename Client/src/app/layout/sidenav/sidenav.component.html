@@ -1,0 +1,138 @@
+<div class="sidenav-container">
+  <div class="sidenav-header">
+    <img
+      class="sidenav-logo"
+      src="https://storage.googleapis.com/smartpatrol_media/logo%20MB%20hat.svg"
+      alt="logo"
+    />
+    <h2 class="sidenav-title">
+      <ng-container *ngIf="isAdmin()">Admin Panel</ng-container>
+      <ng-container *ngIf="isCoach()">Coach Panel</ng-container>
+      <ng-container *ngIf="isStudent()">Student Panel</ng-container>
+      <ng-container *ngIf="isMentor()">Mentor Panel</ng-container>
+    </h2>
+  </div>
+
+  <div class="user-info-panel" *ngIf="isAuthenticated()">
+    <div class="user-avatar-container">
+      <img
+        [src]="user.picture"
+        [alt]="user.name"
+        class="user-avatar-large"
+        *ngIf="user.picture"
+      />
+      <mat-icon *ngIf="!user.picture" class="default-avatar-large"
+        >account_circle</mat-icon
+      >
+    </div>
+    <div class="user-details">
+      <span class="user-full-name">{{ user.name }}</span>
+      <span class="user-email">{{ user.email }}</span>
+    </div>
+  </div>
+  <mat-nav-list class="nav-list">
+    <!-- Admin Menu Items -->
+    <ng-container *ngIf="isAdmin()">
+      <a mat-list-item routerLink="/admin/topic" routerLinkActive="active-link">
+        <mat-icon>subject</mat-icon>
+        <span>Topics</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/proposal"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>description</mat-icon>
+        <span>Proposals</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/organisation"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>business</mat-icon>
+        <span>Organisations</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/project"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>work</mat-icon>
+        <span>Projects</span>
+      </a>
+      <a mat-list-item routerLink="/admin/user" routerLinkActive="active-link">
+        <mat-icon>people</mat-icon>
+        <span>Users</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/classroom"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>school</mat-icon>
+        <span>Classrooms</span>
+      </a>
+      <a mat-list-item routerLink="/admin/year" routerLinkActive="active-link">
+        <mat-icon>date_range</mat-icon>
+        <span>Years</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/examperiod"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>event_note</mat-icon>
+        <span>Examperiods</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/presentation"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>slideshow</mat-icon>
+        <span>Presentations</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/admin/presentationday"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>event</mat-icon>
+        <span>Presentation Days</span>
+      </a>
+      <a mat-list-item routerLink="/admin/slot" routerLinkActive="active-link">
+        <mat-icon>schedule</mat-icon>
+        <span>Slots</span>
+      </a>
+    </ng-container>
+
+    <!-- Coach Menu Items -->
+    <ng-container *ngIf="isCoach()">
+      <a mat-list-item routerLink="/coach" routerLinkActive="active-link">
+        <mat-icon>assignment</mat-icon>
+        <span>Your proposal</span>
+      </a>
+    </ng-container>
+
+    <!-- Student Menu Items -->
+    <ng-container *ngIf="isStudent()">
+      <a mat-list-item routerLink="/student" routerLinkActive="active-link">
+        <mat-icon>school</mat-icon>
+        <span>Your dashboard</span>
+      </a>
+    </ng-container>
+
+    <!-- Mentor Menu Items -->
+    <ng-container *ngIf="isMentor()">
+      <a mat-list-item routerLink="/mentor" routerLinkActive="active-link">
+        <mat-icon>business</mat-icon>
+        <span>Your organisation</span>
+      </a>
+    </ng-container>
+  </mat-nav-list>
+
+  <div class="sidenav-footer">
+    <app-logout-button class="sidenav-logout"></app-logout-button>
+  </div>
+</div>

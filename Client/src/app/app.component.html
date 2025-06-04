@@ -1,14 +1,26 @@
 <div class="app-container">
-  <section class="main-content">
-    <div class="content-wrapper">
-      <app-menu></app-menu>
-      <app-application-flow
-        *ngIf="isAuthenticated() && isStudent()"
-      ></app-application-flow>
-      <div class="router-container">
-        <router-outlet></router-outlet>
-      </div>
-      <app-copyright></app-copyright>
-    </div>
-  </section>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      class="app-sidenav"
+      [opened]="sidenavOpen && isAuthenticated()"
+    >
+      <app-sidenav></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <section class="main-content">
+        <div class="content-wrapper">
+          <app-menu (toggleSidenav)="toggleSidenav()"></app-menu>
+          <app-application-flow
+            *ngIf="isAuthenticated() && isStudent()"
+          ></app-application-flow>
+          <div class="router-container">
+            <router-outlet></router-outlet>
+          </div>
+          <app-copyright></app-copyright>
+        </div>
+      </section>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

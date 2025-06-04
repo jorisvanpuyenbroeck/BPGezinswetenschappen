@@ -1,234 +1,43 @@
-<!-- filepath: c:\Users\Joris\src\.net\BPGezinswetenschappen\Client\src\app\layout\header\menu\menu.component.html -->
 <mat-toolbar color="primary" class="main-toolbar">
   <div class="toolbar-container">
     <!-- Logo and Title -->
     <div class="logo-container">
       <a mat-button routerLink="/" class="home-link">
-        <img
+        <!-- <img
           class="logo-image"
           src="https://storage.googleapis.com/smartpatrol_media/logo%20MB%20hat.svg"
           alt="logo"
-        />
-        <!-- <span class="app-title graduate-regular">My bachelor's project</span> -->
+        /> -->
+        <span class="app-title">My bachelor's project</span>
       </a>
     </div>
-
     <!-- Navigation Menu -->
     <div class="nav-menu-container">
-      <!-- Mobile Menu Toggle Button -->
-      <!-- <button
-        mat-icon-button
-        class="menu-toggle-button"
-        aria-label="Toggle menu"
-        (click)="toggleHamburger()"
-        *ngIf="
-          isAuthenticated() &&
-          (isAdmin() || isCoach() || isMentor() || isStudent())
-        "
-      >
-        <mat-icon>{{ hamburgerOpen ? "close" : "menu" }}</mat-icon>
-      </button> -->
-
       <!-- Authenticated User Menu -->
       <ng-container *ngIf="isAuthenticated()">
-        <!-- Student Menu -->
-        <div *ngIf="isStudent()" class="user-menu">
+        <div class="user-menu">
+          <!-- Menu Toggle Button -->
           <button
-            mat-button
-            [matMenuTriggerFor]="studentMenu"
-            class="user-menu-button"
+            mat-icon-button
+            class="menu-toggle-button"
+            aria-label="Toggle menu"
+            (click)="onToggleSidenav()"
+            *ngIf="isAdmin() || isCoach() || isMentor() || isStudent()"
           >
-            <span class="user-name">Student {{ user.name }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
+            <mat-icon>menu</mat-icon>
           </button>
-          <mat-menu
-            #studentMenu="matMenu"
-            xPosition="before"
-            class="user-dropdown"
-          >
-            <div class="menu-header">
-              <div class="user-info">
-                <img
-                  [src]="user.picture"
-                  [alt]="user.name"
-                  class="menu-user-avatar"
-                  *ngIf="user.picture"
-                />
-                <div class="user-details">
-                  <span class="user-full-name">{{ user.name }}</span>
-                  <span class="user-email">{{ user.email }}</span>
-                </div>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-            <app-logout-button></app-logout-button>
-          </mat-menu>
-        </div>
 
-        <!-- Coach Menu -->
-        <div *ngIf="isCoach()" class="user-menu">
-          <button
-            mat-button
-            [matMenuTriggerFor]="coachMenu"
-            class="user-menu-button"
-          >
-            <span class="user-name">Coach {{ user.name }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
+          <!-- User Avatar Button -->
+          <button mat-icon-button class="user-avatar-button">
+            <img
+              [src]="user.picture"
+              [alt]="user.name"
+              class="user-avatar"
+              *ngIf="user.picture"
+            />
+            <mat-icon *ngIf="!user.picture">account_circle</mat-icon>
           </button>
-          <mat-menu
-            #coachMenu="matMenu"
-            xPosition="before"
-            class="user-dropdown"
-          >
-            <div class="menu-header">
-              <div class="user-info">
-                <img
-                  [src]="user.picture"
-                  [alt]="user.name"
-                  class="menu-user-avatar"
-                  *ngIf="user.picture"
-                />
-                <div class="user-details">
-                  <span class="user-full-name">{{ user.name }}</span>
-                  <span class="user-email">{{ user.email }}</span>
-                </div>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="navigateTo('coach')">
-              <mat-icon>assignment</mat-icon>
-              <span>Your proposal</span>
-            </button>
-            <app-logout-button></app-logout-button>
-          </mat-menu>
         </div>
-
-        <!-- Mentor Menu -->
-        <div *ngIf="isMentor()" class="user-menu">
-          <button
-            mat-button
-            [matMenuTriggerFor]="mentorMenu"
-            class="user-menu-button"
-          >
-            <span class="user-name">Mentor {{ user.name }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-          </button>
-          <mat-menu
-            #mentorMenu="matMenu"
-            xPosition="before"
-            class="user-dropdown"
-          >
-            <div class="menu-header">
-              <div class="user-info">
-                <img
-                  [src]="user.picture"
-                  [alt]="user.name"
-                  class="menu-user-avatar"
-                  *ngIf="user.picture"
-                />
-                <div class="user-details">
-                  <span class="user-full-name">{{ user.name }}</span>
-                  <span class="user-email">{{ user.email }}</span>
-                </div>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="navigateTo('mentor')">
-              <mat-icon>business</mat-icon>
-              <span>Your organisation</span>
-            </button>
-            <app-logout-button></app-logout-button>
-          </mat-menu>
-        </div>
-
-        <!-- Admin Menu -->
-        <div *ngIf="isAdmin()" class="user-menu">
-          <button
-            mat-button
-            [matMenuTriggerFor]="adminMenu"
-            class="user-menu-button"
-          >
-            <span class="user-name">Admin {{ user.name }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-          </button>
-          <mat-menu
-            #adminMenu="matMenu"
-            xPosition="before"
-            class="user-dropdown"
-          >
-            <div class="menu-header">
-              <div class="user-info">
-                <img
-                  [src]="user.picture"
-                  [alt]="user.name"
-                  class="menu-user-avatar"
-                  *ngIf="user.picture"
-                />
-                <div class="user-details">
-                  <span class="user-full-name">{{ user.name }}</span>
-                  <span class="user-email">{{ user.email }}</span>
-                </div>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="navigateTo('admin/topic')">
-              <mat-icon>subject</mat-icon>
-              <span>Topics</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/proposal')">
-              <mat-icon>description</mat-icon>
-              <span>Proposals</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/organisation')">
-              <mat-icon>business</mat-icon>
-              <span>Organisations</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/project')">
-              <mat-icon>work</mat-icon>
-              <span>Projects</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/user')">
-              <mat-icon>people</mat-icon>
-              <span>Users</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/classroom')">
-              <mat-icon>school</mat-icon>
-              <span>Classrooms</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/year')">
-              <mat-icon>date_range</mat-icon>
-              <span>Years</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/examperiod')">
-              <mat-icon>event_note</mat-icon>
-              <span>Examperiods</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/presentation')">
-              <mat-icon>slideshow</mat-icon>
-              <span>Presentations</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/presentationday')">
-              <mat-icon>event</mat-icon>
-              <span>Presentation Days</span>
-            </button>
-            <button mat-menu-item (click)="navigateTo('admin/slot')">
-              <mat-icon>schedule</mat-icon>
-              <span>Slots</span>
-            </button>
-            <mat-divider></mat-divider>
-            <app-logout-button></app-logout-button>
-          </mat-menu>
-        </div>
-
-        <!-- User Avatar (visible on desktop) -->
-        <!-- <div class="user-avatar" *ngIf="user.picture">
-          <img
-            [src]="user.picture"
-            [title]="user.email"
-            class="avatar-image"
-            alt="User Image"
-          />
-        </div> -->
       </ng-container>
 
       <!-- Non-authenticated User Menu -->
@@ -239,76 +48,5 @@
         </div>
       </ng-container>
     </div>
-  </div>
-
-  <!-- Mobile Menu (shown when hamburger menu is toggled) -->
-  <div *ngIf="hamburgerOpen" class="mobile-menu">
-    <mat-nav-list>
-      <ng-container *ngIf="isAdmin()">
-        <a mat-list-item (click)="navigateTo('admin/topic')">
-          <mat-icon mat-list-icon>subject</mat-icon>
-          <span>Topics</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/proposal')">
-          <mat-icon mat-list-icon>description</mat-icon>
-          <span>Proposals</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/organisation')">
-          <mat-icon mat-list-icon>business</mat-icon>
-          <span>Organisations</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/project')">
-          <mat-icon mat-list-icon>work</mat-icon>
-          <span>Projects</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/user')">
-          <mat-icon mat-list-icon>people</mat-icon>
-          <span>Users</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/classroom')">
-          <mat-icon mat-list-icon>school</mat-icon>
-          <span>Classrooms</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/year')">
-          <mat-icon mat-list-icon>date_range</mat-icon>
-          <span>Years</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/examperiod')">
-          <mat-icon mat-list-icon>event_note</mat-icon>
-          <span>Examperiods</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/presentation')">
-          <mat-icon mat-list-icon>slideshow</mat-icon>
-          <span>Presentations</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/presentationday')">
-          <mat-icon mat-list-icon>event</mat-icon>
-          <span>Presentation Days</span>
-        </a>
-        <a mat-list-item (click)="navigateTo('admin/slot')">
-          <mat-icon mat-list-icon>schedule</mat-icon>
-          <span>Slots</span>
-        </a>
-      </ng-container>
-
-      <ng-container *ngIf="isCoach()">
-        <a mat-list-item (click)="navigateTo('coach')">
-          <mat-icon mat-list-icon>assignment</mat-icon>
-          <span>Your proposal</span>
-        </a>
-      </ng-container>
-
-      <ng-container *ngIf="isMentor()">
-        <a mat-list-item (click)="navigateTo('mentor')">
-          <mat-icon mat-list-icon>business</mat-icon>
-          <span>Your organisation</span>
-        </a>
-      </ng-container>
-
-      <mat-divider></mat-divider>
-      <a mat-list-item>
-        <app-logout-button></app-logout-button>
-      </a>
-    </mat-nav-list>
   </div>
 </mat-toolbar>

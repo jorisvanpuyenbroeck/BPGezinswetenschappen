@@ -4,6 +4,7 @@ import { FooterModule } from './footer/footer.module';
 import { HeaderModule } from './header/header.module';
 import { MaterialModule } from './material/material.module';
 import { ModalsModule } from './modals/modals.module';
+import { SidenavModule } from './sidenav/sidenav.module';
 
 @NgModule({
   declarations: [],
@@ -13,7 +14,14 @@ import { ModalsModule } from './modals/modals.module';
     HeaderModule,
     MaterialModule,
     ModalsModule,
+    SidenavModule,
   ],
-  exports: [FooterModule, HeaderModule, MaterialModule, ModalsModule],
+  exports: [
+    FooterModule,
+    HeaderModule,
+    MaterialModule,
+    ModalsModule,
+    SidenavModule,
+  ],
 })
 export class LayoutModule {}
