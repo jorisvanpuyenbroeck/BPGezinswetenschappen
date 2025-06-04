@@ -31,15 +31,20 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PresentationDayReadDto>>> GetPresentationDays()
         {
-            var days = await _context.PresentationDays.ToListAsync();
+            var days = await _context.PresentationDays
+                .Include(pd => pd.ExamPeriod)
+                .ThenInclude(ep => ep.Year)
+                .ToListAsync();
             return Ok(_mapper.Map<IEnumerable<PresentationDayReadDto>>(days));
-        }
-
-        // GET: api/PresentationDays/5
+        }        // GET: api/PresentationDays/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PresentationDayReadDto>> GetPresentationDay(int id)
         {
-            var day = await _context.PresentationDays.FindAsync(id);
+            var day = await _context.PresentationDays
+                .Include(pd => pd.ExamPeriod)
+                .ThenInclude(ep => ep.Year)
+                .FirstOrDefaultAsync(pd => pd.PresentationDayId == id);
+                
             if (day == null)
             {
                 return NotFound();

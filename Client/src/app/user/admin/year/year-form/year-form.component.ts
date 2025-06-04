@@ -67,4 +67,8 @@ export class AdminYearFormComponent implements OnInit, OnDestroy {
         });
     }
   }
+
+  goBack() {
+    this.location.back();
+  }
 }

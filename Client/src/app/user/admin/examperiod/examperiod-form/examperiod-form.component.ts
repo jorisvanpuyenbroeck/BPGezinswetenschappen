@@ -88,4 +88,8 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
         });
     }
   }
+
+  goBack() {
+    this.location.back();
+  }
 }

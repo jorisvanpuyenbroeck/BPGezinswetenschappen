@@ -88,4 +88,8 @@ export class PresentationdayFormComponent implements OnInit, OnDestroy {
         });
     }
   }
+
+  goBack() {
+    this.location.back();
+  }
 }

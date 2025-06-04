@@ -25,8 +25,8 @@ export interface User {
 export interface UserCreateDto {
   sub?: string;
   userName?: string;
-  firstName?: string;
-  lastName?: string;
+  givenName?: string;
+  familyName?: string;
   password?: string;
   email?: string;
   programType?: string;
@@ -37,8 +37,8 @@ export interface UserCreateDto {
 export interface UserReadDto {
   userId: number;
   userName: string;
-  firstName: string;
-  lastName: string;
+  givenName: string;
+  familyName: string;
   email: string;
   programType: string;
   userLevel: string;
@@ -47,8 +47,8 @@ export interface UserReadDto {
 
 export interface UserUpdateDto {
   userName?: string;
-  firstName?: string;
-  lastName?: string;
+  givenName?: string;
+  familyName?: string;
   password?: string;
   email?: string;
   programType?: string;

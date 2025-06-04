@@ -1,4 +1,5 @@
 using System;
+using BPGezinswetenschappen.API.Dtos.ExamPeriod;
 
 namespace BPGezinswetenschappen.API.Dtos.PresentationDay
 {
@@ -6,6 +7,6 @@ namespace BPGezinswetenschappen.API.Dtos.PresentationDay
     {
         public int PresentationDayId { get; set; }
         public DateTime Date { get; set; }
-        public int ExamPeriodId { get; set; }
+        public ExamPeriodReadDto ExamPeriod { get; set; }
     }
 }

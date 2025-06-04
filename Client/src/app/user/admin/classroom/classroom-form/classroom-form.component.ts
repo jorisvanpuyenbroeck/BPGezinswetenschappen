@@ -72,4 +72,8 @@ export class AdminClassroomFormComponent implements OnInit, OnDestroy {
         });
     }
   }
+
+  goBack() {
+    this.location.back();
+  }
 }
