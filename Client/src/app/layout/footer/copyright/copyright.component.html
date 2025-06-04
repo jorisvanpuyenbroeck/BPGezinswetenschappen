@@ -1,6 +1,35 @@
 <footer>
-<div class="w-full bg-white p-4 text-center text-neutral-700 border-gray-200 border-t mt-2">
-    <a class="text-neutral-800 dark:text-neutral-400" href="https://www.google.com"
-    >Joris Van Puyenbroeck</a> © 2024
-</div>
+  <mat-toolbar color="primary" class="footer-toolbar">
+    <div class="footer-content">
+      <span>
+        <a
+          mat-button
+          href="https://www.google.com"
+          target="_blank"
+          class="copyright-link"
+        >
+          <mat-icon>copyright</mat-icon>
+          <span>{{ currentYear }} Joris Van Puyenbroeck</span>
+        </a>
+      </span>
+      <span class="spacer"></span>
+      <!-- <app-theme-toggle></app-theme-toggle> -->
+      <a
+        mat-icon-button
+        href="https://www.linkedin.com"
+        target="_blank"
+        aria-label="LinkedIn"
+      >
+        <mat-icon>linkedin</mat-icon>
+      </a>
+      <a
+        mat-icon-button
+        href="https://github.com"
+        target="_blank"
+        aria-label="GitHub"
+      >
+        <mat-icon>code</mat-icon>
+      </a>
+    </div>
+  </mat-toolbar>
 </footer>

@@ -9,25 +9,22 @@
           src="https://storage.googleapis.com/smartpatrol_media/logo%20MB%20hat.svg"
           alt="logo"
         />
-        <!-- <span class="app-title graduate-regular">My bachelor's project</span> -->
+        <span class="app-title graduate-regular">My bachelor's project</span>
       </a>
     </div>
 
     <!-- Navigation Menu -->
     <div class="nav-menu-container">
       <!-- Mobile Menu Toggle Button -->
-      <!-- <button
+      <button
         mat-icon-button
         class="menu-toggle-button"
         aria-label="Toggle menu"
         (click)="toggleHamburger()"
-        *ngIf="
-          isAuthenticated() &&
-          (isAdmin() || isCoach() || isMentor() || isStudent())
-        "
+        *ngIf="isAuthenticated() && (isAdmin() || isCoach() || isMentor() || isStudent())"
       >
-        <mat-icon>{{ hamburgerOpen ? "close" : "menu" }}</mat-icon>
-      </button> -->
+        <mat-icon>{{ hamburgerOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
 
       <!-- Authenticated User Menu -->
       <ng-container *ngIf="isAuthenticated()">
@@ -221,14 +218,14 @@
         </div>
 
         <!-- User Avatar (visible on desktop) -->
-        <!-- <div class="user-avatar" *ngIf="user.picture">
+        <div class="user-avatar" *ngIf="user.picture">
           <img
             [src]="user.picture"
             [title]="user.email"
             class="avatar-image"
             alt="User Image"
           />
-        </div> -->
+        </div>
       </ng-container>
 
       <!-- Non-authenticated User Menu -->

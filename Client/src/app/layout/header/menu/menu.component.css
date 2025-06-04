@@ -1,6 +1,143 @@
 .graduate-regular {
-    font-family: "Graduate", serif;
-    font-weight: 600;
-    font-style: normal;
-    color: darkred;
+  font-family: "Graduate", serif;
+  font-weight: 600;
+  font-style: normal;
+  color: darkred;
+}
+
+.main-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 40px;
+  margin-right: 8px;
+}
+
+.app-title {
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+.nav-menu-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-button {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  margin-right: 8px;
+}
+
+.menu-header {
+  padding: 16px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.menu-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-full-name {
+  font-weight: 500;
+}
+
+.user-email {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+}
+
+.avatar-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Apply the accent color to icons in menu items */
+mat-menu button mat-icon,
+mat-nav-list mat-icon {
+  color: var(--accent-color);
+}
+
+/* Material menu overrides for styling */
+.mat-menu-panel {
+  max-width: 320px !important;
+}
+
+@media (max-width: 768px) {
+  .app-title {
+    font-size: 1rem;
+  }
+
+  .user-avatar {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    display: none;
+  }
 }

@@ -1,22 +1,66 @@
 @use "@angular/material" as mat;
 
 $black-87-opacity: rgba(0, 0, 0, 0.87); // manually define
+$white-87-opacity: rgba(255, 255, 255, 0.87); // for dark theme contrast
 
 @include mat.core();
 
-$dynamic-theme-palette: (
+// Anthracite palette - dark, sophisticated grays
+$anthracite-palette: (
+  50: #f5f5f5,
+  100: #e9e9e9,
+  200: #d2d2d2,
+  300: #b0b0b0,
+  400: #8d8d8d,
+  500: #3a3a3c,
+  // primary - deep anthracite
+  600: #2c2c2e,
+  // darker variant
+  700: #242426,
+  // even darker
+  800: #1c1c1e,
+  // very dark anthracite
+  900: #141416,
+  // almost black
+  A100: #616161,
+  A200: #4a4a4a,
+  // accent - medium anthracite
+  A400: #303030,
+  A700: #212121,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
+
+// Accent color - a subtle slate blue to complement the anthracite
+$accent-slate-palette: (
   50: #e3f2fd,
   100: #bbdefb,
   200: #90caf9,
   300: #64b5f6,
   400: #42a5f5,
-  500: #1d4ed8,
-  600: #1e88e5,
-  700: #1976d2,
-  800: #1565c0,
-  900: #1d4ed8,
+  500: #2586c5,
+  // more subdued blue than original
+  600: #1e6ea5,
+  700: #1a5c8b,
+  800: #164b71,
+  900: #103a57,
   A100: #82b1ff,
-  A200: #1d4ed8,
+  A200: #517fa4,
+  // slate blue accent
   A400: #2979ff,
   A700: #2962ff,
   contrast: (
@@ -37,16 +81,18 @@ $dynamic-theme-palette: (
   ),
 );
 
-$dynamic-theme-primary: mat.define-palette($dynamic-theme-palette, 500);
+// Define the palettes
+$dynamic-theme-primary: mat.define-palette($anthracite-palette, 500);
 $dynamic-theme-accent: mat.define-palette(
-  $dynamic-theme-palette,
+  $accent-slate-palette,
   A200,
   A100,
   A400
 );
 $my-warn: mat.define-palette(mat.$red-palette);
 
-$dynamic-theme: mat.define-light-theme(
+// Create light and dark themes with the anthracite palette
+$anthracite-light-theme: mat.define-light-theme(
   (
     color: (
       primary: $dynamic-theme-primary,
@@ -58,4 +104,59 @@ $dynamic-theme: mat.define-light-theme(
   )
 );
 
-@include mat.all-component-themes($dynamic-theme);
+$anthracite-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dynamic-theme-primary,
+      accent: $dynamic-theme-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// Use the light theme by default
+@include mat.all-component-themes($anthracite-light-theme);
+
+// Custom CSS variables for additional theming options
+:root {
+  --anthracite-primary: #3a3a3c;
+  --anthracite-primary-lighter: #5f5f61;
+  --anthracite-primary-darker: #2c2c2e;
+  --anthracite-accent: #517fa4;
+  --card-background: #f8f8f8;
+  --hover-background: #f0f0f0;
+  --text-primary: #333333;
+  --text-secondary: #5c5c5c;
+  --divider-color: rgba(0, 0, 0, 0.12);
+  --panel-background: #ffffff;
+}
+
+// Optional: Add a class to enable dark theme mode
+.dark-theme {
+  @include mat.all-component-colors($anthracite-dark-theme);
+
+  --card-background: #2c2c2e;
+  --hover-background: #3a3a3c;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --divider-color: rgba(255, 255, 255, 0.12);
+  --panel-background: #1c1c1e;
+}
+
+// Some additional styling for a more anthracite look
+.mat-toolbar.mat-primary {
+  background-color: var(--anthracite-primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.mat-card {
+  background-color: var(--card-background);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-button:not([disabled]):hover {
+  background-color: var(--hover-background);
+}

@@ -1,85 +1,81 @@
-<div class="mat-elevation-z8">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Topics</mat-card-title>
-      <div class="header-actions">
-        <button mat-raised-button color="primary" (click)="add()">
-          <mat-icon>add</mat-icon> Create Topic
-        </button>
-      </div>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="filter-container">
-        <mat-form-field appearance="outline">
-          <mat-label>Filter</mat-label>
-          <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder="Search topics"
-          />
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
-      </div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Topics</mat-card-title>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="add()">
+        <mat-icon>add</mat-icon> Create Topic
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="filter-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search topics"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
 
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" matSort>
-          <!-- ID Column -->
-          <ng-container matColumnDef="topicId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let topic">{{ topic.topicId }}</td>
-          </ng-container>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="topicId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let topic">{{ topic.topicId }}</td>
+        </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let topic">{{ topic.name }}</td>
-          </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let topic">{{ topic.name }}</td>
+        </ng-container>
 
-          <!-- Description Column -->
-          <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Description
-            </th>
-            <td mat-cell *matCellDef="let topic">{{ topic.description }}</td>
-          </ng-container>
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+          <td mat-cell *matCellDef="let topic">{{ topic.description }}</td>
+        </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let topic">
-              <button
-                mat-icon-button
-                color="primary"
-                (click)="edit(topic.topicId)"
-                matTooltip="Edit topic"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                color="warn"
-                (click)="delete(topic.topicId)"
-                matTooltip="Delete topic"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let topic">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="edit(topic.topicId)"
+              matTooltip="Edit topic"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="delete(topic.topicId)"
+              matTooltip="Delete topic"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-          <!-- Row shown when there is no matching data -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter</td>
-          </tr>
-        </table>
+        <!-- Row shown when there is no matching data -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter</td>
+        </tr>
+      </table>
 
-        <mat-paginator
-          [pageSizeOptions]="[5, 10, 25, 100]"
-          aria-label="Select page of topics"
-        ></mat-paginator>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page of topics"
+      ></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
