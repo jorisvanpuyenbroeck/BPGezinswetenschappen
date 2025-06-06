@@ -2,9 +2,9 @@
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "../node_modules/material-icons/iconfont/material-icons.css";
 
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 :root {
   /* Z-index hierarchy for consistent stacking across the application */
