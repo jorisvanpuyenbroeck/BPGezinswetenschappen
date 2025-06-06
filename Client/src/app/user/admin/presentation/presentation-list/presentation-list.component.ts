@@ -24,6 +24,7 @@ export class AdminPresentationListComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Presentation>([]);
   presentations$: Subscription = new Subscription();
   deletePresentation$: Subscription = new Subscription();
+  errorMessage: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
