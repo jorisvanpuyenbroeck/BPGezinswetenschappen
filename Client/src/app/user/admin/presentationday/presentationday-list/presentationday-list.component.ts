@@ -1,8 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PresentationDay } from '../../../../shared/models/presentationday';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { PresentationdayService } from '../../../../shared/services/presentationday.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-presentationday-list',
@@ -10,32 +14,65 @@ import { PresentationdayService } from '../../../../shared/services/presentation
   styleUrls: ['./presentationday-list.component.css'],
 })
 export class PresentationdayListComponent implements OnInit, OnDestroy {
-  presentationdays: PresentationDay[] = [];
+  displayedColumns: string[] = [
+    'presentationDayId',
+    'date',
+    'examPeriod',
+    'year',
+    'actions',
+  ];
+  dataSource = new MatTableDataSource<PresentationDay>([]);
   presentationdays$: Subscription = new Subscription();
   deletePresentationday$: Subscription = new Subscription();
-  errorMessage: string = '';
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private presentationdayService: PresentationdayService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.getPresentationDays();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   ngOnDestroy(): void {
     this.presentationdays$.unsubscribe();
-    this.deletePresentationday$.unsubscribe();
+    if (this.deletePresentationday$) {
+      this.deletePresentationday$.unsubscribe();
+    }
   }
 
   getPresentationDays() {
     this.presentationdays$ = this.presentationdayService
       .getPresentationDays()
       .subscribe({
-        next: (result) => (this.presentationdays = result),
-        error: (err) => (this.errorMessage = err.message),
+        next: (result) => {
+          this.dataSource.data = result;
+        },
+        error: (error) => {
+          this.showNotification(
+            'Error loading presentation days: ' + error.message,
+            'error'
+          );
+        },
       });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   add() {
@@ -54,8 +91,27 @@ export class PresentationdayListComponent implements OnInit, OnDestroy {
     this.deletePresentationday$ = this.presentationdayService
       .deletePresentationDay(id)
       .subscribe({
-        next: () => this.getPresentationDays(),
-        error: (e) => (this.errorMessage = e.message),
+        next: () => {
+          this.getPresentationDays();
+          this.showNotification(
+            'Presentation day successfully deleted',
+            'success'
+          );
+        },
+        error: (error) => {
+          this.showNotification(
+            'Error deleting presentation day: ' + error.message,
+            'error'
+          );
+        },
       });
+  }
+
+  showNotification(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
   }
 }

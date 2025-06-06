@@ -1,42 +1,96 @@
 <mat-toolbar color="primary" class="main-toolbar">
   <div class="toolbar-container">
-    <!-- Logo and Title -->
+    <!-- Left Side: Logo and Title -->
     <div class="logo-container">
+      <!-- Menu Toggle Button (only for authenticated users) -->
+      <button
+        mat-icon-button
+        class="menu-toggle-button"
+        aria-label="Toggle menu"
+        (click)="onToggleSidenav()"
+        *ngIf="
+          isAuthenticated() &&
+          (isAdmin() || isCoach() || isMentor() || isStudent())
+        "
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <!-- Logo and App Title -->
       <a mat-button routerLink="/" class="home-link">
+        <!-- Uncomment and update src if you have a logo -->
         <!-- <img
           class="logo-image"
-          src="https://storage.googleapis.com/smartpatrol_media/logo%20MB%20hat.svg"
-          alt="logo"
+          src="path/to/your/logo.svg"
+          alt="App Logo"
         /> -->
         <span class="app-title">My bachelor's project</span>
       </a>
     </div>
-    <!-- Navigation Menu -->
+
+    <!-- Right Side: User Menu or Auth Buttons -->
     <div class="nav-menu-container">
       <!-- Authenticated User Menu -->
       <ng-container *ngIf="isAuthenticated()">
         <div class="user-menu">
-          <!-- Menu Toggle Button -->
+          <!-- User Avatar with Dropdown Menu -->
           <button
-            mat-icon-button
-            class="menu-toggle-button"
-            aria-label="Toggle menu"
-            (click)="onToggleSidenav()"
-            *ngIf="isAdmin() || isCoach() || isMentor() || isStudent()"
+            mat-button
+            [matMenuTriggerFor]="userMenu"
+            class="user-dropdown-button"
           >
-            <mat-icon>menu</mat-icon>
+            <div class="user-info-container">
+              <span class="user-name" *ngIf="user.name">{{ user.name }}</span>
+              <div class="avatar-container">
+                <img
+                  [src]="user.picture"
+                  [alt]="user.name"
+                  class="user-avatar"
+                  *ngIf="user.picture"
+                />
+                <mat-icon *ngIf="!user.picture">account_circle</mat-icon>
+              </div>
+            </div>
           </button>
 
-          <!-- User Avatar Button -->
-          <button mat-icon-button class="user-avatar-button">
-            <img
-              [src]="user.picture"
-              [alt]="user.name"
-              class="user-avatar"
-              *ngIf="user.picture"
-            />
-            <mat-icon *ngIf="!user.picture">account_circle</mat-icon>
-          </button>
+          <!-- User Dropdown Menu -->
+          <mat-menu
+            #userMenu="matMenu"
+            xPosition="before"
+            class="user-dropdown-menu"
+          >
+            <div class="menu-header">
+              <div class="user-info">
+                <img
+                  [src]="user.picture"
+                  [alt]="user.name"
+                  class="menu-user-avatar"
+                  *ngIf="user.picture"
+                />
+                <mat-icon *ngIf="!user.picture" class="menu-user-avatar-icon"
+                  >account_circle</mat-icon
+                >
+                <div class="user-details">
+                  <span class="user-full-name">{{ user.name }}</span>
+                  <span class="user-email">{{ user.email }}</span>
+                </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="navigateTo('/profile')">
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </button>
+            <button mat-menu-item (click)="navigateTo('/settings')">
+              <mat-icon>settings</mat-icon>
+              <span>Settings</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
         </div>
       </ng-container>
 

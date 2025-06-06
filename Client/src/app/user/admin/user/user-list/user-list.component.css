@@ -1,0 +1,23 @@
+/* Import shared styles */
+@import "../../../../shared/styles/list-component.css";
+
+/* Component-specific styles */
+.mat-column-userId {
+  width: 8%;
+}
+
+.mat-column-userName {
+  width: 20%;
+}
+
+.mat-column-givenName {
+  width: 22%;
+}
+
+.mat-column-familyName {
+  width: 22%;
+}
+
+.mat-column-userLevel {
+  width: 15%;
+}

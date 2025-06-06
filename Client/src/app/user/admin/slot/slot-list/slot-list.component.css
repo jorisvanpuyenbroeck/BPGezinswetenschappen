@@ -1,0 +1,19 @@
+/* Import shared styles */
+@import "../../../../shared/styles/list-component.css";
+
+/* Component-specific styles */
+.mat-column-slotId {
+  width: 10%;
+}
+
+.mat-column-startTime {
+  width: 25%;
+}
+
+.mat-column-endTime {
+  width: 25%;
+}
+
+.mat-column-classroom {
+  width: 25%;
+}

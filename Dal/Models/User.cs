@@ -22,8 +22,11 @@ namespace BPGezinswetenschappen.DAL.Models
         public string? ProgramType { get; set; }
         public string? UserLevel { get; set; }
         public string? Expertise { get; set; }
-        public int? RoleId { get; set; } // FK to UserRole
+        public int? RoleId { get; set; } 
         public Role? Role { get; set; }
+        public int? OrganisationId { get; set; } 
+        public Organisation? Organisation { get; set; } 
+
 
         // navigation property
 

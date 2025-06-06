@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .sidenav-header {
@@ -25,55 +26,11 @@
   font-weight: 500;
 }
 
-.user-info-panel {
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.user-avatar-container {
-  margin-bottom: 12px;
-}
-
-.user-avatar-large {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--anthracite-primary);
-}
-
-.default-avatar-large {
-  font-size: 80px;
-  width: 80px;
-  height: 80px;
-  color: var(--anthracite-primary);
-}
-
-.user-details {
-  text-align: center;
-}
-
-.user-full-name {
-  display: block;
-  font-weight: 500;
-  font-size: 16px;
-}
-
-.user-email {
-  display: block;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
-  margin-top: 4px;
-}
-
 .nav-list {
   margin-top: 0;
-  padding-top: 0;
+  padding-top: 16px; /* Add space at the top of the list */
   flex: 1;
+  overflow-y: auto;
 }
 
 .nav-list a {
@@ -103,19 +60,4 @@
 .nav-list a:hover {
   background-color: rgba(51, 51, 51, 0.05);
   text-decoration: none;
-}
-
-.sidenav-footer {
-  padding: 16px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  margin-top: auto;
-}
-
-.sidenav-logout {
-  width: 100%;
-}
-
-.sidenav-logout ::ng-deep .mat-button {
-  width: 100%;
-  justify-content: center;
 }

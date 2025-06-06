@@ -1,4 +1,4 @@
-<mat-card class="project-list-card list-component-container">
+<mat-card class="list-component-container">
   <mat-card-header>
     <mat-card-title>Projects</mat-card-title>
     <div class="header-actions">
@@ -21,8 +21,7 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
-
-    <div class="table-container">
+    <div class="table-container mat-elevation-z2">
       <div class="table-responsive">
         <table mat-table [dataSource]="dataSource" matSort>
           <!-- ID Column -->
@@ -66,6 +65,7 @@
                 color="primary"
                 (click)="edit(project.projectId)"
                 matTooltip="Edit project"
+                class="compact-button"
               >
                 <mat-icon>edit</mat-icon>
               </button>
@@ -74,6 +74,7 @@
                 color="warn"
                 (click)="delete(project.projectId)"
                 matTooltip="Delete project"
+                class="compact-button"
               >
                 <mat-icon>delete</mat-icon>
               </button>

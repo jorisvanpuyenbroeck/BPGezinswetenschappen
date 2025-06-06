@@ -1,23 +1,49 @@
-/* Common styles for list components with description tooltips */
+/* Common styles for list components */
+/* Host component styling */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* List component container */
+.list-component-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 16px;
+}
+
+/* Description tooltips */
 ::ng-deep .description-tooltip {
   max-width: 400px !important;
   font-size: 14px;
   line-height: 1.5;
   padding: 12px !important;
-  background-color: var(--anthracite-primary);
-  color: white;
+  background-color: white;
+  color: black;
   white-space: pre-wrap;
   z-index: var(
     --z-index-tooltip
   ); /* Ensure tooltips appear above table headers but below menu */
-  box-shadow: var(--shadow-lg);
 }
 
-.truncated-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
+.filter-container {
+  width: 100%;
+  margin-bottom: 8px; /* Reduced margin */
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* Make form fields more compact */
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0.75em;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding: 0.5em 0;
 }
 
 /* Material table styling */
@@ -26,19 +52,28 @@
   max-width: 300px;
 }
 
-/* For transition to Material design */
+/* Ensure actions column has enough width for icons side by side */
+.mat-column-actions {
+  min-width: 110px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Material design layout */
 mat-card {
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
-  /* Height is now controlled by the list-component-container class in styles.css */
+  height: 100%;
 }
 
 mat-card-content {
-  flex: 1;
+  flex: 1 1 auto; /* Allow content to grow and shrink as needed */
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0; /* Essential for proper flex behavior in Firefox */
+  padding-bottom: 0; /* Remove bottom padding to let content fill space */
 }
 
 mat-card-header {
@@ -48,43 +83,20 @@ mat-card-header {
   margin-bottom: 16px;
 }
 
+mat-card-title {
+  margin: 0;
+}
+
 .header-actions {
   margin-left: auto;
 }
 
-.filter-container {
-  width: 100%;
+/* Error message styling */
+.error-message {
   margin-bottom: 16px;
-}
-
-.filter-container mat-form-field {
-  width: 100%;
-}
-
-/* Improved styling for search fields without labels */
-.filter-container ::ng-deep .mat-form-field-wrapper {
-  padding-bottom: 0;
-}
-
-.filter-container ::ng-deep .mat-form-field-flex {
-  align-items: center;
-}
-
-.filter-container ::ng-deep .mat-form-field-infix {
-  border-top: 0;
-  padding: 0.75em 0;
-}
-
-.filter-container ::ng-deep .mat-form-field-underline {
-  bottom: 0;
-}
-
-/* Hide empty space reserved for the label */
-.filter-container
-  ::ng-deep
-  .mat-form-field-appearance-outline
-  .mat-form-field-flex {
-  margin-top: 0;
+  padding: 8px;
+  background-color: rgba(244, 67, 54, 0.1);
+  border-radius: 4px;
 }
 
 .table-container {
@@ -93,6 +105,8 @@ mat-card-header {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0; /* Essential for proper flex behavior in Firefox */
+  margin-bottom: 0; /* Remove bottom margin */
 }
 
 .table-responsive {
@@ -101,18 +115,12 @@ mat-card-header {
   overflow-x: auto;
   position: relative;
   scrollbar-width: thin; /* For Firefox */
+  min-height: 200px; /* Minimum height ensures visibility even when empty */
 }
 
-table {
-  width: 100%;
-}
-
+/* Position paginator at the bottom */
 mat-paginator {
-  position: sticky;
-  bottom: 0;
-  z-index: var(--z-index-paginator);
-  background: white;
-  box-shadow: var(--shadow-up-md);
+  margin-top: auto; /* Push to bottom */
 }
 
 th.mat-header-cell {
@@ -127,23 +135,4 @@ th.mat-header-cell {
 
 tr.mat-row:hover {
   background-color: rgba(0, 0, 0, 0.04);
-}
-
-/* Custom scrollbar styling for consistent look */
-.table-responsive::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.table-responsive::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.table-responsive::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
-}
-
-.table-responsive::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
 }

@@ -15,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatTooltipModule,
     MatListModule,
     MatSidenavModule,
+    MatMenuModule,
+    MatGridListModule,
   ],
   exports: [
     MatCardModule,
@@ -52,6 +56,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatTooltipModule,
     MatListModule,
     MatSidenavModule,
+    MatMenuModule,
+    MatGridListModule,
   ],
 })
 export class MaterialModule {}

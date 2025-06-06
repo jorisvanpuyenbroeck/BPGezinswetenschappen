@@ -26,20 +26,17 @@
 
   /* Color variables */
   --anthracite-primary: #333333;
-  --error-bg: rgba(244, 67, 54, 0.1);
-  /* Layout variables */
-  --footer-height: 48px;
+  --error-bg: rgba(244, 67, 54, 0.1); /* Layout variables */
   --header-height: 64px;
   --windows-taskbar-height: 48px; /* Approximate height of Windows 11 taskbar */
   --content-max-height: calc(
-    100vh - var(--footer-height) - var(--header-height) -
-      var(--windows-taskbar-height)
-  );
+    100vh - var(--header-height)
+  ); /* Full height minus header */
 }
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevent body scrolling, let individual components handle their scrolling */
@@ -47,12 +44,9 @@ body {
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  height: calc(100vh - var(--windows-taskbar-height));
-  max-height: calc(100vh - var(--windows-taskbar-height));
+  height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
-  padding-bottom: var(
-    --footer-height
-  ); /* Ensure content doesn't go under the footer */
   box-sizing: border-box;
 }
 
@@ -67,23 +61,17 @@ mat-card-content {
   overflow: hidden;
 }
 
-/* Ensure the main content area doesn't overflow the viewport */
+/* Ensure the main content area fills available space */
 .router-container {
-  max-height: var(--content-max-height);
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 /* Add a base class for list component containers */
 .list-component-container {
-  height: calc(
-    100vh - var(--header-height) - var(--footer-height) -
-      var(--windows-taskbar-height) - 24px
-  ); /* 24px for padding */
-  max-height: calc(
-    100vh - var(--header-height) - var(--footer-height) -
-      var(--windows-taskbar-height) - 24px
-  );
+  height: calc(100vh - var(--header-height) - 24px); /* 24px for padding */
+  max-height: calc(100vh - var(--header-height) - 24px);
   overflow: hidden;
   display: flex;
   flex-direction: column;

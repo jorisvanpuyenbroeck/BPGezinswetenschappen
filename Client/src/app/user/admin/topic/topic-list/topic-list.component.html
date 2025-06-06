@@ -1,4 +1,4 @@
-<mat-card class="topic-list-card list-component-container">
+<mat-card class="list-component-container">
   <mat-card-header>
     <mat-card-title>Topics</mat-card-title>
     <div class="header-actions">
@@ -18,8 +18,7 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
-
-    <div class="table-container">
+    <div class="table-container mat-elevation-z2">
       <div class="table-responsive">
         <table mat-table [dataSource]="dataSource" matSort>
           <!-- ID Column -->
@@ -63,6 +62,7 @@
                 color="primary"
                 (click)="edit(topic.topicId)"
                 matTooltip="Edit topic"
+                class="compact-button"
               >
                 <mat-icon>edit</mat-icon>
               </button>
@@ -71,6 +71,7 @@
                 color="warn"
                 (click)="delete(topic.topicId)"
                 matTooltip="Delete topic"
+                class="compact-button"
               >
                 <mat-icon>delete</mat-icon>
               </button>
@@ -89,7 +90,6 @@
           </tr>
         </table>
       </div>
-
       <mat-paginator
         [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of topics"

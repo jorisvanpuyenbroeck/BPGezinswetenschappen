@@ -1,0 +1,7 @@
+/* Import shared styles */
+@import "../../../../shared/styles/list-component.css";
+
+/* Component-specific styles */
+.mat-column-presentationId {
+  width: 80px;
+}

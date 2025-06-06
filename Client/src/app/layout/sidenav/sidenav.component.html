@@ -1,34 +1,16 @@
 <div class="sidenav-container">
   <div class="sidenav-header">
-    <img
+    <!-- <img
       class="sidenav-logo"
       src="https://storage.googleapis.com/smartpatrol_media/logo%20MB%20hat.svg"
       alt="logo"
-    />
+    /> -->
     <h2 class="sidenav-title">
       <ng-container *ngIf="isAdmin()">Admin Panel</ng-container>
       <ng-container *ngIf="isCoach()">Coach Panel</ng-container>
       <ng-container *ngIf="isStudent()">Student Panel</ng-container>
       <ng-container *ngIf="isMentor()">Mentor Panel</ng-container>
     </h2>
-  </div>
-
-  <div class="user-info-panel" *ngIf="isAuthenticated()">
-    <div class="user-avatar-container">
-      <img
-        [src]="user.picture"
-        [alt]="user.name"
-        class="user-avatar-large"
-        *ngIf="user.picture"
-      />
-      <mat-icon *ngIf="!user.picture" class="default-avatar-large"
-        >account_circle</mat-icon
-      >
-    </div>
-    <div class="user-details">
-      <span class="user-full-name">{{ user.name }}</span>
-      <span class="user-email">{{ user.email }}</span>
-    </div>
   </div>
   <mat-nav-list class="nav-list">
     <!-- Admin Menu Items -->
@@ -131,8 +113,4 @@
       </a>
     </ng-container>
   </mat-nav-list>
-
-  <div class="sidenav-footer">
-    <app-logout-button class="sidenav-logout"></app-logout-button>
-  </div>
 </div>

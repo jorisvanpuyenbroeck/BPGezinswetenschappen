@@ -36,7 +36,6 @@ export class UserService {
   hasApplicationOneOrganisation: boolean = false;
   hasApplicationOneProposal: boolean = false;
   canProposeProject: boolean = false;
-
   constructor(
     private auth: AuthService,
     private roleService: RoleService,
@@ -63,6 +62,9 @@ export class UserService {
     roleService.hasPermission('isMentor').subscribe((mentor) => {
       this.isMentor.set(mentor);
     });
+  }
+  logout(): void {
+    this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
   }
 
   updateUserState(): void {

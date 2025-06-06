@@ -1,41 +1,7 @@
 /* Import shared styles */
 @import "../../../../shared/styles/list-component.css";
 
-::ng-deep .description-tooltip {
-  max-width: 400px !important;
-  font-size: 14px;
-  line-height: 1.5;
-  padding: 12px !important;
-  background-color: var(--anthracite-primary);
-  color: white;
-  white-space: pre-wrap;
-}
-
-td div.text-sm {
-  max-width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-}
-
 /* Component-specific styles */
-.proposal-list-card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: calc(
-    100vh - 100px
-  ); /* Adjusted height to fit in viewport with some padding */
-}
-
-.error-message {
-  margin-bottom: 16px;
-  padding: 16px;
-  border-radius: 4px;
-  background-color: rgba(244, 67, 54, 0.1);
-}
-
 .mat-column-proposalId {
   width: 8%;
 }
@@ -53,14 +19,9 @@ td div.text-sm {
 }
 
 .mat-column-origin {
-  width: 12%;
+  width: 15%;
 }
 
 .mat-column-topics {
   width: 15%;
-}
-
-.mat-column-actions {
-  width: 15%;
-  text-align: center;
 }

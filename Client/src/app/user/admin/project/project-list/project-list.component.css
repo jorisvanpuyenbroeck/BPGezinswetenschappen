@@ -2,22 +2,6 @@
 @import "../../../../shared/styles/list-component.css";
 
 /* Component-specific styles */
-.project-list-card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: calc(
-    100vh - 100px
-  ); /* Adjusted height to fit in viewport with some padding */
-}
-
-.error-message {
-  margin-bottom: 16px;
-  padding: 16px;
-  border-radius: 4px;
-  background-color: rgba(244, 67, 54, 0.1);
-}
-
 .mat-column-projectId {
   width: 10%;
 }
@@ -34,19 +18,18 @@
   cursor: pointer;
 }
 
-.mat-column-actions {
-  width: 15%;
-  text-align: center;
+/* Specific styles not covered in shared CSS */
+.compact-button {
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
-::ng-deep .description-tooltip {
-  max-width: 400px !important;
-  font-size: 14px;
-  line-height: 1.5;
-  padding: 12px !important;
-  background-color: var(--anthracite-primary);
-  color: white;
-  white-space: pre-wrap;
+.compact-button .mat-icon {
+  font-size: 18px;
+  line-height: 18px;
+  width: 18px;
+  height: 18px;
 }
 
 td div.text-sm {

@@ -57,9 +57,13 @@ export class MenuComponent implements OnInit, OnDestroy {
   onToggleSidenav(): void {
     this.toggleSidenav.emit();
   }
-
   navigateTo(path: string) {
     this.hamburgerOpen = false;
     this.router.navigate([path]);
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/']);
   }
 }

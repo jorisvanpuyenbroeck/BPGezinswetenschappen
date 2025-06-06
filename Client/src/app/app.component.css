@@ -11,12 +11,12 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  height: 100%;
+  height: 100vh; /* Use viewport height instead of percentage */
 }
 
 .sidenav-container {
-  flex: 1;
-  height: 100vh;
+  flex: 1 1 auto;
+  height: 100%;
 }
 
 .app-sidenav {
@@ -36,24 +36,19 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
   background-color: #f5f5f5;
 }
 .router-container {
-  flex: 1;
+  flex: 1 1 auto;
   padding: 0;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: var(--footer-height); /* Make room for the footer */
+  height: 100%;
 }
-app-copyright {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: var(--z-index-base);
-}
+/* Footer removed */
 app-menu {
   position: sticky;
   top: 0;
