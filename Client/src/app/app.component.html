@@ -2,9 +2,9 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav
       #sidenav
-      mode="side"
+      [mode]="isMobile ? 'over' : 'side'"
       class="app-sidenav"
-      [opened]="sidenavOpen && isAuthenticated()"
+      [opened]="!isMobile && sidenavOpen && isAuthenticated()"
     >
       <app-sidenav></app-sidenav>
     </mat-sidenav>

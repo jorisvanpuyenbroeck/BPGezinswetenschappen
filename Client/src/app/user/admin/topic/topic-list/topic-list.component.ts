@@ -1,23 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { Topic } from '../../../../shared/models/topic';
 import { TopicService } from '../../../../shared/services/topic.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-topic-list',
   templateUrl: './topic-list.component.html',
   styleUrls: ['./topic-list.component.css'],
 })
-export class AdminTopicListComponent implements OnInit {
-  displayedColumns: string[] = ['topicId', 'name', 'description', 'actions'];
+export class AdminTopicListComponent implements OnInit, OnDestroy {
+  // All available columns
+  allColumns: string[] = ['topicId', 'name', 'description', 'actions'];
+  // Default columns - will be updated based on screen size
+  displayedColumns: string[] = this.allColumns;
   dataSource = new MatTableDataSource<Topic>([]);
   topics$: Subscription = new Subscription();
   deleteTopic$: Subscription = new Subscription();
+  isSmallScreen = false;
+  private destroy$ = new Subject<void>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -25,11 +38,14 @@ export class AdminTopicListComponent implements OnInit {
   constructor(
     private topicService: TopicService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
   ) {}
-
   ngOnInit(): void {
     this.getTopics();
+    this.setupResponsiveColumns();
+    // Initial check for current screen size
+    this.checkScreenSize();
   }
 
   ngAfterViewInit() {
@@ -41,6 +57,39 @@ export class AdminTopicListComponent implements OnInit {
     this.topics$.unsubscribe();
     if (this.deleteTopic$) {
       this.deleteTopic$.unsubscribe();
+    }
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // Setup breakpoint observer for responsive behavior
+  setupResponsiveColumns(): void {
+    this.breakpointObserver
+      .observe(['(max-width: 800px)'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        this.isSmallScreen = result.matches;
+        this.updateDisplayedColumns();
+      });
+  }
+
+  // Manual check for screen size
+  @HostListener('window:resize', ['$event'])
+  checkScreenSize(): void {
+    this.isSmallScreen = window.innerWidth < 800;
+    this.updateDisplayedColumns();
+  }
+
+  // Update columns based on screen size
+  updateDisplayedColumns(): void {
+    if (this.isSmallScreen) {
+      // Remove description column on small screens
+      this.displayedColumns = this.allColumns.filter(
+        (column) => column !== 'description'
+      );
+    } else {
+      // Show all columns on larger screens
+      this.displayedColumns = [...this.allColumns];
     }
   }
 

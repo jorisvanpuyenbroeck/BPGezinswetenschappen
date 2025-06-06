@@ -28,6 +28,14 @@
   z-index: var(--z-index-menu);
 }
 
+/* Media query for medium and smaller screens */
+@media (max-width: 768px) {
+  .app-sidenav {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
 .main-content {
   flex: 1;
 }
