@@ -15,7 +15,6 @@ import {
 } from '../../../../shared/models/topic';
 import { TopicService } from '../../../../shared/services/topic.service';
 import { NotificationService } from '../../../../shared/services/notification.service';
-import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericFormComponent } from '../../../../shared/layout/generic-form/generic-form.component';
 import { FormFields } from '../../../../shared/models';
@@ -75,7 +74,6 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private topicService: TopicService,
     private notificationService: NotificationService,
-    private location: Location,
     private fb: FormBuilder
   ) {
     this.initForm();
@@ -160,7 +158,7 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
           this.notificationService.success(message);
           this.savedTopic.emit(savedTopic);
           if (!this.savedTopic.observed) {
-            this.location.back();
+            this.router.navigate(['../'], { relativeTo: this.route });
           }
         },
         error: (error: Error) => {
@@ -178,7 +176,7 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
   onFormCancel(): void {
     this.cancelled.emit();
     if (!this.cancelled.observed) {
-      this.location.back();
+      this.router.navigate(['../'], { relativeTo: this.route });
     }
   }
 }
