@@ -1,14 +1,8 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Topic } from '../../../../shared/models/topic';
 import { TopicService } from '../../../../shared/services/topic.service';
-import { Subscription, Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
@@ -27,9 +21,11 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
   deleteTopic$: Subscription = new Subscription();
 
   @ViewChild(GenericListComponent) genericList!: GenericListComponent;
+
   constructor(
     private topicService: TopicService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
@@ -43,7 +39,8 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
       this.deleteTopic$.unsubscribe();
     }
   }
-  getTopics() {
+
+  getTopics(): void {
     this.topics$ = this.topicService.getTopics().subscribe({
       next: (result) => {
         this.dataSource.data = result;
@@ -55,18 +52,23 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
         );
       },
     });
-  } // Handle events from generic list component
-  onAdd() {
-    this.router.navigate(['admin/topic/form'], { state: { mode: 'add' } });
   }
 
-  onEdit(topic: Topic) {
-    this.router.navigate(['admin/topic/form'], {
+  onAdd(): void {
+    this.router.navigate(['../topic/form'], {
+      relativeTo: this.route,
+      state: { mode: 'add' },
+    });
+  }
+
+  onEdit(topic: Topic): void {
+    this.router.navigate(['../topic/form'], {
+      relativeTo: this.route,
       state: { id: topic.topicId, mode: 'edit' },
     });
   }
 
-  onDelete(topic: Topic) {
+  onDelete(topic: Topic): void {
     this.deleteTopic$ = this.topicService.deleteTopic(topic.topicId).subscribe({
       next: () => {
         this.getTopics();
@@ -81,7 +83,9 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
     });
   }
 
-  showNotification(message: string, action: string = 'Close') {
-    this.genericList?.showNotification(message, action);
+  showNotification(message: string, action: string = 'Close'): void {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 }

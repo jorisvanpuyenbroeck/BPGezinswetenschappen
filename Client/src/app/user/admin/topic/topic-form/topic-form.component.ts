@@ -36,7 +36,6 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
       this._topicId = 0;
       this.isAdd = true;
       this.isEdit = false;
-      this.resetForm();
     }
   }
   get topicId(): number | null {
@@ -127,12 +126,6 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
         this.errorMessage = 'Error loading topic: ' + error.message;
       },
     });
-  }
-
-  private resetForm(): void {
-    this.topic = { topicId: 0, name: '', description: '' };
-    this.topicForm.reset();
-    this.errorMessage = '';
   }
 
   onFormSubmit(formValue: any): void {
