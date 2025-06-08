@@ -1,25 +1,26 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { Proposal } from '../../../../shared/models/proposal';
 import { ProposalService } from '../../../../shared/services/proposal.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { Topic } from '../../../../shared/models/topic';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
 
 @Component({
-  selector: 'app-proposal-list',
+  selector: 'app-admin-proposal-list',
   templateUrl: './proposal-list.component.html',
   styleUrls: ['./proposal-list.component.css'],
 })
-export class AdminProposalListComponent implements OnInit, AfterViewInit {
-  proposals: Proposal[] = [];
-  proposalsSubscription: Subscription = new Subscription();
-  deleteProposalSubscription: Subscription = new Subscription();
-  errorMessage: string = '';
-
-  displayedColumns: string[] = [
+export class AdminProposalListComponent implements OnInit, OnDestroy {
+  // List configuration
+  allColumns: string[] = [
     'proposalId',
     'title',
     'description',
@@ -27,78 +28,71 @@ export class AdminProposalListComponent implements OnInit, AfterViewInit {
     'topics',
     'actions',
   ];
+  hideableColumns: string[] = ['description', 'topics']; // Columns that will be hidden on small screens
   dataSource = new MatTableDataSource<Proposal>([]);
+  proposals$: Subscription = new Subscription();
+  deleteProposal$: Subscription = new Subscription();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
+  @ViewChild(GenericListComponent) genericList!: GenericListComponent;
   constructor(
     private proposalService: ProposalService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.getProposals();
   }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
   ngOnDestroy(): void {
-    this.proposalsSubscription.unsubscribe();
-    if (this.deleteProposalSubscription) {
-      this.deleteProposalSubscription.unsubscribe();
+    this.proposals$.unsubscribe();
+    if (this.deleteProposal$) {
+      this.deleteProposal$.unsubscribe();
     }
   }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   getProposals() {
-    this.proposalsSubscription = this.proposalService.getProposals().subscribe({
+    this.proposals$ = this.proposalService.getProposals().subscribe({
       next: (result) => {
-        this.proposals = result;
-        this.dataSource.data = this.proposals;
+        this.dataSource.data = result;
       },
       error: (error) => {
-        this.errorMessage = 'Failed to load proposals. Please try again later.';
-        console.error('Error loading proposals:', error);
+        this.showNotification(
+          'Error loading proposals: ' + error.message,
+          'Close'
+        );
       },
     });
   }
 
-  add() {
-    //Navigate to form in add mode
+  // Handle events from generic list componentd
+
+  onAdd() {
     this.router.navigate(['admin/proposal/form'], { state: { mode: 'add' } });
   }
 
-  edit(id: number) {
-    //Navigate to form in edit mode
+  onEdit(proposal: Proposal) {
     this.router.navigate(['admin/proposal/form'], {
-      state: { id: id, mode: 'edit' },
+      state: { id: proposal.proposalId, mode: 'edit' },
     });
   }
 
-  delete(id: number) {
-    this.deleteProposalSubscription = this.proposalService
-      .deleteProposal(id)
+  onDelete(proposal: Proposal) {
+    this.deleteProposal$ = this.proposalService
+      .deleteProposal(proposal.proposalId)
       .subscribe({
-        next: (v) => this.getProposals(),
-        error: (e) => (this.errorMessage = e.message),
+        next: () => {
+          this.getProposals();
+          this.showNotification('proposal successfully deleted', 'Close');
+        },
+        error: (error) => {
+          this.showNotification(
+            'Error deleting proposal: ' + error.message,
+            'Close'
+          );
+        },
       });
   }
 
-  getNames(topics: Topic[]) {
-    return topics.map((t) => t.name).join(', ');
+  showNotification(message: string, action: string = 'Close') {
+    this.genericList?.showNotification(message, action);
   }
 }

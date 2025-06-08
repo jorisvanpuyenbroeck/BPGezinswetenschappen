@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminProposalListComponent } from './proposal-list.component';
+import { AdminProposalListComponent } from './proposal-list.component.ts.bak';
 
 describe('ProposalListComponent', () => {
   let component: AdminProposalListComponent;
@@ -8,7 +8,7 @@ describe('ProposalListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AdminProposalListComponent]
+      declarations: [AdminProposalListComponent],
     });
     fixture = TestBed.createComponent(AdminProposalListComponent);
     component = fixture.componentInstance;
