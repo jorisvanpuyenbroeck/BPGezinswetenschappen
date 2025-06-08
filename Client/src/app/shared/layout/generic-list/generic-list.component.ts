@@ -42,10 +42,6 @@ export class GenericListComponent implements OnInit, OnDestroy {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() filter = new EventEmitter<string>();
-  // Template references for custom column templates
-  @ContentChild('idColumnTemplate') idColumnTemplate?: TemplateRef<any>;
-  // We no longer use these templates in the component HTML directly
-  // But we'll keep the ContentChild decorators for potential future use
 
   // Internal state
   isSmallScreen = false;
