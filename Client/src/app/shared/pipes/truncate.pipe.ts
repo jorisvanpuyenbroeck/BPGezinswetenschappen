@@ -1,8 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
+// test
 
 @Pipe({
   name: 'truncate',
-  standalone: false,
+  standalone: true,
 })
 export class TruncatePipe implements PipeTransform {
   transform(

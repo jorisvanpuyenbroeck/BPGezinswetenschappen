@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { CommonModule } from '@angular/common';
-import {environment} from "../../../../environments/environment";
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-logout-button',
   templateUrl: './logout-button.component.html',
-  styleUrls: ['./logout-button.component.css']
+  styleUrls: ['./logout-button.component.css'],
 })
 export class LogoutButtonComponent {
   constructor(private auth: AuthService) {}
@@ -18,5 +18,4 @@ export class LogoutButtonComponent {
       },
     });
   }
-
 }

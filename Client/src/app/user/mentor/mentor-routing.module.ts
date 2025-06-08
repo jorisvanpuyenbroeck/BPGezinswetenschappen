@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {MentorOrganisationFormComponent} from "./organisation-form/organisation-form.component";
-import {HomeComponent} from "../../layout/body/home/home.component";
+import { MentorOrganisationFormComponent } from './organisation-form/organisation-form.component';
+import { HomeComponent } from '../home/home.component';
 
 const routes: Routes = [
-
-  { path: '', component: HomeComponent},
+  { path: '', component: HomeComponent },
   { path: 'organisation/form', component: MentorOrganisationFormComponent },
-
 ];
 
 @NgModule({

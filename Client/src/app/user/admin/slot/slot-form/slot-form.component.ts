@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-slot-form',
-  standalone: true,
-  imports: [],
+  selector: 'app-admin-slot-form',
   templateUrl: './slot-form.component.html',
-  styleUrl: './slot-form.component.css'
+  styleUrl: './slot-form.component.css',
 })
-export class SlotFormComponent {
-
-}
+export class AdminSlotFormComponent {}

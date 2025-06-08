@@ -3,10 +3,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { StudentProposalListComponent } from './proposal/proposal-list/proposal-list.component';
 import { StudentTopicListComponent } from './topic/topic-list/topic-list.component';
 import { StudentOrganisationListComponent } from './organisation/organisation-list/organisation-list.component';
-import { StudentProjectFormComponent } from "./project/project-form/project-form.component";
-import { StudentProposalCardComponent} from "./proposal/proposal-card/proposal-card.component";
-import {LayoutModule} from "../../layout/layout.module";
-import {StudentHomeComponent} from "./home/home.component";
+import { StudentProjectFormComponent } from './project/project-form/project-form.component';
+import { StudentProposalCardComponent } from './proposal/proposal-card/proposal-card.component';
+import { StudentHomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +16,9 @@ import {StudentHomeComponent} from "./home/home.component";
     StudentProjectFormComponent,
     StudentProposalListComponent,
     StudentTopicListComponent,
-    StudentProposalCardComponent
+    StudentProposalCardComponent,
   ],
-  imports: [
-    SharedModule,
-    LayoutModule
-  ],
+  imports: [SharedModule],
   exports: [
     StudentHomeComponent,
     StudentProposalListComponent,
@@ -31,7 +27,7 @@ import {StudentHomeComponent} from "./home/home.component";
     StudentProjectFormComponent,
     StudentProposalListComponent,
     StudentTopicListComponent,
-    StudentProposalCardComponent
+    StudentProposalCardComponent,
   ],
 })
 export class StudentModule {}

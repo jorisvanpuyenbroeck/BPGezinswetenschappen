@@ -1,28 +1,30 @@
 import { NgModule } from '@angular/core';
-import {UserService} from "./user.service";
-import {RoleService} from "./role.service";
-import {AuthService} from "@auth0/auth0-angular";
-import {StudentModule} from "./student/student.module";
-import {MentorModule} from "./mentor/mentor.module";
-import {CoachModule} from "./coach/coach.module";
-import {AdminModule} from "./admin/admin.module";
+import { UserService } from './user.service';
+import { RoleService } from './role.service';
+import { AuthService } from '@auth0/auth0-angular';
+import { StudentModule } from './student/student.module';
+import { MentorModule } from './mentor/mentor.module';
+import { CoachModule } from './coach/coach.module';
+import { AdminModule } from './admin/admin.module';
+import { HomeComponent } from './home/home.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports : [
+  declarations: [HomeComponent],
+  imports: [
     StudentModule,
     MentorModule,
     CoachModule,
-    AdminModule
+    AdminModule,
+    SharedModule,
   ],
-  exports : [
+  exports: [
     StudentModule,
     MentorModule,
     CoachModule,
-    AdminModule
+    AdminModule,
+    HomeComponent,
   ],
-  providers: [
-    UserService, RoleService, AuthService
-  ],
-
+  providers: [UserService, RoleService, AuthService],
 })
-export class UserModule { }
+export class UserModule {}

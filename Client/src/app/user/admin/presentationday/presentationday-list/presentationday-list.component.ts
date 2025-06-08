@@ -9,11 +9,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-presentationday-list',
+  selector: 'app-admin-presentationday-list',
   templateUrl: './presentationday-list.component.html',
   styleUrls: ['./presentationday-list.component.css'],
 })
-export class PresentationdayListComponent implements OnInit, OnDestroy {
+export class AdminPresentationdayListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'presentationDayId',
     'date',

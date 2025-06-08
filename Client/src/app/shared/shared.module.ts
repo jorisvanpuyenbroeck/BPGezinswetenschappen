@@ -9,11 +9,11 @@ import { OrganisationService } from './services/organisation.service';
 import { ProposalService } from './services/proposal.service';
 import { ProjectService } from './services/project.service';
 import { UserService } from '../user/user.service';
-import { MaterialModule } from '../layout/material/material.module';
+import { MaterialModule } from './material/material.module';
+import { LayoutModule } from './layout/layout.module';
 import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
-  declarations: [TruncatePipe],
   imports: [
     StoreModule,
     CommonModule,
@@ -23,6 +23,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
+    LayoutModule,
   ],
   exports: [
     StoreModule,
@@ -33,7 +34,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    TruncatePipe,
+    LayoutModule,
   ],
   providers: [
     TopicService,

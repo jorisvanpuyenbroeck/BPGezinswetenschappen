@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { UserService } from "../../../user/user.service";
-import {first, reduce, take} from "rxjs";
-
+import { UserService } from '../../../../user/user.service';
+import { first, reduce, take } from 'rxjs';
 
 @Component({
   selector: 'app-signup-button',
   templateUrl: './signup-button.component.html',
-  styleUrls: ['./signup-button.component.css']
+  styleUrls: ['./signup-button.component.css'],
 })
 export class SignupButtonComponent {
-  constructor(private auth: AuthService ) {}
+  constructor(private auth: AuthService) {}
 
   handleSignUp(): void {
     this.auth.loginWithRedirect({
@@ -19,7 +18,7 @@ export class SignupButtonComponent {
       },
       authorizationParams: {
         prompt: 'login',
-        screen_hint: "signup",
+        screen_hint: 'signup',
       },
     });
   }
@@ -51,5 +50,4 @@ export class SignupButtonComponent {
   //     }
   //   });
   // }
-
 }

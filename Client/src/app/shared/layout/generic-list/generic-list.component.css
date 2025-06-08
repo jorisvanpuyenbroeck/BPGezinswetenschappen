@@ -1,0 +1,85 @@
+/* Shared list component styles */
+.list-component-container {
+  margin: 16px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-container {
+  padding: 8px;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.filter-container mat-form-field {
+  width: 300px;
+  max-width: 100%;
+}
+
+.table-container {
+  overflow: auto;
+  max-height: calc(100vh - 270px);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.description-tooltip {
+  white-space: pre-line;
+  max-width: 400px;
+}
+
+.compact-button {
+  line-height: 24px;
+  width: 32px;
+  height: 32px;
+}
+
+/* Responsive styles */
+@media (max-width: 800px) {
+  .filter-container mat-form-field {
+    width: 100%;
+  }
+
+  /* Smaller padding on cells for more compact view */
+  .mat-cell,
+  .mat-header-cell {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  /* Ensure action buttons are properly aligned */
+  .compact-button {
+    padding: 0;
+    line-height: 24px;
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Reduce width of ID column */
+  .mat-column-topicId,
+  .mat-column-id,
+  .mat-column-proposalId,
+  .mat-column-projectId {
+    max-width: 50px;
+  }
+}

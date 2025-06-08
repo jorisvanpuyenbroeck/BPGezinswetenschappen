@@ -8,11 +8,11 @@ import { ExamPeriod } from '../../../../shared/models/examperiod';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-presentationday-form',
+  selector: 'app-admin-presentationday-form',
   templateUrl: './presentationday-form.component.html',
   styleUrls: ['./presentationday-form.component.css'],
 })
-export class PresentationdayFormComponent implements OnInit, OnDestroy {
+export class AdminPresentationdayFormComponent implements OnInit, OnDestroy {
   isAdd: boolean = false;
   isEdit: boolean = false;
   presentationDayId: number = 0;

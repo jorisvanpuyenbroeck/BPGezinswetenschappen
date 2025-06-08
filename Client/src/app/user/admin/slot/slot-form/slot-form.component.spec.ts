@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlotFormComponent } from './slot-form.component';
+import { AdminSlotFormComponent } from './slot-form.component';
 
 describe('SlotFormComponent', () => {
-  let component: SlotFormComponent;
-  let fixture: ComponentFixture<SlotFormComponent>;
+  let component: AdminSlotFormComponent;
+  let fixture: ComponentFixture<AdminSlotFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SlotFormComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(SlotFormComponent);
+      imports: [AdminSlotFormComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AdminSlotFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

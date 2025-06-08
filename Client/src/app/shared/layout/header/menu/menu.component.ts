@@ -7,8 +7,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../../shared/models/user';
-import { UserService } from '../../../user/user.service';
+import { User } from '../../../models/user';
+import { UserService } from '../../../../user/user.service';
 import { Subscription } from 'rxjs';
 
 @Component({

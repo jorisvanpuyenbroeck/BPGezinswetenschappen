@@ -1,18 +1,18 @@
 import { Component, signal, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
-import { User } from '../../shared/models/user';
-import { UserService } from '../../user/user.service';
+import { User } from '../../../models/user';
+import { UserService } from '../../../../user/user.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css'],
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css'],
 })
-export class SidenavComponent implements OnInit, OnDestroy {
+export class MenuComponent implements OnInit, OnDestroy {
   user: User = {} as User;
   userSubscription: Subscription | undefined;
+  hamburgerOpen = false;
 
   isAuthenticated = signal(false);
   isAdmin = signal(false);
@@ -20,10 +20,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
   isStudent = signal(false);
   isMentor = signal(false);
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.userSubscription = this.userService.userStore$.subscribe((user) => {
+      console.log('menu component initialized');
+      // Update the local user property
       this.user = user;
     });
 
@@ -40,7 +42,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
     }
   }
 
-  navigateTo(path: string): void {
+  toggleHamburger(): void {
+    this.hamburgerOpen = !this.hamburgerOpen;
+  }
+
+  navigateTo(path: string) {
+    this.hamburgerOpen = false;
     this.router.navigate([path]);
   }
 }

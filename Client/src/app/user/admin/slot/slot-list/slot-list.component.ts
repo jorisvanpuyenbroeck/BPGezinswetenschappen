@@ -15,11 +15,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-slot-list',
+  selector: 'app-admin-slot-list',
   templateUrl: './slot-list.component.html',
   styleUrls: ['./slot-list.component.css'],
 })
-export class SlotListComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AdminSlotListComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   displayedColumns: string[] = [
     'slotId',
     'startTime',

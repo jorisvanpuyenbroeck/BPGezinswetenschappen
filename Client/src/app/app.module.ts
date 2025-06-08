@@ -2,14 +2,11 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from '@auth0/auth0-angular';
 import { UserModule } from './user/user.module';
-import { LayoutModule } from './layout/layout.module';
-import { BodyModule } from './layout/body/body.module';
 import { ApiConfigService } from './app.config';
 
 @NgModule({
@@ -28,8 +25,6 @@ import { ApiConfigService } from './app.config';
     }),
     AppRoutingModule,
     SharedModule,
-    LayoutModule,
-    BodyModule,
     UserModule,
   ],
   providers: [

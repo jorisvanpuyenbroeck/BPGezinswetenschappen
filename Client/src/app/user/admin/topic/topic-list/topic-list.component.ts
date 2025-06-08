@@ -10,11 +10,8 @@ import { TopicService } from '../../../../shared/services/topic.service';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { takeUntil } from 'rxjs/operators';
+import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
 
 @Component({
   selector: 'app-admin-topic-list',
@@ -22,35 +19,22 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./topic-list.component.css'],
 })
 export class AdminTopicListComponent implements OnInit, OnDestroy {
-  // All available columns
+  // List configuration
   allColumns: string[] = ['topicId', 'name', 'description', 'actions'];
-  // Default columns - will be updated based on screen size
-  displayedColumns: string[] = this.allColumns;
+  hideableColumns: string[] = ['description']; // Columns that will be hidden on small screens
   dataSource = new MatTableDataSource<Topic>([]);
   topics$: Subscription = new Subscription();
   deleteTopic$: Subscription = new Subscription();
-  isSmallScreen = false;
-  private destroy$ = new Subject<void>();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
+  @ViewChild(GenericListComponent) genericList!: GenericListComponent;
   constructor(
     private topicService: TopicService,
     private router: Router,
-    private snackBar: MatSnackBar,
-    private breakpointObserver: BreakpointObserver
+    private snackBar: MatSnackBar
   ) {}
+
   ngOnInit(): void {
     this.getTopics();
-    this.setupResponsiveColumns();
-    // Initial check for current screen size
-    this.checkScreenSize();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
@@ -58,41 +42,7 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
     if (this.deleteTopic$) {
       this.deleteTopic$.unsubscribe();
     }
-    this.destroy$.next();
-    this.destroy$.complete();
   }
-
-  // Setup breakpoint observer for responsive behavior
-  setupResponsiveColumns(): void {
-    this.breakpointObserver
-      .observe(['(max-width: 800px)'])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result) => {
-        this.isSmallScreen = result.matches;
-        this.updateDisplayedColumns();
-      });
-  }
-
-  // Manual check for screen size
-  @HostListener('window:resize', ['$event'])
-  checkScreenSize(): void {
-    this.isSmallScreen = window.innerWidth < 800;
-    this.updateDisplayedColumns();
-  }
-
-  // Update columns based on screen size
-  updateDisplayedColumns(): void {
-    if (this.isSmallScreen) {
-      // Remove description column on small screens
-      this.displayedColumns = this.allColumns.filter(
-        (column) => column !== 'description'
-      );
-    } else {
-      // Show all columns on larger screens
-      this.displayedColumns = [...this.allColumns];
-    }
-  }
-
   getTopics() {
     this.topics$ = this.topicService.getTopics().subscribe({
       next: (result) => {
@@ -101,51 +51,39 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.showNotification(
           'Error loading topics: ' + error.message,
-          'error'
+          'Close'
         );
       },
     });
   }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  add() {
-    //Navigate to form in add mode
+  // Handle events from generic list component
+  onAdd() {
     this.router.navigate(['admin/topic/form'], { state: { mode: 'add' } });
   }
 
-  edit(id: number) {
-    //Navigate to form in edit mode
+  onEdit(topic: Topic) {
     this.router.navigate(['admin/topic/form'], {
-      state: { id: id, mode: 'edit' },
+      state: { id: topic.topicId, mode: 'edit' },
     });
   }
-  delete(id: number) {
-    this.deleteTopic$ = this.topicService.deleteTopic(id).subscribe({
+
+  onDelete(topic: Topic) {
+    this.deleteTopic$ = this.topicService.deleteTopic(topic.topicId).subscribe({
       next: () => {
         this.getTopics();
-        this.showNotification('Topic successfully deleted', 'success');
+        this.showNotification('Topic successfully deleted', 'Close');
       },
       error: (error) => {
         this.showNotification(
           'Error deleting topic: ' + error.message,
-          'error'
+          'Close'
         );
       },
     });
   }
 
-  showNotification(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
+  showNotification(message: string, action: string = 'Close') {
+    this.genericList?.showNotification(message, action);
   }
 }

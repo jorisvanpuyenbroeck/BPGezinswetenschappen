@@ -18,10 +18,10 @@ import { AdminExamperiodListComponent } from './examperiod/examperiod-list/examp
 import { AdminExamperiodFormComponent } from './examperiod/examperiod-form/examperiod-form.component';
 import { AdminPresentationListComponent } from './presentation/presentation-list/presentation-list.component';
 import { AdminPresentationFormComponent } from './presentation/presentation-form/presentation-form.component';
-import { PresentationdayListComponent } from './presentationday/presentationday-list/presentationday-list.component';
-import { PresentationdayFormComponent } from './presentationday/presentationday-form/presentationday-form.component';
-import { SlotListComponent } from './slot/slot-list/slot-list.component';
-import { SlotFormComponent } from './slot/slot-form/slot-form.component';
+import { AdminPresentationdayListComponent } from './presentationday/presentationday-list/presentationday-list.component';
+import { AdminPresentationdayFormComponent } from './presentationday/presentationday-form/presentationday-form.component';
+import { AdminSlotListComponent } from './slot/slot-list/slot-list.component';
+import { AdminSlotFormComponent } from './slot/slot-form/slot-form.component';
 
 const routes: Routes = [
   { path: '', component: AdminHomeComponent },
@@ -42,10 +42,13 @@ const routes: Routes = [
   { path: 'examperiod/form', component: AdminExamperiodFormComponent },
   { path: 'presentation', component: AdminPresentationListComponent },
   { path: 'presentation/form', component: AdminPresentationFormComponent },
-  { path: 'presentationday', component: PresentationdayListComponent },
-  { path: 'presentationday/form', component: PresentationdayFormComponent },
-  { path: 'slot', component: SlotListComponent },
-  { path: 'slot/form', component: SlotFormComponent },
+  { path: 'presentationday', component: AdminPresentationdayListComponent },
+  {
+    path: 'presentationday/form',
+    component: AdminPresentationdayFormComponent,
+  },
+  { path: 'slot', component: AdminSlotListComponent },
+  { path: 'slot/form', component: AdminSlotFormComponent },
   //  { path: 'user/form', component: AdminUserFormComponent },
 ];
 
