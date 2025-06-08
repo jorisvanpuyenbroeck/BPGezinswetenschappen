@@ -18,10 +18,7 @@ import { NotificationService } from '../../../../shared/services/notification.se
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericFormComponent } from '../../../../shared/layout/generic-form/generic-form.component';
-import {
-  FormFieldConfig,
-  FormFields,
-} from '../../../../shared/layout/generic-form/form-field.config';
+import { FormFields } from '../../../../shared/models';
 
 interface TopicFormMode {
   isEdit: boolean;

@@ -8,12 +8,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {
-  FormFieldConfig,
-  isTextArea,
-  isSelect,
-  isDate,
-} from './form-field.config';
+import { FormFieldConfig, isTextArea, isSelect, isDate } from '../../models';
 
 @Component({
   selector: 'app-generic-form',

@@ -7,17 +7,14 @@ import {
   HostListener,
   Output,
   EventEmitter,
-  ContentChild,
-  TemplateRef,
 } from '@angular/core';
-import { Subscription, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { takeUntil } from 'rxjs/operators';
-import { TruncatePipe } from '../../pipes/truncate.pipe';
 
 @Component({
   selector: 'app-generic-list',
