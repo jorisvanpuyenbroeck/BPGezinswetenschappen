@@ -9,9 +9,4 @@
   (edit)="onEdit($event)"
   (delete)="onDelete($event)"
 >
-  <!-- Custom template for topicId column -->
-  <ng-template #idColumnTemplate>
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-    <td mat-cell *matCellDef="let item">{{ item.topicId }}</td>
-  </ng-template>
 </app-generic-list>

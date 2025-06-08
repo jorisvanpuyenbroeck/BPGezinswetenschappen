@@ -33,94 +33,60 @@
               "
               [matColumnDef]="column"
             >
-              <ng-container *ngIf="idColumnTemplate; else defaultIdColumn">
-                <ng-container
-                  *ngTemplateOutlet="idColumnTemplate"
-                ></ng-container>
-              </ng-container>
-              <ng-template #defaultIdColumn>
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-                <td mat-cell *matCellDef="let item">{{ item[column] }}</td>
-              </ng-template>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+              <td mat-cell *matCellDef="let item">{{ item[column] }}</td>
             </ng-container>
-
             <!-- Name Column -->
             <ng-container *ngIf="column === 'name'" [matColumnDef]="column">
-              <ng-container *ngIf="nameColumnTemplate; else defaultNameColumn">
-                <ng-container
-                  *ngTemplateOutlet="nameColumnTemplate"
-                ></ng-container>
-              </ng-container>
-              <ng-template #defaultNameColumn>
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-                <td mat-cell *matCellDef="let item">{{ item.name }}</td>
-              </ng-template>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+              <td mat-cell *matCellDef="let item">{{ item.name }}</td>
             </ng-container>
-
             <!-- Description Column -->
             <ng-container
               *ngIf="column === 'description'"
               [matColumnDef]="column"
             >
-              <ng-container
-                *ngIf="descriptionColumnTemplate; else defaultDescriptionColumn"
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Description
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let item"
+                [matTooltip]="item.description"
+                [matTooltipDisabled]="
+                  !item.description || item.description.length <= 100
+                "
+                matTooltipClass="description-tooltip"
+                matTooltipPosition="above"
+                [matTooltipShowDelay]="300"
               >
-                <ng-container
-                  *ngTemplateOutlet="descriptionColumnTemplate"
-                ></ng-container>
-              </ng-container>
-              <ng-template #defaultDescriptionColumn>
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Description
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let item"
-                  [matTooltip]="item.description"
-                  [matTooltipDisabled]="
-                    !item.description || item.description.length <= 100
-                  "
-                  matTooltipClass="description-tooltip"
-                  matTooltipPosition="above"
-                  [matTooltipShowDelay]="300"
-                >
-                  {{ item.description | truncate : 100 : true }}
-                </td>
-              </ng-template>
+                {{ item.description | truncate : 100 : true }}
+              </td>
             </ng-container>
 
             <!-- Actions Column -->
             <ng-container *ngIf="column === 'actions'" [matColumnDef]="column">
-              <ng-container
-                *ngIf="actionsColumnTemplate; else defaultActionsColumn"
-              >
-                <ng-container
-                  *ngTemplateOutlet="actionsColumnTemplate"
-                ></ng-container>
-              </ng-container>
-              <ng-template #defaultActionsColumn>
-                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                <td mat-cell *matCellDef="let item">
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    (click)="onEdit(item)"
-                    matTooltip="Edit item"
-                    class="compact-button"
-                  >
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button
-                    mat-icon-button
-                    color="warn"
-                    (click)="onDelete(item)"
-                    matTooltip="Delete item"
-                    class="compact-button"
-                  >
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </td>
-              </ng-template>
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let item">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="onEdit(item)"
+                  matTooltip="Edit item"
+                  class="compact-button"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="onDelete(item)"
+                  matTooltip="Delete item"
+                  class="compact-button"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
             </ng-container>
           </ng-container>
 

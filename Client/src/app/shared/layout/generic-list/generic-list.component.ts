@@ -32,7 +32,7 @@ export class GenericListComponent implements OnInit, OnDestroy {
   @Input() noDataMessage: string = 'No data matching the filter';
   @Input() dataSource = new MatTableDataSource<any>([]);
   @Input() allColumns: string[] = [];
-  @Input() displayedColumns: string[] = [];
+  displayedColumns: string[] = []; // This will be calculated based on allColumns and hideableColumns
   @Input() hideableColumns: string[] = []; // Columns that can be hidden on small screens
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100];
   @Input() defaultPageSize: number = 10;
@@ -42,14 +42,10 @@ export class GenericListComponent implements OnInit, OnDestroy {
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() filter = new EventEmitter<string>();
-
   // Template references for custom column templates
   @ContentChild('idColumnTemplate') idColumnTemplate?: TemplateRef<any>;
-  @ContentChild('nameColumnTemplate') nameColumnTemplate?: TemplateRef<any>;
-  @ContentChild('descriptionColumnTemplate')
-  descriptionColumnTemplate?: TemplateRef<any>;
-  @ContentChild('actionsColumnTemplate')
-  actionsColumnTemplate?: TemplateRef<any>;
+  // We no longer use these templates in the component HTML directly
+  // But we'll keep the ContentChild decorators for potential future use
 
   // Internal state
   isSmallScreen = false;
@@ -62,8 +58,9 @@ export class GenericListComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver
   ) {}
-
   ngOnInit(): void {
+    // Initialize displayedColumns from allColumns
+    this.displayedColumns = [...this.allColumns];
     this.setupResponsiveColumns();
     // Initial check for current screen size
     this.checkScreenSize();
