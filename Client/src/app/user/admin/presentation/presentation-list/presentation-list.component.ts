@@ -4,9 +4,8 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { PresentationService } from '../../../../shared/services/presentation.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
 
 @Component({
   selector: 'app-admin-presentation-list',
@@ -14,20 +13,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./presentation-list.component.css'],
 })
 export class AdminPresentationListComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = [
+  // List configuration
+  allColumns: string[] = [
     'presentationId',
     'student',
     'coach',
     'expert',
     'actions',
   ];
+  hideableColumns: string[] = []; // No columns to hide by default
   dataSource = new MatTableDataSource<Presentation>([]);
   presentations$: Subscription = new Subscription();
   deletePresentation$: Subscription = new Subscription();
-  errorMessage: string = '';
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(GenericListComponent) genericList!: GenericListComponent;
 
   constructor(
     private presentationService: PresentationService,
@@ -37,11 +36,6 @@ export class AdminPresentationListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getPresentations();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
@@ -61,55 +55,43 @@ export class AdminPresentationListComponent implements OnInit, OnDestroy {
         error: (error) => {
           this.showNotification(
             'Error loading presentations: ' + error.message,
-            'error'
+            'Close'
           );
         },
       });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  add() {
+  // Handle events from generic list component
+  onAdd() {
     this.router.navigate(['admin/presentation/form'], {
       state: { mode: 'add' },
     });
   }
 
-  edit(id: number) {
+  onEdit(presentation: Presentation) {
     this.router.navigate(['admin/presentation/form'], {
-      state: { id: id, mode: 'edit' },
+      state: { id: presentation.presentationId, mode: 'edit' },
     });
   }
 
-  delete(id: number) {
+  onDelete(presentation: Presentation) {
     this.deletePresentation$ = this.presentationService
-      .deletePresentation(id)
+      .deletePresentation(presentation.presentationId)
       .subscribe({
         next: () => {
           this.getPresentations();
-          this.showNotification('Presentation successfully deleted', 'success');
+          this.showNotification('Presentation successfully deleted', 'Close');
         },
         error: (error) => {
           this.showNotification(
             'Error deleting presentation: ' + error.message,
-            'error'
+            'Close'
           );
         },
       });
   }
 
-  showNotification(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
+  showNotification(message: string, action: string = 'Close') {
+    this.genericList?.showNotification(message, action);
   }
 }

@@ -4,9 +4,8 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { PresentationdayService } from '../../../../shared/services/presentationday.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
 
 @Component({
   selector: 'app-admin-presentationday-list',
@@ -14,19 +13,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./presentationday-list.component.css'],
 })
 export class AdminPresentationdayListComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = [
+  // List configuration
+  allColumns: string[] = [
     'presentationDayId',
     'date',
     'examPeriod',
     'year',
     'actions',
   ];
+  hideableColumns: string[] = ['year']; // Hide year column on small screens as it's related to examPeriod
   dataSource = new MatTableDataSource<PresentationDay>([]);
+
   presentationdays$: Subscription = new Subscription();
   deletePresentationday$: Subscription = new Subscription();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(GenericListComponent) genericList!: GenericListComponent;
 
   constructor(
     private presentationdayService: PresentationdayService,
@@ -36,11 +37,6 @@ export class AdminPresentationdayListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getPresentationDays();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
@@ -60,58 +56,46 @@ export class AdminPresentationdayListComponent implements OnInit, OnDestroy {
         error: (error) => {
           this.showNotification(
             'Error loading presentation days: ' + error.message,
-            'error'
+            'Close'
           );
         },
       });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  add() {
+  // Event handlers for generic list component
+  onAdd() {
     this.router.navigate(['admin/presentationday/form'], {
       state: { mode: 'add' },
     });
   }
 
-  edit(id: number) {
+  onEdit(presentationday: PresentationDay) {
     this.router.navigate(['admin/presentationday/form'], {
-      state: { id: id, mode: 'edit' },
+      state: { id: presentationday.presentationDayId, mode: 'edit' },
     });
   }
 
-  delete(id: number) {
+  onDelete(presentationday: PresentationDay) {
     this.deletePresentationday$ = this.presentationdayService
-      .deletePresentationDay(id)
+      .deletePresentationDay(presentationday.presentationDayId)
       .subscribe({
         next: () => {
           this.getPresentationDays();
           this.showNotification(
             'Presentation day successfully deleted',
-            'success'
+            'Close'
           );
         },
         error: (error) => {
           this.showNotification(
             'Error deleting presentation day: ' + error.message,
-            'error'
+            'Close'
           );
         },
       });
   }
 
-  showNotification(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
+  showNotification(message: string, action: string = 'Close') {
+    this.genericList?.showNotification(message, action);
   }
 }

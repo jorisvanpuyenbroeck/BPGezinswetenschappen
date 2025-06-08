@@ -1,12 +1,1 @@
-﻿@import "../../../../shared/styles/list-component.css";
-
-/* Component-specific styles */
-.mat-column-organisationId {
-  width: 80px;
-}
-
-.mat-column-actions {
-  min-width: 110px;
-  white-space: nowrap;
-  text-align: center;
-}
+﻿

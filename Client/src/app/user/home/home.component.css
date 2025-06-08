@@ -38,12 +38,18 @@
 .feature-item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 24px;
   padding: 8px 0;
 }
 
 .feature-item mat-icon {
   color: #3f51b5;
+}
+
+mat-icon {
+  overflow: visible;
+  padding-right: 4px;
+  margin-right: 4px;
 }
 
 mat-card-title {

@@ -1,102 +1,12 @@
-<mat-card class="list-component-container">
-  <mat-card-header>
-    <mat-card-title>Presentations</mat-card-title>
-    <div class="header-actions">
-      <button mat-raised-button color="primary" (click)="add()">
-        <mat-icon>add</mat-icon> Create Presentation
-      </button>
-    </div>
-  </mat-card-header>
-  <mat-card-content>
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-    <div class="filter-container">
-      <mat-form-field appearance="outline">
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Search presentations"
-        />
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-    </div>
-    <div class="table-container mat-elevation-z2">
-      <div class="table-responsive">
-        <table mat-table [dataSource]="dataSource" matSort>
-          <!-- ID Column -->
-          <ng-container matColumnDef="presentationId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let presentation">
-              {{ presentation.presentationId }}
-            </td>
-          </ng-container>
-
-          <!-- Student Column -->
-          <ng-container matColumnDef="student">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Student</th>
-            <td mat-cell *matCellDef="let presentation">
-              {{ presentation.student.userName }}
-            </td>
-          </ng-container>
-
-          <!-- Coach Column -->
-          <ng-container matColumnDef="coach">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Coach</th>
-            <td mat-cell *matCellDef="let presentation">
-              {{ presentation.coach.userName }}
-            </td>
-          </ng-container>
-
-          <!-- Expert Column -->
-          <ng-container matColumnDef="expert">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Expert</th>
-            <td mat-cell *matCellDef="let presentation">
-              {{ presentation.expert?.userName }}
-            </td>
-          </ng-container>
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let presentation">
-              <button
-                mat-icon-button
-                color="primary"
-                (click)="edit(presentation.presentationId)"
-                matTooltip="Edit presentation"
-                class="compact-button"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                color="warn"
-                (click)="delete(presentation.presentationId)"
-                matTooltip="Delete presentation"
-                class="compact-button"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"
-          ></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-          <!-- Row shown when there is no matching data -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="5">No data matching the filter</td>
-          </tr>
-        </table>
-      </div>
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        [pageSize]="10"
-        aria-label="Select page of presentations"
-      ></mat-paginator>
-    </div>
-  </mat-card-content>
-</mat-card>
+<app-generic-list
+  title="Presentations"
+  addButtonText="Create Presentation"
+  searchPlaceholder="Search presentations"
+  [dataSource]="dataSource"
+  [allColumns]="allColumns"
+  [hideableColumns]="hideableColumns"
+  (add)="onAdd()"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+>
+</app-generic-list>

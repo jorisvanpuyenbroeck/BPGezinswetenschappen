@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ExamPeriod } from '../../../../shared/models/examperiod';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ExamperiodService } from '../../../../shared/services/examperiod.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
 
 @Component({
   selector: 'app-admin-examperiod-list',
@@ -14,14 +13,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./examperiod-list.component.css'],
 })
 export class AdminExamperiodListComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['examPeriodId', 'name', 'year', 'actions'];
+  // List configuration
+  allColumns: string[] = ['examPeriodId', 'name', 'year', 'actions'];
+  hideableColumns: string[] = []; // No columns to hide by default
   dataSource = new MatTableDataSource<ExamPeriod>([]);
+
   examperiods$: Subscription = new Subscription();
   deleteExamperiod$: Subscription = new Subscription();
-  errorMessage: string = '';
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(GenericListComponent) genericList!: GenericListComponent;
 
   constructor(
     private examperiodService: ExamperiodService,
@@ -31,11 +31,6 @@ export class AdminExamperiodListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getExamPeriods();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
@@ -51,55 +46,37 @@ export class AdminExamperiodListComponent implements OnInit, OnDestroy {
         this.dataSource.data = result;
       },
       error: (error) => {
-        this.showNotification(
-          'Error loading exam periods: ' + error.message,
-          'error'
-        );
+        this.showNotification('Error loading exam periods: ' + error.message, 'Close');
       },
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  add() {
+  // Event handlers for generic list component
+  onAdd() {
     this.router.navigate(['admin/examperiod/form'], { state: { mode: 'add' } });
   }
 
-  edit(id: number) {
+  onEdit(examperiod: ExamPeriod) {
     this.router.navigate(['admin/examperiod/form'], {
-      state: { id: id, mode: 'edit' },
+      state: { id: examperiod.examPeriodId, mode: 'edit' },
     });
   }
 
-  delete(id: number) {
+  onDelete(examperiod: ExamPeriod) {
     this.deleteExamperiod$ = this.examperiodService
-      .deleteExamPeriod(id)
+      .deleteExamPeriod(examperiod.examPeriodId)
       .subscribe({
         next: () => {
           this.getExamPeriods();
-          this.showNotification('Exam period successfully deleted', 'success');
+          this.showNotification('Exam period successfully deleted', 'Close');
         },
         error: (error) => {
-          this.showNotification(
-            'Error deleting exam period: ' + error.message,
-            'error'
-          );
+          this.showNotification('Error deleting exam period: ' + error.message, 'Close');
         },
       });
   }
 
-  showNotification(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
+  showNotification(message: string, action: string = 'Close') {
+    this.genericList?.showNotification(message, action);
   }
 }

@@ -128,6 +128,14 @@ export class GenericListComponent implements OnInit, OnDestroy {
     this.delete.emit(item);
   }
 
+  // Helper method to safely get topic names from an array
+  getTopicNames(topics: any[]): string {
+    if (topics && Array.isArray(topics)) {
+      return topics.map((topic) => topic.name).join(', ');
+    }
+    return '';
+  }
+
   // Helper method to show notifications
   showNotification(
     message: string,

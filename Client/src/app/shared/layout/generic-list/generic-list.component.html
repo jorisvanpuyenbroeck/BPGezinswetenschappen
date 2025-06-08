@@ -29,18 +29,157 @@
                 column === 'topicId' ||
                 column === 'id' ||
                 column === 'projectId' ||
-                column === 'proposalId'
+                column === 'proposalId' ||
+                column === 'presentationId' ||
+                column === 'organisationId' ||
+                column === 'userId' ||
+                column === 'classroomId' ||
+                column === 'yearId' ||
+                column === 'examPeriodId' ||
+                column === 'presentationDayId' ||
+                column === 'slotId'
               "
               [matColumnDef]="column"
             >
               <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
               <td mat-cell *matCellDef="let item">{{ item[column] }}</td>
             </ng-container>
+
             <!-- Name Column -->
             <ng-container *ngIf="column === 'name'" [matColumnDef]="column">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
               <td mat-cell *matCellDef="let item">{{ item.name }}</td>
             </ng-container>
+
+            <!-- Label Column -->
+            <ng-container *ngIf="column === 'label'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Label</th>
+              <td mat-cell *matCellDef="let item">{{ item.label }}</td>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container *ngIf="column === 'date'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+              <td mat-cell *matCellDef="let item">{{ item.date | date : "dd/MM/yyyy" }}</td>
+            </ng-container>
+
+            <!-- Start Time Column -->
+            <ng-container *ngIf="column === 'startTime'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
+              <td mat-cell *matCellDef="let item">{{ item.startTime }}</td>
+            </ng-container>
+
+            <!-- End Time Column -->
+            <ng-container *ngIf="column === 'endTime'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
+              <td mat-cell *matCellDef="let item">{{ item.endTime }}</td>
+            </ng-container>
+
+            <!-- Year Column -->
+            <ng-container *ngIf="column === 'year'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
+              <td mat-cell *matCellDef="let item">
+                {{ item.year?.label || item.examPeriod?.year?.label || '-' }}
+              </td>
+            </ng-container>
+
+            <!-- Exam Period Column -->
+            <ng-container *ngIf="column === 'examPeriod'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Exam Period</th>
+              <td mat-cell *matCellDef="let item">{{ item.examPeriod?.name || '-' }}</td>
+            </ng-container>
+
+            <!-- Classroom Column -->
+            <ng-container *ngIf="column === 'classroom'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Classroom</th>
+              <td mat-cell *matCellDef="let item">{{ item.classroom?.name || '-' }}</td>
+            </ng-container>
+
+            <!-- Username Column -->
+            <ng-container *ngIf="column === 'userName'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+              <td mat-cell *matCellDef="let item">{{ item.userName }}</td>
+            </ng-container>
+
+            <!-- Given Name Column -->
+            <ng-container *ngIf="column === 'givenName'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Given Name</th>
+              <td mat-cell *matCellDef="let item">{{ item.givenName }}</td>
+            </ng-container>
+
+            <!-- Family Name Column -->
+            <ng-container *ngIf="column === 'familyName'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Family Name</th>
+              <td mat-cell *matCellDef="let item">{{ item.familyName }}</td>
+            </ng-container>
+
+            <!-- User Level Column -->
+            <ng-container *ngIf="column === 'userLevel'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>User Level</th>
+              <td mat-cell *matCellDef="let item">{{ item.userLevel }}</td>
+            </ng-container>
+
+            <!-- Level Column -->
+            <ng-container *ngIf="column === 'level'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Level</th>
+              <td mat-cell *matCellDef="let item">{{ item.level }}</td>
+            </ng-container>
+
+            <!-- Address Column -->
+            <ng-container *ngIf="column === 'address'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+              <td mat-cell *matCellDef="let item">{{ item.address }}</td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container *ngIf="column === 'title'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+              <td mat-cell *matCellDef="let item">{{ item.title }}</td>
+            </ng-container>
+
+            <!-- Origin Column -->
+            <ng-container *ngIf="column === 'origin'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Origin</th>
+              <td mat-cell *matCellDef="let item">{{ item.origin }}</td>
+            </ng-container>
+
+            <!-- Topics Column -->
+            <ng-container *ngIf="column === 'topics'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Topics</th>
+              <td mat-cell *matCellDef="let item">
+                <ng-container
+                  *ngIf="item.topics && item.topics.length > 0; else noTopics"
+                >
+                  {{ getTopicNames(item.topics) }}
+                </ng-container>
+                <ng-template #noTopics>-</ng-template>
+              </td>
+            </ng-container>
+
+            <!-- Student Column -->
+            <ng-container *ngIf="column === 'student'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Student</th>
+              <td mat-cell *matCellDef="let item">
+                {{ item.student?.userName || "-" }}
+              </td>
+            </ng-container>
+
+            <!-- Coach Column -->
+            <ng-container *ngIf="column === 'coach'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Coach</th>
+              <td mat-cell *matCellDef="let item">
+                {{ item.coach?.userName || "-" }}
+              </td>
+            </ng-container>
+
+            <!-- Expert Column -->
+            <ng-container *ngIf="column === 'expert'" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Expert</th>
+              <td mat-cell *matCellDef="let item">
+                {{ item.expert?.userName || "-" }}
+              </td>
+            </ng-container>
+
             <!-- Description Column -->
             <ng-container
               *ngIf="column === 'description'"

@@ -1,41 +1,38 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../../../../shared/models/project';
 import { ProjectService } from '../../../../shared/services/project.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Topic } from '../../../../shared/models/topic';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css'],
 })
-export class AdminProjectListComponent implements OnInit, AfterViewInit {
-  projects: Project[] = [];
+export class AdminProjectListComponent implements OnInit, OnDestroy {
+  // List configuration
+  allColumns: string[] = ['projectId', 'title', 'description', 'actions'];
+  hideableColumns: string[] = ['description']; // Hide description on small screens
+  dataSource = new MatTableDataSource<Project>([]);
+  
+  // Subscriptions
   projectsSubscription: Subscription = new Subscription();
   deleteProjectSubscription: Subscription = new Subscription();
-  errorMessage: string = '';
 
-  displayedColumns: string[] = ['projectId', 'title', 'description', 'actions'];
-  dataSource = new MatTableDataSource<Project>([]);
+  @ViewChild(GenericListComponent) genericList!: GenericListComponent;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(private projectService: ProjectService, private router: Router) {}
+  constructor(
+    private projectService: ProjectService, 
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.getProjects();
-  }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
   }
 
   ngOnDestroy(): void {
@@ -45,50 +42,48 @@ export class AdminProjectListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   getProjects() {
     this.projectsSubscription = this.projectService.getProjects().subscribe({
       next: (result) => {
-        this.projects = result;
-        this.dataSource.data = this.projects;
+        this.dataSource.data = result;
       },
       error: (error) => {
-        this.errorMessage = 'Failed to load projects. Please try again later.';
+        this.showNotification('Failed to load projects: ' + error.message, 'Close');
         console.error('Error loading projects:', error);
       },
     });
   }
 
-  add() {
-    //Navigate to form in add mode
+  // Event handlers for generic list component
+  onAdd() {
     this.router.navigate(['admin/project/form'], { state: { mode: 'add' } });
   }
 
-  edit(id: number) {
-    //Navigate to form in edit mode
+  onEdit(project: Project) {
     this.router.navigate(['admin/project/form'], {
-      state: { id: id, mode: 'edit' },
+      state: { id: project.projectId, mode: 'edit' },
     });
   }
 
-  delete(id: number) {
+  onDelete(project: Project) {
     this.deleteProjectSubscription = this.projectService
-      .deleteProject(id)
+      .deleteProject(project.projectId)
       .subscribe({
-        next: (v) => this.getProjects(),
-        error: (e) => (this.errorMessage = e.message),
+        next: () => {
+          this.getProjects();
+          this.showNotification('Project successfully deleted', 'Close');
+        },
+        error: (error) => {
+          this.showNotification('Error deleting project: ' + error.message, 'Close');
+        },
       });
   }
 
-  getNames(topics: Topic[]) {
+  getTopicNames(topics: Topic[]) {
     return topics.map((t) => t.name).join(', ');
+  }
+
+  showNotification(message: string, action: string = 'Close') {
+    this.genericList?.showNotification(message, action);
   }
 }
