@@ -22,6 +22,7 @@ import { AdminPresentationdayListComponent } from './presentationday/presentatio
 import { AdminPresentationdayFormComponent } from './presentationday/presentationday-form/presentationday-form.component';
 import { AdminSlotListComponent } from './slot/slot-list/slot-list.component';
 import { AdminSlotFormComponent } from './slot/slot-form/slot-form.component';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { AdminSlotFormComponent } from './slot/slot-form/slot-form.component';
     AdminSlotFormComponent,
     AdminSlotListComponent,
   ],
-  imports: [SharedModule],
+  imports: [SharedModule, TruncatePipe],
   exports: [
     AdminHomeComponent,
     AdminTopicListComponent,
