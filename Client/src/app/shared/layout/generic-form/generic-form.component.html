@@ -15,55 +15,35 @@
     (ngSubmit)="onSubmit()"
     class="generic-form"
   >
-    <!-- Standard Text Fields -->
-    <ng-container *ngFor="let field of textFields">
+    <!-- Dynamic Fields -->
+    <ng-container *ngFor="let field of fields">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>{{ field.label }}</mat-label>
+
+        <!-- Text Input -->
         <input
+          *ngIf="field.type === 'text'"
           matInput
           [formControlName]="field.name"
           [placeholder]="field.placeholder || field.label"
-          [required]="field.required === true"
+          [attr.required]="field.required"
         />
-        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
-        <mat-error *ngIf="hasError(field.name, 'required')">
-          {{ field.label }} is required
-        </mat-error>
-        <mat-error *ngIf="hasError(field.name, 'maxlength')">
-          {{ field.label }} exceeds maximum length
-        </mat-error>
-      </mat-form-field>
-    </ng-container>
 
-    <!-- Standard Textarea Fields -->
-    <ng-container *ngFor="let field of textareaFields">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>{{ field.label }}</mat-label>
+        <!-- Textarea Input -->
         <textarea
+          *ngIf="isTextArea(field)"
           matInput
           [formControlName]="field.name"
           [placeholder]="field.placeholder || field.label"
           [rows]="field.rows || 5"
-          [required]="field.required === true"
+          [attr.required]="field.required"
         ></textarea>
-        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
-        <mat-error *ngIf="hasError(field.name, 'required')">
-          {{ field.label }} is required
-        </mat-error>
-        <mat-error *ngIf="hasError(field.name, 'maxlength')">
-          {{ field.label }} exceeds maximum length
-        </mat-error>
-      </mat-form-field>
-    </ng-container>
 
-    <!-- Select Fields -->
-    <ng-container *ngFor="let field of selectFields">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>{{ field.label }}</mat-label>
+        <!-- Select Input -->
         <mat-select
+          *ngIf="isSelect(field)"
           [formControlName]="field.name"
-          [required]="field.required === true"
-          [placeholder]="field.placeholder || field.label"
+          [attr.required]="field.required"
         >
           <mat-option
             *ngFor="let option of field.options"
@@ -72,49 +52,44 @@
             {{ option.viewValue }}
           </mat-option>
         </mat-select>
-        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
-        <mat-error *ngIf="hasError(field.name, 'required')">
-          {{ field.label }} is required
-        </mat-error>
-      </mat-form-field>
-    </ng-container>
 
-    <!-- Date Fields -->
-    <ng-container *ngFor="let field of dateFields">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>{{ field.label }}</mat-label>
+        <!-- Date Input -->
         <input
+          *ngIf="isDate(field)"
           matInput
           [matDatepicker]="picker"
           [formControlName]="field.name"
           [placeholder]="field.placeholder || field.label"
-          [required]="field.required === true"
+          [attr.required]="field.required"
         />
         <mat-datepicker-toggle
+          *ngIf="isDate(field)"
           matIconSuffix
           [for]="picker"
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+
+        <!-- Field Hints and Errors -->
         <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
         <mat-error *ngIf="hasError(field.name, 'required')">
           {{ field.label }} is required
         </mat-error>
+        <mat-error *ngIf="hasError(field.name, 'maxlength')">
+          {{ field.label }} exceeds maximum length
+        </mat-error>
       </mat-form-field>
     </ng-container>
 
-    <!-- Slot for custom fields -->
+    <!-- Custom Fields -->
     <ng-container *ngIf="customFieldsTemplate">
       <ng-container *ngTemplateOutlet="customFieldsTemplate"></ng-container>
     </ng-container>
 
     <!-- Form Actions -->
     <div class="form-actions">
-      <!-- Cancel Button -->
       <button mat-button type="button" (click)="onCancel()">
         {{ cancelButtonText }}
       </button>
-
-      <!-- Save Button -->
       <button
         mat-raised-button
         color="primary"

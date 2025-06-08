@@ -2,15 +2,12 @@
 <app-generic-form
   [title]="isEdit ? 'Edit Topic' : 'Create Topic'"
   [formGroup]="topicForm"
-  [isEdit]="isEdit"
+  [fields]="fields"
   [isSubmitted]="isSubmitted"
   [errorMessage]="errorMessage"
-  [textFields]="textFields"
-  [textareaFields]="textareaFields"
   [saveButtonText]="isEdit ? 'Update' : 'Create'"
   [cancelButtonText]="'Cancel'"
   (formSubmit)="onFormSubmit($event)"
   (formCancel)="onFormCancel()"
 >
-  <!-- We don't need custom fields for this simple form -->
 </app-generic-form>
