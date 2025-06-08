@@ -16,9 +16,9 @@ import { FormFieldConfig, isTextArea, isSelect, isDate } from '../../models';
   styleUrls: ['./generic-form.component.css'],
 })
 export class GenericFormComponent implements OnInit {
-  // Input configurations
   @Input() title: string = 'Item Form';
   @Input() formGroup!: FormGroup;
+  @Input() isEdit: boolean = false;
   @Input() isSubmitted: boolean = false;
   @Input() errorMessage: string = '';
   @Input() saveButtonText: string = 'Save';

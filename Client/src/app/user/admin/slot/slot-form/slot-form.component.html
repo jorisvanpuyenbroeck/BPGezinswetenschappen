@@ -1,1 +1,12 @@
-<p>slot-form works!</p>
+<app-generic-form
+  [title]="isEdit ? 'Edit Slot' : 'Create Slot'"
+  [formGroup]="slotForm"
+  [isEdit]="isEdit"
+  [isSubmitted]="isSubmitted"
+  [errorMessage]="errorMessage"
+  [fields]="fields"
+  [saveButtonText]="isEdit ? 'Update' : 'Create'"
+  (formSubmit)="onSubmit($event)"
+  (formCancel)="onCancel()"
+>
+</app-generic-form>

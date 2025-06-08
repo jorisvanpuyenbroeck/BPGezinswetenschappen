@@ -1,76 +1,14 @@
 <div class="container mx-auto mt-8 mb-8">
-  <div
-    *ngIf="isSubmitted && errorMessage"
-    class="rounded p-4 mb-4 text-lg bg-red-200 text-red-800 border-2 border-red-300"
+  <app-generic-form
+    [title]="isEdit ? 'Edit Presentation' : 'Create Presentation'"
+    [formGroup]="presentationForm"
+    [isEdit]="isEdit"
+    [isSubmitted]="isSubmitted"
+    [errorMessage]="errorMessage"
+    [fields]="fields"
+    [saveButtonText]="isEdit ? 'Update' : 'Create'"
+    (formSubmit)="onSubmit($event)"
+    (formCancel)="onCancel()"
   >
-    {{ errorMessage }}
-  </div>
-  <form #presentationForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="m-1 mb-6">
-      <label
-        class="block mb-2 text-sm font-medium text-gray-900"
-        for="studentId"
-        >Student ID</label
-      >
-      <input
-        #studentId="ngModel"
-        [(ngModel)]="presentation.studentId"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="studentId"
-        name="studentId"
-        placeholder="Student ID"
-        required
-        type="number"
-      />
-      <div
-        [hidden]="studentId.valid || studentId.pristine"
-        class="text-red-500 mt-2"
-      >
-        Student ID is required
-      </div>
-    </div>
-    <div class="m-1 mb-6">
-      <label class="block mb-2 text-sm font-medium text-gray-900" for="coachId"
-        >Coach ID</label
-      >
-      <input
-        #coachId="ngModel"
-        [(ngModel)]="presentation.coachId"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="coachId"
-        name="coachId"
-        placeholder="Coach ID"
-        required
-        type="number"
-      />
-      <div
-        [hidden]="coachId.valid || coachId.pristine"
-        class="text-red-500 mt-2"
-      >
-        Coach ID is required
-      </div>
-    </div>
-    <div class="m-1 mb-6">
-      <label class="block mb-2 text-sm font-medium text-gray-900" for="expertId"
-        >Expert ID</label
-      >
-      <input
-        #expertId="ngModel"
-        [(ngModel)]="presentation.expertId"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="expertId"
-        name="expertId"
-        placeholder="Expert ID (optional)"
-        type="number"
-      />
-    </div>
-    <div class="flex justify-end">
-      <button
-        type="submit"
-        class="px-4 py-2 rounded-md bg-blue-200 hover:bg-blue-300 text-blue-800 font-medium"
-      >
-        {{ isAdd ? "Create" : "Save" }} presentation
-      </button>
-    </div>
-  </form>
+  </app-generic-form>
 </div>

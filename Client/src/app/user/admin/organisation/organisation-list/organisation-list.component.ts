@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Organisation } from '../../../../shared/models/organisation';
 import { OrganisationService } from '../../../../shared/services/organisation.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericListComponent } from '../../../../shared/layout/generic-list/generic-list.component';
@@ -25,6 +25,7 @@ export class AdminOrganisationListComponent implements OnInit, OnDestroy {
   constructor(
     private organisationService: OrganisationService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
@@ -57,13 +58,15 @@ export class AdminOrganisationListComponent implements OnInit, OnDestroy {
 
   // Handle events from generic list component
   onAdd() {
-    this.router.navigate(['admin/organisation/form'], {
+    this.router.navigate(['../organisation/form'], {
+      relativeTo: this.route,
       state: { mode: 'add' },
     });
   }
 
   onEdit(organisation: Organisation) {
-    this.router.navigate(['admin/organisation/form'], {
+    this.router.navigate(['../organisation/form'], {
+      relativeTo: this.route,
       state: { id: organisation.organisationId, mode: 'edit' },
     });
   }
@@ -86,6 +89,6 @@ export class AdminOrganisationListComponent implements OnInit, OnDestroy {
   }
 
   showNotification(message: string, action: string = 'Close') {
-    this.genericList?.showNotification(message, action);
+    this.snackBar.open(message, action, { duration: 3000 });
   }
 }

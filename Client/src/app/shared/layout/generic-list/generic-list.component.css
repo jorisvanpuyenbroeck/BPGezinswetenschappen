@@ -136,3 +136,13 @@ th.mat-header-cell {
 tr.mat-row:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
+
+.id-column {
+  width: 4ch !important;
+  padding-right: 8px !important;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}

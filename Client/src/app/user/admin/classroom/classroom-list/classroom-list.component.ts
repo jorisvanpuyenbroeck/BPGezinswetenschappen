@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Classroom } from '../../../../shared/models/classroom';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ClassroomService } from '../../../../shared/services/classroom.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,6 +27,7 @@ export class AdminClassroomListComponent implements OnInit, OnDestroy {
   constructor(
     private classroomService: ClassroomService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
@@ -57,11 +58,15 @@ export class AdminClassroomListComponent implements OnInit, OnDestroy {
 
   // Event handlers for generic list component
   onAdd() {
-    this.router.navigate(['admin/classroom/form'], { state: { mode: 'add' } });
+    this.router.navigate(['../classroom/form'], {
+      relativeTo: this.route,
+      state: { mode: 'add' },
+    });
   }
 
   onEdit(classroom: Classroom) {
-    this.router.navigate(['admin/classroom/form'], {
+    this.router.navigate(['../classroom/form'], {
+      relativeTo: this.route,
       state: { id: classroom.classroomId, mode: 'edit' },
     });
   }
@@ -84,6 +89,6 @@ export class AdminClassroomListComponent implements OnInit, OnDestroy {
   }
 
   showNotification(message: string, action: string = 'Close') {
-    this.genericList?.showNotification(message, action);
+    this.snackBar.open(message, action, { duration: 3000 });
   }
 }

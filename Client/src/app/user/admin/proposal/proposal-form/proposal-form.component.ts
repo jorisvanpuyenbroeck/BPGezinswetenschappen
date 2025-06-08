@@ -112,6 +112,7 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
       placeholder: 'Select related topics',
       required: true,
       options: [],
+      multiple: true,
     },
   ];
 
@@ -215,7 +216,6 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(sub);
   }
-
   onFormSubmit(formValue: ProposalFormValue): void {
     this.isSubmitted = true;
     if (this.proposalForm.valid) {
@@ -223,9 +223,7 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
         title: formValue.title,
         description: formValue.description,
         origin: formValue.origin,
-        topics: formValue.topicIds
-          .map((id) => this.allTopics.find((t) => t.topicId === id))
-          .filter((t): t is Topic => t !== undefined),
+        topicIds: formValue.topicIds,
       };
 
       const sub = (

@@ -1,11 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PresentationDay } from '../../../../shared/models/presentationday';
 import { PresentationdayService } from '../../../../shared/services/presentationday.service';
 import { ExamperiodService } from '../../../../shared/services/examperiod.service';
 import { ExamPeriod } from '../../../../shared/models/examperiod';
 import { Location } from '@angular/common';
+import { GenericFormComponent } from '../../../../shared/layout/generic-form/generic-form.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NotificationService } from '../../../../shared/services/notification.service';
+import { FormFields } from '../../../../shared/models';
+
+interface PresentationDayFormMode {
+  isEdit: boolean;
+  presentationDayId?: number;
+}
+
+interface PresentationDayFormValue {
+  date: string;
+  examPeriodId: number;
+}
 
 @Component({
   selector: 'app-admin-presentationday-form',
@@ -13,9 +27,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./presentationday-form.component.css'],
 })
 export class AdminPresentationdayFormComponent implements OnInit, OnDestroy {
-  isAdd: boolean = false;
-  isEdit: boolean = false;
-  presentationDayId: number = 0;
+  @ViewChild(GenericFormComponent) genericForm!: GenericFormComponent;
+
+  // Form state
   presentationDay: PresentationDay = {
     presentationDayId: 0,
     date: '',
@@ -23,73 +37,166 @@ export class AdminPresentationdayFormComponent implements OnInit, OnDestroy {
     examPeriod: null,
     slots: [],
   };
-  examPeriods: ExamPeriod[] = [];
-  isSubmitted: boolean = false;
-  errorMessage: string = '';
-  presentationDay$: Subscription = new Subscription();
-  postPresentationDay$: Subscription = new Subscription();
-  putPresentationDay$: Subscription = new Subscription();
-  examPeriods$: Subscription = new Subscription();
+  presentationDayForm!: FormGroup;
+  isEdit = false;
+  isSubmitted = false;
+  errorMessage = '';
+
+  // Form field configurations
+  fields: FormFields = [
+    {
+      type: 'date',
+      name: 'date',
+      label: 'Date',
+      placeholder: 'Select date',
+      required: true,
+    },
+    {
+      type: 'select',
+      name: 'examPeriodId',
+      label: 'Exam Period',
+      placeholder: 'Select exam period',
+      required: true,
+      options: [], // Will be populated with exam periods
+    },
+  ];
+
+  private subscriptions = new Subscription();
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private presentationdayService: PresentationdayService,
     private examperiodService: ExamperiodService,
-    private location: Location
+    private location: Location,
+    private fb: FormBuilder,
+    private notificationService: NotificationService
   ) {
-    this.isAdd =
-      this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'add';
-    this.isEdit =
-      this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'edit';
-    this.presentationDayId =
-      +this.router.getCurrentNavigation()?.extras.state?.['id'];
-    if (!this.isAdd && !this.isEdit) {
-      this.isAdd = true;
-    }
+    this.initForm();
   }
 
   ngOnInit(): void {
-    this.examPeriods$ = this.examperiodService.getExamPeriods().subscribe({
-      next: (result) => (this.examPeriods = result),
-      error: (err) => (this.errorMessage = err.message),
-    });
-    if (this.isEdit && this.presentationDayId) {
-      this.presentationDay$ = this.presentationdayService
-        .getPresentationDay(this.presentationDayId)
-        .subscribe({
-          next: (result) => (this.presentationDay = result),
-          error: (err) => (this.errorMessage = err.message),
-        });
-    }
+    this.loadExamPeriods();
+    this.initializeFormMode();
   }
 
   ngOnDestroy(): void {
-    this.presentationDay$.unsubscribe();
-    this.postPresentationDay$.unsubscribe();
-    this.putPresentationDay$.unsubscribe();
-    this.examPeriods$.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
-  onSubmit() {
-    this.isSubmitted = true;
-    if (this.isAdd) {
-      this.postPresentationDay$ = this.presentationdayService
-        .createPresentationDay(this.presentationDay)
-        .subscribe({
-          next: () => this.location.back(),
-          error: (err) => (this.errorMessage = err.message),
-        });
-    } else if (this.isEdit) {
-      this.putPresentationDay$ = this.presentationdayService
-        .updatePresentationDay(this.presentationDayId, this.presentationDay)
-        .subscribe({
-          next: () => this.location.back(),
-          error: (err) => (this.errorMessage = err.message),
-        });
+  private initializeFormMode(): void {
+    const formMode = this.getFormMode();
+    this.isEdit = formMode.isEdit;
+
+    if (formMode.isEdit && formMode.presentationDayId) {
+      this.loadPresentationDay(formMode.presentationDayId);
     }
   }
 
-  goBack() {
+  private getFormMode(): PresentationDayFormMode {
+    const params = this.route.snapshot.queryParams;
+    const state = history.state;
+
+    return {
+      isEdit: params['mode'] === 'edit' || state['mode'] === 'edit',
+      presentationDayId: this.extractPresentationDayId(
+        params['id'] || state['id']
+      ),
+    };
+  }
+
+  private extractPresentationDayId(
+    id: string | number | undefined
+  ): number | undefined {
+    if (id === undefined) return undefined;
+    const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+    return isNaN(numericId) ? undefined : numericId;
+  }
+
+  private initForm(): void {
+    this.presentationDayForm = this.fb.group<{
+      [K in keyof PresentationDayFormValue]: any;
+    }>({
+      date: ['', [Validators.required]],
+      examPeriodId: ['', [Validators.required]],
+    });
+  }
+
+  private loadExamPeriods(): void {
+    const sub = this.examperiodService.getExamPeriods().subscribe({
+      next: (examPeriods: ExamPeriod[]) => {
+        // Update select field options
+        this.fields = this.fields.map((field) => {
+          if (field.type === 'select' && field.name === 'examPeriodId') {
+            return {
+              ...field,
+              options: examPeriods.map((examPeriod) => ({
+                value: examPeriod.examPeriodId,
+                viewValue: examPeriod.name,
+              })),
+            };
+          }
+          return field;
+        });
+      },
+      error: (error: Error) => {
+        this.errorMessage = 'Error loading exam periods: ' + error.message;
+        this.notificationService.error(this.errorMessage);
+      },
+    });
+    this.subscriptions.add(sub);
+  }
+
+  private loadPresentationDay(id: number): void {
+    const sub = this.presentationdayService.getPresentationDay(id).subscribe({
+      next: (presentationDay: PresentationDay) => {
+        this.presentationDay = presentationDay;
+        this.presentationDayForm.patchValue({
+          date: presentationDay.date,
+          examPeriodId: presentationDay.examPeriodId,
+        });
+      },
+      error: (error: Error) => {
+        this.errorMessage = 'Error loading presentation day: ' + error.message;
+        this.notificationService.error(this.errorMessage);
+      },
+    });
+    this.subscriptions.add(sub);
+  }
+
+  onSubmit(formValue: PresentationDayFormValue): void {
+    this.isSubmitted = true;
+
+    const presentationDay: PresentationDay = {
+      ...this.presentationDay,
+      ...formValue,
+    };
+
+    const operation = this.isEdit
+      ? this.presentationdayService.updatePresentationDay(
+          presentationDay.presentationDayId,
+          presentationDay
+        )
+      : this.presentationdayService.createPresentationDay(presentationDay);
+
+    const sub = operation.subscribe({
+      next: () => {
+        const message = this.isEdit
+          ? 'Presentation day updated'
+          : 'Presentation day created';
+        this.notificationService.success(message);
+        this.router.navigate(['/admin/presentationdays']);
+      },
+      error: (error: Error) => {
+        this.isSubmitted = false;
+        this.errorMessage = 'Error saving presentation day: ' + error.message;
+        this.notificationService.error(this.errorMessage);
+      },
+    });
+    this.subscriptions.add(sub);
+  }
+
+  onCancel(): void {
     this.location.back();
   }
 }

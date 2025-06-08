@@ -23,6 +23,7 @@ export interface SelectFieldConfig extends BaseFieldConfig {
     readonly value: any;
     readonly viewValue: string;
   }[];
+  readonly multiple?: boolean;
 }
 
 export interface DateFieldConfig extends BaseFieldConfig {

@@ -9,7 +9,7 @@ export interface Slot {
   endTime: string; // Use string for TimeOnly
   presentationDayId?: number;
   presentationDay?: any;
-  classRoomId?: number;
+  classroomId?: number;
   classroom?: Classroom;
   presentations: Presentation[];
   availabilities: any[];

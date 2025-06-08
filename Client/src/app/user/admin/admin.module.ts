@@ -23,6 +23,11 @@ import { AdminPresentationdayFormComponent } from './presentationday/presentatio
 import { AdminSlotListComponent } from './slot/slot-list/slot-list.component';
 import { AdminSlotFormComponent } from './slot/slot-form/slot-form.component';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../shared/material/material.module';
+import { GenericFormComponent } from '../../shared/layout/generic-form/generic-form.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,14 @@ import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
     AdminSlotFormComponent,
     AdminSlotListComponent,
   ],
-  imports: [SharedModule, TruncatePipe],
+  imports: [
+    SharedModule,
+    TruncatePipe,
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MaterialModule,
+  ],
   exports: [
     AdminHomeComponent,
     AdminTopicListComponent,
