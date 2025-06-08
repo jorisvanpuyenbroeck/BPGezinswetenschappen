@@ -1,0 +1,128 @@
+<!-- Generic Form Component -->
+<div class="form-container">
+  <!-- Title -->
+  <h2 class="form-title" *ngIf="title">{{ title }}</h2>
+
+  <!-- Error Message -->
+  <mat-error *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </mat-error>
+
+  <!-- Form -->
+  <form
+    *ngIf="formGroup"
+    [formGroup]="formGroup"
+    (ngSubmit)="onSubmit()"
+    class="generic-form"
+  >
+    <!-- Standard Text Fields -->
+    <ng-container *ngFor="let field of textFields">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+        <input
+          matInput
+          [formControlName]="field.name"
+          [placeholder]="field.placeholder || field.label"
+          [required]="field.required === true"
+        />
+        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
+        <mat-error *ngIf="hasError(field.name, 'required')">
+          {{ field.label }} is required
+        </mat-error>
+        <mat-error *ngIf="hasError(field.name, 'maxlength')">
+          {{ field.label }} exceeds maximum length
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Standard Textarea Fields -->
+    <ng-container *ngFor="let field of textareaFields">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+        <textarea
+          matInput
+          [formControlName]="field.name"
+          [placeholder]="field.placeholder || field.label"
+          [rows]="field.rows || 5"
+          [required]="field.required === true"
+        ></textarea>
+        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
+        <mat-error *ngIf="hasError(field.name, 'required')">
+          {{ field.label }} is required
+        </mat-error>
+        <mat-error *ngIf="hasError(field.name, 'maxlength')">
+          {{ field.label }} exceeds maximum length
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Select Fields -->
+    <ng-container *ngFor="let field of selectFields">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+        <mat-select
+          [formControlName]="field.name"
+          [required]="field.required === true"
+          [placeholder]="field.placeholder || field.label"
+        >
+          <mat-option
+            *ngFor="let option of field.options"
+            [value]="option.value"
+          >
+            {{ option.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
+        <mat-error *ngIf="hasError(field.name, 'required')">
+          {{ field.label }} is required
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Date Fields -->
+    <ng-container *ngFor="let field of dateFields">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [formControlName]="field.name"
+          [placeholder]="field.placeholder || field.label"
+          [required]="field.required === true"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
+        <mat-error *ngIf="hasError(field.name, 'required')">
+          {{ field.label }} is required
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Slot for custom fields -->
+    <ng-container *ngIf="customFieldsTemplate">
+      <ng-container *ngTemplateOutlet="customFieldsTemplate"></ng-container>
+    </ng-container>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <!-- Cancel Button -->
+      <button mat-button type="button" (click)="onCancel()">
+        {{ cancelButtonText }}
+      </button>
+
+      <!-- Save Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="formGroup.invalid || isSubmitted"
+      >
+        {{ saveButtonText }}
+      </button>
+    </div>
+  </form>
+</div>

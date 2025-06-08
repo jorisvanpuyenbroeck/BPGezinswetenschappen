@@ -1,4 +1,5 @@
 using System;
+using BPGezinswetenschappen.API.Dtos.Classroom;
 
 namespace BPGezinswetenschappen.API.Dtos.Slot
 {
@@ -9,5 +10,7 @@ namespace BPGezinswetenschappen.API.Dtos.Slot
         public TimeOnly EndTime { get; set; }
         public int? PresentationDayId { get; set; }
         public int? ClassroomId { get; set; }
+        public ClassroomReadDto? Classroom { get; set; }
+        
     }
 }

@@ -7,6 +7,7 @@ import { TruncatePipe } from '../pipes/truncate.pipe';
 
 // Import all layout components
 import { GenericListComponent } from './generic-list/generic-list.component';
+import { GenericFormComponent } from './generic-form/generic-form.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 // Import body components
@@ -27,6 +28,7 @@ import { ProjectRequirementsComponent } from './modals/project-requirements/proj
   declarations: [
     // Main layout components
     GenericListComponent,
+    GenericFormComponent,
     SidenavComponent,
 
     // Header components
@@ -51,6 +53,7 @@ import { ProjectRequirementsComponent } from './modals/project-requirements/proj
   exports: [
     // Main layout components
     GenericListComponent,
+    GenericFormComponent,
     SidenavComponent,
 
     // Header components

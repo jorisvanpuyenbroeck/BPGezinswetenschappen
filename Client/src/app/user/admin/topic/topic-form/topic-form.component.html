@@ -1,53 +1,16 @@
-<div class="form-container">
-  <!-- Error Message -->
-  <mat-error *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </mat-error>
-
-  <!-- Reactive Form -->
-  <form [formGroup]="topicForm" (ngSubmit)="onSubmit()" class="topic-form">
-    <!-- Name Field -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Name</mat-label>
-      <input
-        matInput
-        formControlName="name"
-        placeholder="Topic name"
-        required
-      />
-      <mat-hint>Enter the topic name</mat-hint>
-      <mat-error *ngIf="topicForm.controls['name'].hasError('required')">
-        Name is required
-      </mat-error>
-    </mat-form-field>
-
-    <!-- Description Field -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Description</mat-label>
-      <textarea
-        matInput
-        formControlName="description"
-        placeholder="Topic description"
-        rows="5"
-        required
-      ></textarea>
-      <mat-hint>Provide a detailed description of the topic</mat-hint>
-      <mat-error *ngIf="topicForm.controls['description'].hasError('required')">
-        Description is required
-      </mat-error>
-    </mat-form-field>
-
-    <!-- Form Actions -->
-    <div class="form-actions">
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="topicForm.invalid || isSubmitted"
-      >
-        {{ isAdd ? "Create" : "Update" }}
-      </button>
-      <button mat-button type="button" (click)="goBack()">Cancel</button>
-    </div>
-  </form>
-</div>
+<!-- Using the Generic Form Component -->
+<app-generic-form
+  [title]="isEdit ? 'Edit Topic' : 'Create Topic'"
+  [formGroup]="topicForm"
+  [isEdit]="isEdit"
+  [isSubmitted]="isSubmitted"
+  [errorMessage]="errorMessage"
+  [textFields]="textFields"
+  [textareaFields]="textareaFields"
+  [saveButtonText]="isEdit ? 'Update' : 'Create'"
+  [cancelButtonText]="'Cancel'"
+  (formSubmit)="onFormSubmit($event)"
+  (formCancel)="onFormCancel()"
+>
+  <!-- We don't need custom fields for this simple form -->
+</app-generic-form>

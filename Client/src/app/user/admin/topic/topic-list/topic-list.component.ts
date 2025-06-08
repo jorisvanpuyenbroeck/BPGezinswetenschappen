@@ -55,9 +55,7 @@ export class AdminTopicListComponent implements OnInit, OnDestroy {
         );
       },
     });
-  }
-
-  // Handle events from generic list component
+  } // Handle events from generic list component
   onAdd() {
     this.router.navigate(['admin/topic/form'], { state: { mode: 'add' } });
   }

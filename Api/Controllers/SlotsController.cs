@@ -30,7 +30,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SlotReadDto>>> GetSlots()
         {
-            var slots = await _context.Slots.ToListAsync();
+            var slots = await _context.Slots
+                .Include(s => s.Classroom)
+                .ToListAsync();
             return Ok(_mapper.Map<IEnumerable<SlotReadDto>>(slots));
         }
 
