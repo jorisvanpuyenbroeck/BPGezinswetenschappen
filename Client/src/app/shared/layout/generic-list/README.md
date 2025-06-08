@@ -22,7 +22,7 @@ The `GenericListComponent` is a reusable Angular component that standardizes the
 Ensure the GenericListComponent is imported in your module:
 
 ```typescript
-import { GenericListComponent } from '../../shared/layout/generic-list/generic-list.component';
+import { GenericListComponent } from "../../shared/layout/generic-list/generic-list.component";
 ```
 
 ### Basic Implementation
@@ -31,22 +31,18 @@ import { GenericListComponent } from '../../shared/layout/generic-list/generic-l
 
 ```typescript
 @Component({
-  selector: 'app-your-list',
-  templateUrl: './your-list.component.html',
+  selector: "app-your-list",
+  templateUrl: "./your-list.component.html",
 })
 export class YourListComponent implements OnInit, OnDestroy {
   // List configuration
-  allColumns: string[] = ['id', 'name', 'description', 'actions'];
-  hideableColumns: string[] = ['description']; // Columns to hide on small screens
+  allColumns: string[] = ["id", "name", "description", "actions"];
+  hideableColumns: string[] = ["description"]; // Columns to hide on small screens
   dataSource = new MatTableDataSource<YourModel>([]);
-  
+
   @ViewChild(GenericListComponent) genericList!: GenericListComponent;
-  
-  constructor(
-    private yourService: YourService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+
+  constructor(private yourService: YourService, private router: Router, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -58,19 +54,19 @@ export class YourListComponent implements OnInit, OnDestroy {
         this.dataSource.data = result;
       },
       error: (error) => {
-        this.showNotification('Error loading data: ' + error.message, 'Close');
-      }
+        this.showNotification("Error loading data: " + error.message, "Close");
+      },
     });
   }
 
   // Event handlers
   onAdd() {
-    this.router.navigate(['your/path/form'], { state: { mode: 'add' } });
+    this.router.navigate(["your/path/form"], { state: { mode: "add" } });
   }
 
   onEdit(item: YourModel) {
-    this.router.navigate(['your/path/form'], { 
-      state: { id: item.id, mode: 'edit' } 
+    this.router.navigate(["your/path/form"], {
+      state: { id: item.id, mode: "edit" },
     });
   }
 
@@ -78,16 +74,16 @@ export class YourListComponent implements OnInit, OnDestroy {
     this.yourService.deleteItem(item.id).subscribe({
       next: () => {
         this.loadData();
-        this.showNotification('Item successfully deleted', 'Close');
+        this.showNotification("Item successfully deleted", "Close");
       },
       error: (error) => {
-        this.showNotification('Error deleting item: ' + error.message, 'Close');
-      }
+        this.showNotification("Error deleting item: " + error.message, "Close");
+      },
     });
   }
 
   // Helper method for notifications
-  showNotification(message: string, action: string = 'Close') {
+  showNotification(message: string, action: string = "Close") {
     this.genericList?.showNotification(message, action);
   }
 }
@@ -96,41 +92,30 @@ export class YourListComponent implements OnInit, OnDestroy {
 2. In your component HTML file:
 
 ```html
-<app-generic-list
-  title="Your Items"
-  addButtonText="Create Item"
-  searchPlaceholder="Search items"
-  [dataSource]="dataSource"
-  [allColumns]="allColumns"
-  [hideableColumns]="hideableColumns"
-  (add)="onAdd()"
-  (edit)="onEdit($event)"
-  (delete)="onDelete($event)"
->
-</app-generic-list>
+<app-generic-list title="Your Items" addButtonText="Create Item" searchPlaceholder="Search items" [dataSource]="dataSource" [allColumns]="allColumns" [hideableColumns]="hideableColumns" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"> </app-generic-list>
 ```
 
 ## Input Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| title | string | 'Items' | Title displayed at the top of the component |
-| addButtonText | string | 'Add Item' | Text for the add button |
-| searchPlaceholder | string | 'Search items' | Placeholder text for the search input |
-| noDataMessage | string | 'No data matching the filter' | Message shown when no data matches the filter |
-| dataSource | MatTableDataSource<any> | new MatTableDataSource([]) | Data source for the table |
-| allColumns | string[] | [] | All columns to be displayed in the table |
-| hideableColumns | string[] | [] | Columns that will be hidden on small screens |
-| pageSizeOptions | number[] | [5, 10, 25, 100] | Options for the number of items per page |
-| defaultPageSize | number | 10 | Default number of items per page |
+| Property          | Type                    | Default                       | Description                                   |
+| ----------------- | ----------------------- | ----------------------------- | --------------------------------------------- |
+| title             | string                  | 'Items'                       | Title displayed at the top of the component   |
+| addButtonText     | string                  | 'Add Item'                    | Text for the add button                       |
+| searchPlaceholder | string                  | 'Search items'                | Placeholder text for the search input         |
+| noDataMessage     | string                  | 'No data matching the filter' | Message shown when no data matches the filter |
+| dataSource        | MatTableDataSource<any> | new MatTableDataSource([])    | Data source for the table                     |
+| allColumns        | string[]                | []                            | All columns to be displayed in the table      |
+| hideableColumns   | string[]                | []                            | Columns that will be hidden on small screens  |
+| pageSizeOptions   | number[]                | [5, 10, 25, 100]              | Options for the number of items per page      |
+| defaultPageSize   | number                  | 10                            | Default number of items per page              |
 
 ## Output Events
 
-| Event | Type | Description |
-|-------|------|-------------|
-| add | EventEmitter<void> | Emitted when the add button is clicked |
-| edit | EventEmitter<any> | Emitted when an edit action is triggered, with the item as payload |
-| delete | EventEmitter<any> | Emitted when a delete action is triggered, with the item as payload |
+| Event  | Type                 | Description                                                            |
+| ------ | -------------------- | ---------------------------------------------------------------------- |
+| add    | EventEmitter<void>   | Emitted when the add button is clicked                                 |
+| edit   | EventEmitter<any>    | Emitted when an edit action is triggered, with the item as payload     |
+| delete | EventEmitter<any>    | Emitted when a delete action is triggered, with the item as payload    |
 | filter | EventEmitter<string> | Emitted when the filter input changes, with the filter text as payload |
 
 ## Supported Column Types
@@ -138,9 +123,11 @@ export class YourListComponent implements OnInit, OnDestroy {
 The GenericListComponent supports various column types:
 
 ### ID Columns
+
 Supports various ID fields: `id`, `topicId`, `projectId`, `proposalId`, `presentationId`, `organisationId`, `userId`, `classroomId`
 
 ### Basic Columns
+
 - `name`: Displays the name property
 - `title`: Displays the title property
 - `description`: Displays the description with truncation and tooltip for long text
@@ -149,21 +136,25 @@ Supports various ID fields: `id`, `topicId`, `projectId`, `proposalId`, `present
 - `level`: Displays the level property (for classrooms)
 
 ### User-specific Columns
+
 - `userName`: Displays the username
 - `givenName`: Displays the user's given name
 - `familyName`: Displays the user's family name
 - `userLevel`: Displays the user's permission level
 
 ### Relationship Columns
+
 - `topics`: Displays topic names from a related topics array
 - `student`, `coach`, `expert`: Displays the userName property of related entities
 
 ### Actions Column
+
 - `actions`: Provides edit and delete buttons with Material icons
 
 ## Responsive Behavior
 
 The component adapts to screen sizes:
+
 - On large screens, all columns are displayed
 - On small screens (width < 800px), columns specified in `hideableColumns` are hidden
 
@@ -172,7 +163,7 @@ The component adapts to screen sizes:
 Use the `showNotification` method to display notifications:
 
 ```typescript
-this.genericList.showNotification('Your message', 'Action Button Text', durationInMs);
+this.genericList.showNotification("Your message", "Action Button Text", durationInMs);
 ```
 
 ## Examples

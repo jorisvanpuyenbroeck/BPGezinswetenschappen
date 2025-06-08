@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Classroom } from '../../../../shared/models/classroom';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -22,7 +17,7 @@ export class AdminClassroomListComponent implements OnInit, OnDestroy {
   allColumns: string[] = ['classroomId', 'name', 'level', 'actions'];
   hideableColumns: string[] = []; // No columns to hide by default
   dataSource = new MatTableDataSource<Classroom>([]);
-  
+
   // Subscriptions
   classrooms$: Subscription = new Subscription();
   deleteClassroom$: Subscription = new Subscription();
@@ -52,7 +47,10 @@ export class AdminClassroomListComponent implements OnInit, OnDestroy {
         this.dataSource.data = result;
       },
       error: (error) => {
-        this.showNotification('Error loading classrooms: ' + error.message, 'Close');
+        this.showNotification(
+          'Error loading classrooms: ' + error.message,
+          'Close'
+        );
       },
     });
   }
@@ -77,7 +75,10 @@ export class AdminClassroomListComponent implements OnInit, OnDestroy {
           this.showNotification('Classroom successfully deleted', 'Close');
         },
         error: (error) => {
-          this.showNotification('Error deleting classroom: ' + error.message, 'Close');
+          this.showNotification(
+            'Error deleting classroom: ' + error.message,
+            'Close'
+          );
         },
       });
   }

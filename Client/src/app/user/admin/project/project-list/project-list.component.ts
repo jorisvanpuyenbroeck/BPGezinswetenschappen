@@ -18,7 +18,7 @@ export class AdminProjectListComponent implements OnInit, OnDestroy {
   allColumns: string[] = ['projectId', 'title', 'description', 'actions'];
   hideableColumns: string[] = ['description']; // Hide description on small screens
   dataSource = new MatTableDataSource<Project>([]);
-  
+
   // Subscriptions
   projectsSubscription: Subscription = new Subscription();
   deleteProjectSubscription: Subscription = new Subscription();
@@ -26,7 +26,7 @@ export class AdminProjectListComponent implements OnInit, OnDestroy {
   @ViewChild(GenericListComponent) genericList!: GenericListComponent;
 
   constructor(
-    private projectService: ProjectService, 
+    private projectService: ProjectService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
@@ -48,7 +48,10 @@ export class AdminProjectListComponent implements OnInit, OnDestroy {
         this.dataSource.data = result;
       },
       error: (error) => {
-        this.showNotification('Failed to load projects: ' + error.message, 'Close');
+        this.showNotification(
+          'Failed to load projects: ' + error.message,
+          'Close'
+        );
         console.error('Error loading projects:', error);
       },
     });
@@ -74,7 +77,10 @@ export class AdminProjectListComponent implements OnInit, OnDestroy {
           this.showNotification('Project successfully deleted', 'Close');
         },
         error: (error) => {
-          this.showNotification('Error deleting project: ' + error.message, 'Close');
+          this.showNotification(
+            'Error deleting project: ' + error.message,
+            'Close'
+          );
         },
       });
   }

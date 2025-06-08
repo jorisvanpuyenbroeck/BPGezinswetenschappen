@@ -46,7 +46,10 @@ export class AdminExamperiodListComponent implements OnInit, OnDestroy {
         this.dataSource.data = result;
       },
       error: (error) => {
-        this.showNotification('Error loading exam periods: ' + error.message, 'Close');
+        this.showNotification(
+          'Error loading exam periods: ' + error.message,
+          'Close'
+        );
       },
     });
   }
@@ -71,7 +74,10 @@ export class AdminExamperiodListComponent implements OnInit, OnDestroy {
           this.showNotification('Exam period successfully deleted', 'Close');
         },
         error: (error) => {
-          this.showNotification('Error deleting exam period: ' + error.message, 'Close');
+          this.showNotification(
+            'Error deleting exam period: ' + error.message,
+            'Close'
+          );
         },
       });
   }

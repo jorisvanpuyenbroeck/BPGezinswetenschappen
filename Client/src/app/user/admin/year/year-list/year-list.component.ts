@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Year } from '../../../../shared/models/year';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';

@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { User } from '../../../../shared/models/user';
 import { UserService } from '../../../user.service';
 import { Subscription } from 'rxjs';
@@ -29,7 +24,7 @@ export class AdminUserListComponent implements OnInit, OnDestroy {
   ];
   hideableColumns: string[] = ['givenName', 'familyName']; // Hide these columns on small screens
   dataSource = new MatTableDataSource<User>([]);
-  
+
   users$: Subscription = new Subscription();
   deleteUser$: Subscription = new Subscription();
 
@@ -79,7 +74,7 @@ export class AdminUserListComponent implements OnInit, OnDestroy {
       this.showNotification('Cannot delete user: Invalid user ID', 'Close');
       return;
     }
-    
+
     this.deleteUser$ = this.userService.deleteUser(user.userId).subscribe({
       next: () => {
         this.getUsers();

@@ -23,7 +23,7 @@ export class AdminSlotListComponent implements OnInit, OnDestroy {
   ];
   hideableColumns: string[] = []; // No columns to hide by default
   dataSource = new MatTableDataSource<Slot>([]);
-  
+
   slots$: Subscription = new Subscription();
   deleteSlot$: Subscription = new Subscription();
 
