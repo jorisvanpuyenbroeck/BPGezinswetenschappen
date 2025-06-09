@@ -17,68 +17,70 @@
   >
     <!-- Dynamic Fields -->
     <ng-container *ngFor="let field of fields">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>{{ field.label }}</mat-label>
+      <div class="field-container" [class.textarea]="isTextArea(field)">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ field.label }}</mat-label>
 
-        <!-- Text Input -->
-        <input
-          *ngIf="field.type === 'text'"
-          matInput
-          [formControlName]="field.name"
-          [placeholder]="field.placeholder || field.label"
-          [attr.required]="field.required"
-        />
+          <!-- Text Input -->
+          <input
+            *ngIf="field.type === 'text'"
+            matInput
+            [formControlName]="field.name"
+            [placeholder]="field.placeholder || field.label"
+            [attr.required]="field.required"
+          />
 
-        <!-- Textarea Input -->
-        <textarea
-          *ngIf="isTextArea(field)"
-          matInput
-          [formControlName]="field.name"
-          [placeholder]="field.placeholder || field.label"
-          [rows]="field.rows || 5"
-          [attr.required]="field.required"
-        ></textarea>
+          <!-- Textarea Input -->
+          <textarea
+            *ngIf="isTextArea(field)"
+            matInput
+            [formControlName]="field.name"
+            [placeholder]="field.placeholder || field.label"
+            [rows]="field.rows || 5"
+            [attr.required]="field.required"
+          ></textarea>
 
-        <!-- Select Input -->
-        <mat-select
-          *ngIf="isSelect(field)"
-          [formControlName]="field.name"
-          [attr.required]="field.required"
-          [multiple]="field.multiple"
-        >
-          <mat-option
-            *ngFor="let option of field.options"
-            [value]="option.value"
+          <!-- Select Input -->
+          <mat-select
+            *ngIf="isSelect(field)"
+            [formControlName]="field.name"
+            [attr.required]="field.required"
+            [multiple]="field.multiple"
           >
-            {{ option.viewValue }}
-          </mat-option>
-        </mat-select>
+            <mat-option
+              *ngFor="let option of field.options"
+              [value]="option.value"
+            >
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
 
-        <!-- Date Input -->
-        <input
-          *ngIf="isDate(field)"
-          matInput
-          [matDatepicker]="picker"
-          [formControlName]="field.name"
-          [placeholder]="field.placeholder || field.label"
-          [attr.required]="field.required"
-        />
-        <mat-datepicker-toggle
-          *ngIf="isDate(field)"
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+          <!-- Date Input -->
+          <input
+            *ngIf="isDate(field)"
+            matInput
+            [matDatepicker]="picker"
+            [formControlName]="field.name"
+            [placeholder]="field.placeholder || field.label"
+            [attr.required]="field.required"
+          />
+          <mat-datepicker-toggle
+            *ngIf="isDate(field)"
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
 
-        <!-- Field Hints and Errors -->
-        <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
-        <mat-error *ngIf="hasError(field.name, 'required')">
-          {{ field.label }} is required
-        </mat-error>
-        <mat-error *ngIf="hasError(field.name, 'maxlength')">
-          {{ field.label }} exceeds maximum length
-        </mat-error>
-      </mat-form-field>
+          <!-- Field Hints and Errors -->
+          <mat-hint *ngIf="field.placeholder">{{ field.placeholder }}</mat-hint>
+          <mat-error *ngIf="hasError(field.name, 'required')">
+            {{ field.label }} is required
+          </mat-error>
+          <mat-error *ngIf="hasError(field.name, 'maxlength')">
+            {{ field.label }} exceeds maximum length
+          </mat-error>
+        </mat-form-field>
+      </div>
     </ng-container>
 
     <!-- Custom Fields -->
