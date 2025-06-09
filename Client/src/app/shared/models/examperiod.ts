@@ -7,3 +7,13 @@ export interface ExamPeriod {
   year: any; // Use 'any' to avoid circular reference for now
   presentationDays?: any[]; // Use 'any[]' to avoid circular reference for now
 }
+
+export interface ExamPeriodCreateDto {
+  name: string;
+  yearId: number;
+}
+
+export interface ExamPeriodUpdateDto {
+  name: string;
+  yearId: number;
+}

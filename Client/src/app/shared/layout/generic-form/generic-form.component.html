@@ -39,13 +39,13 @@
             [rows]="field.rows || 5"
             [attr.required]="field.required"
           ></textarea>
-
           <!-- Select Input -->
           <mat-select
             *ngIf="isSelect(field)"
             [formControlName]="field.name"
             [attr.required]="field.required"
             [multiple]="field.multiple"
+            [placeholder]="field.placeholder ?? field.label"
           >
             <mat-option
               *ngFor="let option of field.options"

@@ -122,21 +122,20 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
       yearId: ['', [Validators.required]],
     });
   }
-
   private loadYears(): void {
     const sub = this.yearService.getYears().subscribe({
       next: (years: Year[]) => {
         this.years = years;
-        // Update select field options
+        // Update select field options without modifying readonly properties
+        const yearOptions = years.map((year) => ({
+          value: year.yearId,
+          viewValue: year.label,
+        }));
         this.fields = this.fields.map((field) => {
           if (field.type === 'select' && field.name === 'yearId') {
-            return {
-              ...field,
-              options: years.map((year) => ({
-                value: year.yearId,
-                viewValue: year.label,
-              })),
-            };
+            const updatedField = { ...field, options: yearOptions };
+            // Ensure the options array is properly assigned
+            return updatedField;
           }
           return field;
         });
@@ -153,10 +152,20 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
     const sub = this.examperiodService.getExamPeriod(id).subscribe({
       next: (examPeriod: ExamPeriod) => {
         this.examPeriod = examPeriod;
-        this.examPeriodForm.patchValue({
-          name: examPeriod.name,
-          yearId: examPeriod.yearId,
-        });
+
+        // If years are already loaded, patch the form values
+        if (this.years.length > 0) {
+          setTimeout(() => {
+            this.examPeriodForm.patchValue(
+              {
+                name: examPeriod.name,
+                yearId: examPeriod.yearId,
+              },
+              { emitEvent: false }
+            );
+          });
+        }
+        // If years aren't loaded yet, they'll be set in loadYears when they arrive
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading exam period: ' + error.message;
@@ -187,7 +196,7 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
           ? 'Exam period updated'
           : 'Exam period created';
         this.notificationService.showSuccess(message);
-        this.router.navigate(['/admin/examperiods']);
+        this.router.navigate(['/admin/examperiod']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;

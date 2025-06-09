@@ -33,10 +33,11 @@ namespace API.Controllers
         }
 
         // GET: api/ExamPeriods/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ExamPeriodReadDto>> GetExamPeriod(int id)
+        [HttpGet("{id}")]        public async Task<ActionResult<ExamPeriodReadDto>> GetExamPeriod(int id)
         {
-            var examPeriod = await _context.ExamPeriods.FindAsync(id);
+            var examPeriod = await _context.ExamPeriods
+                .Include(ep => ep.Year)
+                .FirstOrDefaultAsync(ep => ep.ExamPeriodId == id);
             if (examPeriod == null)
             {
                 return NotFound();
