@@ -3,6 +3,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from '@auth0/auth0-angular';
@@ -12,6 +13,7 @@ import { ApiConfigService } from './app.config';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    BrowserAnimationsModule,
     AuthModule.forRoot({
       domain: environment.AUTH0_DOMAIN,
       clientId: environment.AUTH0_CLIENT_ID,

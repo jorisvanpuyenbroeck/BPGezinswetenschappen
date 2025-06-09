@@ -12,6 +12,7 @@ import { UserService } from '../user/user.service';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from './layout/layout.module';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -21,7 +22,6 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     MaterialModule,
     LayoutModule,
   ],
@@ -32,7 +32,6 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     MaterialModule,
     LayoutModule,
   ],
