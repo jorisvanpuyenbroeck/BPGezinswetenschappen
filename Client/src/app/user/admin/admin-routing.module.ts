@@ -7,6 +7,7 @@ import { AdminProposalFormComponent } from './proposal/proposal-form/proposal-fo
 import { AdminOrganisationFormComponent } from './organisation/organisation-form/organisation-form.component';
 import { AdminOrganisationListComponent } from './organisation/organisation-list/organisation-list.component';
 import { AdminProjectListComponent } from './project/project-list/project-list.component';
+import { AdminProjectFormComponent } from './project/project-form/project-form.component';
 import { AdminUserListComponent } from './user/user-list/user-list.component';
 // import { AdminUserFormComponent } from './user/user-form/user-form.component';
 import { AdminHomeComponent } from './home/home.component';
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'organisation', component: AdminOrganisationListComponent },
   { path: 'organisation/form', component: AdminOrganisationFormComponent },
   { path: 'project', component: AdminProjectListComponent },
-  { path: 'project/form', component: AdminProjectListComponent },
+  { path: 'project/form', component: AdminProjectFormComponent },
   { path: 'user', component: AdminUserListComponent },
   { path: 'classroom', component: AdminClassroomListComponent },
   { path: 'classroom/form', component: AdminClassroomFormComponent },
