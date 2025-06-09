@@ -4,14 +4,19 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  margin: 1rem;
 }
 
 /* List component container */
 .list-component-container {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: 0;
+  gap: 1rem;
+  padding: 1rem;
   height: 100vh;
-  margin: 16px;
 }
 
 /* Description tooltips */

@@ -70,8 +70,8 @@ mat-card-content {
 
 /* Add a base class for list component containers */
 .list-component-container {
-  height: calc(100vh - var(--header-height) - 24px); /* 24px for padding */
-  max-height: calc(100vh - var(--header-height) - 24px);
+  height: calc(100vh - var(--header-height)); /* 24px for padding */
+  max-height: calc(100vh - var(--header-height));
   overflow: hidden;
   display: flex;
   flex-direction: column;
