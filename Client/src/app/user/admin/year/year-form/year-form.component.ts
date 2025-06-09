@@ -1,7 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Year } from '../../../../shared/models/year';
+import { map } from 'rxjs/operators';
+import {
+  Year,
+  YearCreateDto,
+  YearUpdateDto,
+} from '../../../../shared/models/year';
 import { YearService } from '../../../../shared/services/year.service';
 import { Location } from '@angular/common';
 import { GenericFormComponent } from '../../../../shared/layout/generic-form/generic-form.component';
@@ -111,23 +116,20 @@ export class AdminYearFormComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(sub);
   }
-
   onSubmit(formValue: YearFormValue): void {
     this.isSubmitted = true;
-    const year: Year = {
-      ...this.year,
-      ...formValue,
-    };
 
     const operation = this.isEdit
-      ? this.yearService.updateYear(year.yearId, year)
-      : this.yearService.createYear(year);
+      ? this.yearService
+          .updateYear(this.year.yearId, { label: formValue.label })
+          .pipe(map(() => undefined as Year | void))
+      : this.yearService.createYear({ label: formValue.label });
 
     const sub = operation.subscribe({
       next: () => {
         const message = this.isEdit ? 'Year updated' : 'Year created';
         this.notificationService.showSuccess(message);
-        this.router.navigate(['/admin/years']);
+        this.router.navigate(['/admin/year']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;

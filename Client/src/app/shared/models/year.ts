@@ -4,3 +4,11 @@ export interface Year {
   label: string;
   examPeriods: any[];
 }
+
+export interface YearCreateDto {
+  label: string;
+}
+
+export interface YearUpdateDto {
+  label: string;
+}

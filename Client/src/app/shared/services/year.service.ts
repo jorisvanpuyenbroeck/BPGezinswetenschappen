@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Year } from '../models/year';
+import { Year, YearCreateDto, YearUpdateDto } from '../models/year';
 import { ApiConfigService } from '../../app.config';
 
 @Injectable({ providedIn: 'root' })
@@ -23,14 +23,14 @@ export class YearService {
     return this.http.get<Year>(url);
   }
 
-  createYear(year: Year): Observable<Year> {
+  createYear(year: YearCreateDto): Observable<Year> {
     const url = `${this.apiConfigService.apiBaseUrl}${this.yearsEndpoint}`;
     return this.http.post<Year>(url, year);
   }
 
-  updateYear(id: number, year: Year): Observable<Year> {
+  updateYear(id: number, year: YearUpdateDto): Observable<void> {
     const url = `${this.apiConfigService.apiBaseUrl}${this.yearsEndpoint}/${id}`;
-    return this.http.put<Year>(url, year);
+    return this.http.put<void>(url, year);
   }
 
   deleteYear(id: number): Observable<void> {

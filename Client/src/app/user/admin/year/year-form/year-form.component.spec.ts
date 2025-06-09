@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { YearFormComponent } from './year-form.component';
+import { AdminYearFormComponent } from './year-form.component';
 
-describe('YearFormComponent', () => {
-  let component: YearFormComponent;
-  let fixture: ComponentFixture<YearFormComponent>;
+describe('AdminYearFormComponent', () => {
+  let component: AdminYearFormComponent;
+  let fixture: ComponentFixture<AdminYearFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [YearFormComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(YearFormComponent);
+      imports: [AdminYearFormComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AdminYearFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
