@@ -182,7 +182,7 @@ export class AdminPresentationFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading presentation: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -208,13 +208,13 @@ export class AdminPresentationFormComponent implements OnInit, OnDestroy {
         const message = this.isEdit
           ? 'Presentation updated'
           : 'Presentation created';
-        this.notificationService.success(message);
+        this.notificationService.showSuccess(message);
         this.router.navigate(['/admin/presentations']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;
         this.errorMessage = 'Error saving presentation: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);

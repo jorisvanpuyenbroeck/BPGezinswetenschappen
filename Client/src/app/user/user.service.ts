@@ -4,7 +4,7 @@ import { UserStore } from '../store/user-store';
 import { map, tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject, first, take, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { User, UserCreateDto } from '../shared/models/user';
+import { User, UserCreateDto, UserUpdateDto } from '../shared/models/user';
 import { Application } from '../shared/models/application';
 import { RoleService } from './role.service';
 import { ApiConfigService } from '../app.config'; // Import the config service
@@ -172,5 +172,20 @@ export class UserService {
   mapUserToUserDto(user: User): UserCreateDto {
     const { application, ...userDto } = user;
     return userDto;
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.http
+      .get<User>(
+        `${this.apiConfigService.apiBaseUrl}${this.usersEndpoint}/${id}`
+      )
+      .pipe(tap((user) => console.log('Fetched user:', user)));
+  }
+
+  updateUser(id: number, updateDto: UserUpdateDto): Observable<any> {
+    return this.http.put(
+      `${this.apiConfigService.apiBaseUrl}${this.usersEndpoint}/${id}`,
+      updateDto
+    );
   }
 }

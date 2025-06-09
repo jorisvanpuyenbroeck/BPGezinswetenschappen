@@ -178,7 +178,7 @@ export class AdminOrganisationFormComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.errorMessage = 'Error loading organisation: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
         this.router.navigate(['/admin/organisation']);
       },
     });
@@ -205,12 +205,12 @@ export class AdminOrganisationFormComponent implements OnInit, OnDestroy {
           const message = `Organisation successfully ${
             this.isEdit ? 'updated' : 'created'
           }`;
-          this.notificationService.success(message);
+          this.notificationService.showSuccess(message);
           this.router.navigate(['/admin/organisation']);
         },
         error: (error) => {
           this.errorMessage = 'Error saving organisation: ' + error.message;
-          this.notificationService.error(this.errorMessage);
+          this.notificationService.showError(this.errorMessage);
         },
       });
       this.subscriptions.add(sub);

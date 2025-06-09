@@ -120,7 +120,7 @@ export class AdminClassroomFormComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.errorMessage = 'Error loading classroom: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
         this.router.navigate(['/admin/classroom']);
       },
     });
@@ -144,12 +144,12 @@ export class AdminClassroomFormComponent implements OnInit, OnDestroy {
           const message = `Classroom successfully ${
             this.isEdit ? 'updated' : 'created'
           }`;
-          this.notificationService.success(message);
+          this.notificationService.showSuccess(message);
           this.router.navigate(['/admin/classroom']);
         },
         error: (error) => {
           this.errorMessage = 'Error saving classroom: ' + error.message;
-          this.notificationService.error(this.errorMessage);
+          this.notificationService.showError(this.errorMessage);
         },
       });
       this.subscriptions.add(sub);

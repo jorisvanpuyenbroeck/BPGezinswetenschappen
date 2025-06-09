@@ -9,7 +9,7 @@ import { AdminOrganisationListComponent } from './organisation/organisation-list
 import { AdminProjectListComponent } from './project/project-list/project-list.component';
 import { AdminProjectFormComponent } from './project/project-form/project-form.component';
 import { AdminUserListComponent } from './user/user-list/user-list.component';
-// import { AdminUserFormComponent } from './user/user-form/user-form.component';
+import { UserFormComponent } from './user/user-form/user-form.component';
 import { AdminHomeComponent } from './home/home.component';
 import { AdminClassroomListComponent } from './classroom/classroom-list/classroom-list.component';
 import { AdminClassroomFormComponent } from './classroom/classroom-form/classroom-form.component';
@@ -35,6 +35,7 @@ const routes: Routes = [
   { path: 'project', component: AdminProjectListComponent },
   { path: 'project/form', component: AdminProjectFormComponent },
   { path: 'user', component: AdminUserListComponent },
+  { path: 'user/form', component: UserFormComponent },
   { path: 'classroom', component: AdminClassroomListComponent },
   { path: 'classroom/form', component: AdminClassroomFormComponent },
   { path: 'year', component: AdminYearListComponent },
@@ -50,7 +51,6 @@ const routes: Routes = [
   },
   { path: 'slot', component: AdminSlotListComponent },
   { path: 'slot/form', component: AdminSlotFormComponent },
-  //  { path: 'user/form', component: AdminUserFormComponent },
 ];
 
 @NgModule({

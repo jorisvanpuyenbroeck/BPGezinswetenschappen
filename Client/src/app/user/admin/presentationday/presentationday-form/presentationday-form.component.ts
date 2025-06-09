@@ -141,7 +141,7 @@ export class AdminPresentationdayFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading exam periods: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -158,7 +158,7 @@ export class AdminPresentationdayFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading presentation day: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -184,13 +184,13 @@ export class AdminPresentationdayFormComponent implements OnInit, OnDestroy {
         const message = this.isEdit
           ? 'Presentation day updated'
           : 'Presentation day created';
-        this.notificationService.success(message);
+        this.notificationService.showSuccess(message);
         this.router.navigate(['/admin/presentationdays']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;
         this.errorMessage = 'Error saving presentation day: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);

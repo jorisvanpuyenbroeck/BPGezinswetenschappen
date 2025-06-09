@@ -244,7 +244,7 @@ export class AdminProjectFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading topics: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -272,7 +272,7 @@ export class AdminProjectFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading project: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -313,14 +313,14 @@ export class AdminProjectFormComponent implements OnInit, OnDestroy {
           const message = `Project successfully ${
             this.isEdit ? 'updated' : 'created'
           }`;
-          this.notificationService.success(message);
+          this.notificationService.showSuccess(message);
           this.router.navigate(['/admin/project']);
         },
         error: (error: Error) => {
           this.errorMessage = `Error ${
             this.isEdit ? 'updating' : 'creating'
           } project: ${error.message}`;
-          this.notificationService.error(this.errorMessage);
+          this.notificationService.showError(this.errorMessage);
         },
       });
       this.subscriptions.add(sub);

@@ -146,7 +146,7 @@ export class AdminSlotFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading classrooms: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
 
@@ -163,7 +163,7 @@ export class AdminSlotFormComponent implements OnInit, OnDestroy {
         error: (error: Error) => {
           this.errorMessage =
             'Error loading presentation days: ' + error.message;
-          this.notificationService.error(this.errorMessage);
+          this.notificationService.showError(this.errorMessage);
         },
       });
 
@@ -205,7 +205,7 @@ export class AdminSlotFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading slot: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -226,13 +226,13 @@ export class AdminSlotFormComponent implements OnInit, OnDestroy {
     const sub = operation.subscribe({
       next: () => {
         const message = this.isEdit ? 'Slot updated' : 'Slot created';
-        this.notificationService.success(message);
+        this.notificationService.showSuccess(message);
         this.router.navigate(['/admin/slots']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;
         this.errorMessage = 'Error saving slot: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);

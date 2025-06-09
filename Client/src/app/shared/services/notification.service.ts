@@ -7,23 +7,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NotificationService {
   constructor(private snackBar: MatSnackBar) {}
 
-  success(message: string, action: string = 'Close'): void {
-    this.showNotification(message, action, 3000);
-  }
-
-  error(message: string, action: string = 'Close'): void {
-    this.showNotification(message, action, 5000);
-  }
-
-  private showNotification(
-    message: string,
-    action: string,
-    duration: number
-  ): void {
+  showNotification(message: string, action: string = 'Close') {
     this.snackBar.open(message, action, {
-      duration,
-      horizontalPosition: 'end',
+      duration: 5000,
+      horizontalPosition: 'right',
       verticalPosition: 'top',
+    });
+  }
+
+  showError(message: string, action: string = 'Close') {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar'],
+    });
+  }
+
+  showSuccess(message: string, action: string = 'Close') {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar'],
     });
   }
 }

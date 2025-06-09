@@ -143,7 +143,7 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading years: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -160,7 +160,7 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading exam period: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -186,13 +186,13 @@ export class AdminExamperiodFormComponent implements OnInit, OnDestroy {
         const message = this.isEdit
           ? 'Exam period updated'
           : 'Exam period created';
-        this.notificationService.success(message);
+        this.notificationService.showSuccess(message);
         this.router.navigate(['/admin/examperiods']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;
         this.errorMessage = 'Error saving exam period: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);

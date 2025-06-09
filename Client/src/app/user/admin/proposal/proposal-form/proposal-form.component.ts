@@ -192,7 +192,7 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading topics: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -211,7 +211,7 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading proposal: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -238,7 +238,7 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
           const message = `Proposal successfully ${
             this.isEdit ? 'updated' : 'created'
           }`;
-          this.notificationService.success(message);
+          this.notificationService.showSuccess(message);
           this.savedProposal.emit(savedProposal);
           if (!this.savedProposal.observed) {
             this.router.navigate(['../'], { relativeTo: this.route });
@@ -248,7 +248,7 @@ export class AdminProposalFormComponent implements OnInit, OnDestroy {
           this.errorMessage = `Error ${
             this.isEdit ? 'updating' : 'creating'
           } proposal: ${error.message}`;
-          this.notificationService.error(this.errorMessage);
+          this.notificationService.showError(this.errorMessage);
           this.isSubmitted = false;
         },
       });

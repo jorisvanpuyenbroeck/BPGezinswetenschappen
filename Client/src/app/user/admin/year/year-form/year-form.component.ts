@@ -106,7 +106,7 @@ export class AdminYearFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading year: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -126,13 +126,13 @@ export class AdminYearFormComponent implements OnInit, OnDestroy {
     const sub = operation.subscribe({
       next: () => {
         const message = this.isEdit ? 'Year updated' : 'Year created';
-        this.notificationService.success(message);
+        this.notificationService.showSuccess(message);
         this.router.navigate(['/admin/years']);
       },
       error: (error: Error) => {
         this.isSubmitted = false;
         this.errorMessage = 'Error saving year: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);

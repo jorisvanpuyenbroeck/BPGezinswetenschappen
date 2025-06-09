@@ -1,1 +1,13 @@
-<p>user-form works!</p>
+<div class="container mx-auto mt-8 mb-8">
+  <app-generic-form
+    [title]="isEdit ? 'Edit User' : 'Create User'"
+    [formGroup]="userForm"
+    [fields]="fields"
+    [isSubmitted]="isSubmitted"
+    [errorMessage]="errorMessage"
+    [saveButtonText]="isEdit ? 'Update' : 'Create'"
+    [cancelButtonText]="'Cancel'"
+    (formSubmit)="onFormSubmit($event)"
+    (formCancel)="onFormCancel()"
+  ></app-generic-form>
+</div>

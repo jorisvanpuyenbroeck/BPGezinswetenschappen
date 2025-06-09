@@ -132,7 +132,7 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         this.errorMessage = 'Error loading topic: ' + error.message;
-        this.notificationService.error(this.errorMessage);
+        this.notificationService.showError(this.errorMessage);
       },
     });
     this.subscriptions.add(sub);
@@ -155,7 +155,7 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
           const message = `Topic successfully ${
             this.isEdit ? 'updated' : 'created'
           }`;
-          this.notificationService.success(message);
+          this.notificationService.showSuccess(message);
           this.savedTopic.emit(savedTopic);
           if (!this.savedTopic.observed) {
             this.router.navigate(['../'], { relativeTo: this.route });
@@ -165,7 +165,7 @@ export class AdminTopicFormComponent implements OnInit, OnDestroy {
           this.errorMessage = `Error ${
             this.isEdit ? 'updating' : 'creating'
           } topic: ${error.message}`;
-          this.notificationService.error(this.errorMessage);
+          this.notificationService.showError(this.errorMessage);
           this.isSubmitted = false;
         },
       });
