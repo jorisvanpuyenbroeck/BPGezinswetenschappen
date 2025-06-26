@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
+  gap: 12px !important;
 }
 
 .sidenav-logo {
@@ -27,22 +27,28 @@
 }
 
 .nav-list {
-  margin-top: 0;
-  padding-top: 16px; /* Add space at the top of the list */
-  flex: 1;
-  overflow-y: auto;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  flex: 1 !important;
+  overflow-y: auto !important;
 }
 
 .nav-list a {
-  height: 48px;
+  height: 48px !important;
   display: flex;
-  align-items: center;
-  padding: 0 16px;
+  align-items: center !important;
+  padding: 0 16px !important;
   transition: background-color 0.2s;
 }
 
+.nav-item {
+  display: block !important;
+  padding: 8px 16px !important;
+  /* ... add !important to all other properties */
+}
+
 .nav-list mat-icon {
-  margin-right: 16px;
+  margin-right: 16px !important;
   color: var(--anthracite-primary);
 }
 

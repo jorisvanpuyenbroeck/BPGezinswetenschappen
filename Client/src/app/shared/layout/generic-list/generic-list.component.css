@@ -148,3 +148,7 @@ tr.mat-row:hover {
 table {
   width: 100%;
 }
+
+.generic-list-container {
+  padding-top: 16px;
+}

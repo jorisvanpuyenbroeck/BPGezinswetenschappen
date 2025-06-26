@@ -65,12 +65,28 @@ namespace BPGezinswetenschappen.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProposal(int id, ProposalUpdateDto proposalUpdateDto)
         {
-            var proposal = await _context.Proposals.FindAsync(id);
+            var proposal = await _context.Proposals
+                .Include(p => p.Topics)
+                .FirstOrDefaultAsync(p => p.ProposalId == id);
             if (proposal == null)
             {
                 return NotFound();
             }
+            // Map basic fields
             _mapper.Map(proposalUpdateDto, proposal);
+            // Update related topics
+            proposal.Topics.Clear();
+            if (proposalUpdateDto.TopicIds?.Any() == true)
+            {
+                foreach (var topicId in proposalUpdateDto.TopicIds)
+                {
+                    var topic = await _context.Topics.FindAsync(topicId);
+                    if (topic != null)
+                    {
+                        proposal.Topics.Add(topic);
+                    }
+                }
+            }
             try
             {
                 await _context.SaveChangesAsync();
@@ -95,6 +111,20 @@ namespace BPGezinswetenschappen.API.Controllers
         public async Task<ActionResult<ProposalReadDto>> PostProposal(ProposalCreateDto proposalCreateDto)
         {
             var proposal = _mapper.Map<Proposal>(proposalCreateDto);
+
+            // Attach related topics based on provided IDs
+            if (proposalCreateDto.TopicIds?.Any() == true)
+            {
+                proposal.Topics = new List<Topic>();
+                foreach (var topicId in proposalCreateDto.TopicIds)
+                {
+                    var topic = await _context.Topics.FindAsync(topicId);
+                    if (topic != null)
+                    {
+                        proposal.Topics.Add(topic);
+                    }
+                }
+            }
             _context.Proposals.Add(proposal);
             await _context.SaveChangesAsync();
             var result = _mapper.Map<ProposalReadDto>(proposal);
