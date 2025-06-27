@@ -102,8 +102,15 @@ export class GenericListComponent implements OnInit, OnDestroy {
 
   // Handle filter input
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
+    // Generic predicate: search across all object fields
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const dataStr = JSON.stringify(data).toLowerCase();
+      return dataStr.includes(filter);
+    };
+    this.dataSource.filter = filterValue;
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

@@ -17,6 +17,7 @@ import { FormFields } from '../../../../shared/models';
 import { User } from '../../../../shared/models/user';
 import { Organisation } from '../../../../shared/models/organisation';
 import { Proposal } from '../../../../shared/models/proposal';
+import { ProposalService } from 'src/app/shared/services/proposal.service';
 
 interface ProjectFormMode {
   isEdit: boolean;
@@ -77,6 +78,7 @@ export class AdminProjectFormComponent implements OnInit, OnDestroy {
 
   // Data for select fields
   allTopics: Topic[] = [];
+  allProposals: Proposal[] = [];
   stageOptions = [
     { value: 'Gestart', viewValue: 'Started' },
     { value: 'InUitvoering', viewValue: 'In Progress' },
@@ -162,6 +164,7 @@ export class AdminProjectFormComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private topicService: TopicService,
+    private proposalService: ProposalService,
     private location: Location,
     private fb: FormBuilder,
     private notificationService: NotificationService
@@ -238,6 +241,29 @@ export class AdminProjectFormComponent implements OnInit, OnDestroy {
         this.fields = this.fields.map((field) => {
           if (field.type === 'select' && field.name === 'topicIds') {
             return { ...field, options: topicOptions };
+          }
+          return field;
+        });
+      },
+      error: (error: Error) => {
+        this.errorMessage = 'Error loading topics: ' + error.message;
+        this.notificationService.showError(this.errorMessage);
+      },
+    });
+    this.subscriptions.add(sub);
+  }
+  private loadProposals(): void {
+    const sub = this.proposalService.getProposals().subscribe({
+      next: (proposals: Proposal[]) => {
+        this.allProposals = proposals;
+        // Update the topics select field options
+        const proposalOptions = proposals.map((proposal) => ({
+          value: proposal.proposalId,
+          viewValue: proposal.title,
+        }));
+        this.fields = this.fields.map((field) => {
+          if (field.type === 'select' && field.name === 'proposalIds') {
+            return { ...field, options: proposalOptions };
           }
           return field;
         });

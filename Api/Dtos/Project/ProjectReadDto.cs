@@ -25,7 +25,7 @@ namespace BPGezinswetenschappen.API.Dtos.Project
         public int? StudentId { get; set; }
         public int? CoachId { get; set; }
         public int? OrganisationId { get; set; }
-        public int? ProposalId { get; set; }
+        public ProposalReadDto Proposal { get; set; }
         public List<int> TopicIds { get; set; }
     }
 }

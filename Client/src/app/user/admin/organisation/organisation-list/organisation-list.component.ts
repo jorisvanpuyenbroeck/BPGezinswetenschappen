@@ -14,7 +14,14 @@ import { GenericListComponent } from '../../../../shared/layout/generic-list/gen
 })
 export class AdminOrganisationListComponent implements OnInit, OnDestroy {
   // List configuration
-  allColumns: string[] = ['organisationId', 'name', 'address', 'actions'];
+  allColumns: string[] = [
+    'organisationId',
+    'name',
+    'address',
+    'city',
+    'contact',
+    'actions',
+  ];
   hideableColumns: string[] = []; // No columns to hide by default
   dataSource = new MatTableDataSource<Organisation>([]);
   organisations$: Subscription = new Subscription();
@@ -79,9 +86,11 @@ export class AdminOrganisationListComponent implements OnInit, OnDestroy {
           this.getOrganisations();
           this.showNotification('Organisation successfully deleted', 'Close');
         },
-        error: (error) => {
+        error: (error: any) => {
+          // Display server-provided error message if available
+          const serverMsg = error.error || error.message;
           this.showNotification(
-            'Error deleting organisation: ' + error.message,
+            'Error deleting organisation: ' + serverMsg,
             'Close'
           );
         },

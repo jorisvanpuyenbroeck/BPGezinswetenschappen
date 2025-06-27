@@ -95,6 +95,14 @@ namespace BPGezinswetenschappen.API.Controllers
             {
                 return NotFound();
             }
+
+            // Check for related projects
+            var hasProjects = await _context.Projects.AnyAsync(p => p.OrganisationId == id);
+            if (hasProjects)
+            {
+                return Conflict("Cannot delete organisation: related projects exist.");
+            }
+
             _context.Organisations.Remove(organisation);
             await _context.SaveChangesAsync();
             return NoContent();

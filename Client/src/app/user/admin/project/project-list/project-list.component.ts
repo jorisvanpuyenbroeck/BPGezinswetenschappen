@@ -15,7 +15,13 @@ import { GenericListComponent } from '../../../../shared/layout/generic-list/gen
 })
 export class AdminProjectListComponent implements OnInit, OnDestroy {
   // List configuration
-  allColumns: string[] = ['projectId', 'title', 'description', 'actions'];
+  allColumns: string[] = [
+    'projectId',
+    'title',
+    'description',
+    'stage',
+    'actions',
+  ];
   hideableColumns: string[] = ['description']; // Hide description on small screens
   dataSource = new MatTableDataSource<Project>([]);
 
